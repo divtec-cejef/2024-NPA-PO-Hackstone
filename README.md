@@ -13,7 +13,7 @@ L'adminstrateur a 5 PV.
 Le hacker 5 minutes de temps d'attaque.
 
 # Plateau de jeu 
-Image du plateau ![image du plateau]()
+Image du plateau ![image du plateau](plateau.png)
 
 # Règles 
 * Les cartes d'attaque doivent attendre un tour après avoir été posées avant de pouvoir attaquer.
