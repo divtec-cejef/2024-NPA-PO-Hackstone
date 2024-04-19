@@ -12,7 +12,16 @@ L'adminstrateur a 5 PV.
 
 Le hacker 5 minutes de temps d'attaque.
 
-# Déroulement d'une partie : 
+
+# Règles 
+* Les cartes d'attaque doivent attendre un tour après avoir été posées avant de pouvoir attaquer.
+* Lors d'une attaque la carte attaquante doit obligatoirement attaquer la cartes qui la défend si elle est présente sur le terrain de l'adversaire, sinon elle peut attaquer les PV du défenseur.
+* Lorsqu'on attaque les points de vie du défenseur on lui en retire un seul quelque soit la carte.
+* L'anonymus doit obligatoirement attaquer les cartes en défense quelqu'elle soit, il peut résister à deux attaques et attaquer deux fois par tour.
+* Si au début de son tour un joueur à 6 cartes dans sa main il doit au lieu de piocher, prendre la cartes du dessus de son deck et la mettre au cimetière.
+* La quatrième zone de de cartes est utilisable uniquement par le défenseur lorsqu'il à utiliser la carte stockage pour la débloquer.
+
+# Déroulement d'une partie 
 * Premier tour : 
   - Lors du lancement du jeu, nous choisissons notre rôle (attaquant ou défenseur), chaque rôle possède son propre deck de cartes.
   - Au début de la partie chaque joueur pioche 5 cartes
@@ -21,7 +30,9 @@ Le hacker 5 minutes de temps d'attaque.
   - Une fois que l'attaquant a terminé son tour, c'est au défenseur de jouer.
   - Il pioche une 6ème carte.
   - Le défenseur doit ensuite poser ses cartes selon celle de l'adversaire afin de pouvoir se protéger des ses attaques.
- * Reste de la partie :
+    
+* Reste de la partie :
+  - Lors du début de son tour le joueur quelque soit son rôle pioche jusqu'à avoir 5 cartes dans sa main. 
   - L'attaquant peut désormais attaquer avec les cartes qu'il a poser au premier tour.
   - Lorsqu'une carte attaque elle doit **obligatoirement** attaquer la carte qui la défend si il y en a une présente sur le terrain du défenseur. Sinon, elle peut attaquer directement les points de vie du défenseur.
   - Lorsqu'une carte à attaquer une carte qui la défend les deux cartes s'étant confrontées se détruise.
@@ -51,13 +62,18 @@ Le hacker 5 minutes de temps d'attaque.
   - 2 Phishing (jouable uniquement par l'ordinateur)
   - 1 Anonymus
 
-  * Rapport entre les cartes
-    - Les antivirus défendent les virus et les chevaux de Troie
-    - Les chiffrements de données défendent les élévations de privilèges
-    - Les firewall défendent les DDOS
-    - Les mises à jour défendent les logiciels malveillants
-    - Les authentification à deux facteurs défendent les brutforcings
-    - Les backup défendent les pannes réseau
-    - Les VPN défendent les hacker
-    - Le super-antivirus défend l'anonymus
-    - Le stockage permet de débloquer une case de plus pour poser une carte supplémentaire en défense
+* Rapport entre les cartes
+   - Les antivirus défendent les virus et les chevaux de Troie
+   - Les chiffrements de données défendent les élévations de privilèges
+   - Les firewall défendent les DDOS
+   - Les mises à jour défendent les logiciels malveillants
+   - Les authentification à deux facteurs défendent les brutforcings
+   - Les backup défendent les pannes réseau
+   - Les VPN défendent les hacker
+   - Le super-antivirus défend l'anonymus
+  
+ 
+* Capacités spéciales
+   - Le stockage permet de débloquer une case de plus pour poser une carte supplémentaire en défense
+   - L'anonymus détruit toute les cartes poser sur les deux terrains lors de son invocation
+   - Le super-antivirus permet de protéger les cartes en défense lors de l'invocation de l'anonymus et permet aussi de résister à deux attaques de virus ou de cheval de Troie
