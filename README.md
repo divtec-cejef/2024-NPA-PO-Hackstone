@@ -7,11 +7,11 @@ Ce jeu, inspiré de Yu-Gi-Oh ainsi que de Hearthstone (pour le design et en part
 Il fait se confronter un administrateur système face à un hacker.
 L'administrateur système a pour objectif de protéger son environnement informatique des attaques du hacker.
 
-Le hacker doit quant à lui réussir à réduire les points de vie du système à 0 avant la fin du temps imparti. 
+Le hacker doit quant à lui réussir à réduire les points de vie du système à 0 avant la fin du nombre de tours imparti. 
 
 L'administrateur a 5 PV.
 
-Le hacker a 5 minutes de temps d'attaque.
+Le hacker a 5 tours pour réduire les points de vie de l'administrateur à zéro.
 
 # Plateau de jeu 
 ![image du plateau](plateau.png)
@@ -25,6 +25,7 @@ La case informations sur une carte permet de poser une carte de jeu dessus et d'
 * L'anonymus doit obligatoirement attaquer les cartes en défense quelle qu'elles soient, il peut résister à deux attaques et attaquer deux fois par tour.
 * Si au début de son tour un joueur a 6 cartes dans sa main, il doit au lieu de piocher, prendre la carte du dessus de son deck et la mettre au cimetière.
 * La quatrième zone de cartes est utilisable uniquement par le défenseur lorsqu'il a utilisé la carte stockage pour la débloquer.
+* Le nombre de tour de l'attaquant augmente au début de son tour.
 
 # Déroulement d'une partie 
 * Premier tour : 
@@ -44,7 +45,7 @@ La case informations sur une carte permet de poser une carte de jeu dessus et d'
   - L'attaquant remporte la partie lorsque le défenseur n'a plus de points de vie, et le défenseur gagne lorsque l'attaquant n'a plus de temps pour attaquer.
 
 # Cartes 
-* Le deck du défenseur possède 18 cartes qui sont :
+* Le deck du défenseur possède 22 cartes qui sont :
   - 3 Antivirus
   - 2 Chiffrements de données
   - 2 Firewall
@@ -52,16 +53,18 @@ La case informations sur une carte permet de poser une carte de jeu dessus et d'
   - 2 Authentification à deux facteurs
   - 3 Backup
   - 2 VPN
+  - 2 White hat
+  - 2 Redondance de données 
   - 1 Stockage
   - 1 Super-antivirus
  
-* Le deck de l'attaquant en possède 23 :
+* Le deck de l'attaquant en possède 24 :
   - 2 Virus
   - 2 Cheval de Troie
   - 3 DDOS
   - 3 Logiciels malveillants
   - 3 Hacker
-  - 2 Pannes réseau
+  - 3 Pannes réseau
   - 2 Elévations de privilège
   - 3 Bruteforcing
   - 2 Phishing (jouable uniquement par l'ordinateur)
@@ -75,3 +78,10 @@ La case informations sur une carte permet de poser une carte de jeu dessus et d'
    - Les authentifications à deux facteurs défendent les bruteforcing.
    - Les backup défendent les pannes réseau.
    - Les VPN défendent les hackers.
+   - Les White hat peuvent défendre une attaque de n'importe quelle carte.
+ 
+* Capacités spéciales
+   - Le stockage permet de débloquer une case de plus pour poser une carte supplémentaire en défense
+   - L'anonymus détruit toute les cartes poser sur les deux terrains lors de son invocation
+   - Le super-antivirus permet de protéger les cartes en défense lors de l'invocation de l'anonymus et permet aussi de résister à deux attaques de virus ou de cheval de Troie
+   - Les redondances de données permettent de copier n'importe quelle carte déjà posée sur le terrain
