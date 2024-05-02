@@ -11,19 +11,20 @@ Le hacker doit quant à lui réussir à réduire les points de vie du système �
 
 L'administrateur a 5 PV.
 
-Le hacker a 5 tours pour réduire les points de vie de l'administrateur à zéro.
+Le hacker a jusqu'à la fin de son 5ème tour pour réduire les points de vie de l'administrateur à zéro.
 
 # Plateau de jeu 
 ![image du plateau](Plateau.png)
 
-La case informations sur une carte permet de poser une carte de jeu dessus et d'afficher une page à l'écran faisant une courte description de la carte posée.
+La zone d'informations sur une carte permet de poser une carte de jeu dessus et d'afficher une page à l'écran faisant une courte description de la carte posée.
 
 # Règles 
 * Les cartes d'attaque doivent attendre un tour après avoir été posées avant de pouvoir attaquer.
 * Lors d'une attaque, la carte attaquante doit obligatoirement attaquer la carte qui la défend si elle est présente sur le terrain de l'adversaire, sinon elle peut attaquer les PV du défenseur.
 * Lorsqu'on attaque les points de vie du défenseur, on lui en retire un seul quelque soit la carte.
 * L'anonymus doit obligatoirement attaquer les cartes en défense quelle qu'elles soient, il peut résister à deux attaques et attaquer deux fois par tour.
-* Si au début de son tour un joueur a 6 cartes dans sa main, il doit au lieu de piocher, prendre la carte du dessus de son deck et la mettre au cimetière.
+* Lorsqu'un super-antivirus ou un white hat est posé en défense, les cartes doivent les détruirse avant de pouvoir attaquer les points de vie de l'adversaire, cependant si la carte qui défend spécifiquement la carte attaquante est posée (si l'on essaie d'attaquer avec un DDOS et qu'un Firewall est posé en défense), la carte doit l'attaquer avant le super-antivirus ou le white hat.
+* Si à la fin de son tour un joueur à 7 cartes dans sa main, il doit en mettre une au cimetière.
 * La quatrième zone de cartes est utilisable uniquement par le défenseur lorsqu'il a utilisé la carte stockage pour la débloquer.
 * Le nombre de tour de l'attaquant augmente au début de son tour.
 
@@ -81,7 +82,7 @@ La case informations sur une carte permet de poser une carte de jeu dessus et d'
    - Les White hat peuvent défendre une attaque de n'importe quelle carte.
  
 * Capacités spéciales
-   - Le stockage permet de débloquer une case de plus pour poser une carte supplémentaire en défense
-   - L'anonymus détruit toute les cartes poser sur les deux terrains lors de son invocation
-   - Le super-antivirus permet de protéger les cartes en défense lors de l'invocation de l'anonymus et permet aussi de résister à deux attaques de virus ou de cheval de Troie
-   - Les redondances de données permettent de copier n'importe quelle carte déjà posée sur le terrain
+   - Le stockage permet de débloquer une zone de carte de plus pour ajouter une défense supplémentaire.
+   - L'anonymus détruit toute les cartes poser sur les deux terrains lors de son invocation.
+   - Le super-antivirus permet de protéger les cartes en défense lors de l'invocation de l'anonymus et permet aussi de résister à deux attaques de virus ou de cheval de Troie.
+   - Les redondances de données permettent de copier n'importe quelle carte déjà posée sur le terrain.
