@@ -14,7 +14,7 @@ L'administrateur a 5 PV.
 Le hacker a 5 tours pour réduire les points de vie de l'administrateur à zéro.
 
 # Plateau de jeu 
-![image du plateau](plateau.png)
+![image du plateau](Plateau.png)
 
 La case informations sur une carte permet de poser une carte de jeu dessus et d'afficher une page à l'écran faisant une courte description de la carte posée.
 
