@@ -84,5 +84,5 @@ La zone d'informations sur une carte permet de poser une carte de jeu dessus et 
 * Capacités spéciales
    - Le stockage permet de débloquer une zone de carte de plus pour ajouter une défense supplémentaire.
    - L'anonymus détruit toute les cartes poser sur les deux terrains lors de son invocation.
-   - Le super-antivirus permet de protéger les cartes en défense lors de l'invocation de l'anonymus et permet aussi de résister à deux attaques de virus ou de cheval de Troie.
+   - Le super-antivirus permet de protéger les cartes en défense lors de l'invocation de l'anonymus et permet aussi de résister à deux attaques de n'importe quelle carte excepté l'anonymous.
    - Les redondances de données permettent de copier n'importe quelle carte déjà posée sur le terrain.
