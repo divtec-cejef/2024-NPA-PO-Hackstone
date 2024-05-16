@@ -43,7 +43,7 @@ La zone d'informations sur une carte permet de poser une carte de jeu dessus et 
   - L'attaquant peut désormais attaquer avec les cartes qu'il a posées au premier tour.
   - Lorsqu'une carte attaque, elle doit **obligatoirement** attaquer la carte qui la défend si il y en a une présente sur le terrain du défenseur. Sinon, elle peut attaquer directement les points de vie du défenseur.
   - Lorsqu'une carte a attaqué une carte qui la défend, les deux cartes s'étant confrontées se détruisent.
-  - L'attaquant remporte la partie lorsque le défenseur n'a plus de points de vie, et le défenseur gagne lorsque l'attaquant n'a plus de temps pour attaquer.
+  - L'attaquant remporte la partie lorsque le défenseur n'a plus de points de vie, et le défenseur gagne lorsque l'attaquant est arrivé au terme de son cinquième tour.
 
 # Cartes 
 * Le deck du défenseur possède 22 cartes qui sont :
@@ -83,6 +83,6 @@ La zone d'informations sur une carte permet de poser une carte de jeu dessus et 
  
 * Capacités spéciales
    - Le stockage permet de débloquer une zone de carte de plus pour ajouter une défense supplémentaire.
-   - L'anonymus détruit toute les cartes poser sur les deux terrains lors de son invocation.
-   - Le super-antivirus permet de protéger les cartes en défense lors de l'invocation de l'anonymus et permet aussi de résister à deux attaques de n'importe quelle carte excepté l'anonymous.
+   - L'anonymous détruit toute les cartes poser sur les deux terrains lors de son invocation.
+   - Le super-antivirus n'est pas détruit lors de l'invocation de l'anonymous et permet aussi de résister à deux attaques de n'importe quelle carte excepté l'anonymous.
    - Les redondances de données permettent de copier n'importe quelle carte déjà posée sur le terrain.
