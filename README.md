@@ -46,13 +46,13 @@ La zone d'informations sur une carte permet de poser une carte de jeu dessus et 
   - L'attaquant remporte la partie lorsque le défenseur n'a plus de points de vie, et le défenseur gagne lorsque l'attaquant est arrivé au terme de son cinquième tour.
 
 # Cartes 
-* Le deck du défenseur possède 22 cartes qui sont :
+* Le deck du défenseur possède 21 cartes qui sont :
   - 3 Antivirus
   - 2 Chiffrements de données
   - 2 Firewall
   - 2 Mises à jour
   - 2 Authentification à deux facteurs
-  - 3 Backup
+  - 2 Backup
   - 2 VPN
   - 2 White hat
   - 2 Redondance de données 
