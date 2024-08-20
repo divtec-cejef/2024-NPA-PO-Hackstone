@@ -59,14 +59,14 @@ La zone d'informations sur une carte permet de poser une carte de jeu dessus et 
   - 1 Stockage
   - 1 Super-antivirus
  
-* Le deck de l'attaquant en possède 24 :
+* Le deck de l'attaquant en possède 25 :
   - 2 Virus
   - 2 Cheval de Troie
   - 3 DDOS
   - 3 Logiciels malveillants
   - 3 Hacker
   - 3 Pannes réseau
-  - 2 Elévations de privilège
+  - 3 Elévations de privilège
   - 3 Bruteforcing
   - 2 Phishing (jouable uniquement par l'ordinateur)
   - 1 Anonymus
