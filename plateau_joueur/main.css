@@ -1,0 +1,16 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: url("../plateau_joueur/img/cote_attaquant.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    font: 1rem "Lato", Arial, sans-serif;
+    color: #9E9E9E;
+    min-width: 320px;
+}
