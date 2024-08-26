@@ -20,17 +20,23 @@ body {
 .line {
     margin-top: 50px;
     margin-bottom: 50px;
-    max-width: 110%; /* S'assure que l'image ne dépasse pas la largeur de l'écran */
+    max-width: 100%; /* S'assure que l'image ne dépasse pas la largeur de l'écran */
     height: auto; /* Maintient les proportions de l'image */
     mix-blend-mode: lighten;
     opacity: 0.9;
     rotate: 180deg
 }
 
-.case_carte {
-    width: 225px;   /* largeur du rectangle */
-    height: 325px;  /* hauteur du rectangle */
+.case_carte, .case_carte_stockage {
+    width: 270px;   /* largeur du rectangle */
+    height: 380px;  /* hauteur du rectangle */
     border: 4px solid white;  /* bordure */
+}
+
+.case_carte_stockage {
+    border-color: red;
+    text-align: center;
+    align-content: center;
 }
 
 .cases_carte {
@@ -73,4 +79,47 @@ body {
     height: 70px;
     background: url('../img/coeur2.webp') no-repeat center center;
     background-size: contain; /* Ajustez la taille de l'image de fond pour contenir l'élément */
+}
+/**Cadenas*/
+.lock {
+    position: relative;
+    width: 80px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.serrure {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 60px;
+    border: 10px solid azure;
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+    animation: openShackle 4s ease-in-out infinite 2s; /* Répétition infinie */
+}
+
+.base {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 60px;
+    background-color: red;
+    border-radius: 10px;
+}
+
+@keyframes openShackle {
+    0% {
+        transform: translateX(-50%);
+    }
+    50% {
+        transform: translateX(-50%) rotate(45deg) translateY(-20px);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
