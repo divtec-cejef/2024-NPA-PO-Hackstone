@@ -8,7 +8,7 @@ html, body {
 }
 
 body {
-    background: url("plateau_joueur_defenseur/img/cote_attaquant.jpeg") no-repeat center center fixed;
+    background: url("../img/cote_defenseur.png") no-repeat center center fixed;
     background-size: cover;
     font: 1rem "Lato", Arial, sans-serif;
     color: #9E9E9E;
@@ -20,11 +20,10 @@ body {
 .line {
     margin-top: 50px;
     margin-bottom: 50px;
-    max-width: 110%; /* S'assure que l'image ne dépasse pas la largeur de l'écran */
+    max-width: 105%; /* S'assure que l'image ne dépasse pas la largeur de l'écran */
     height: auto; /* Maintient les proportions de l'image */
     mix-blend-mode: lighten;
     opacity: 0.9;
-    rotate: 180deg
 }
 
 .case_carte {
@@ -50,20 +49,19 @@ body {
 
 .compteur {
     position: fixed;
-    bottom: 0;
-    margin-bottom: 50px;
-    margin-left: 50px;
-    left: 0;
+    top: 50px;
+    right: 50px;
     width: 300px;
     height: 300px;
+
     /* Ajoutez d'autres styles si nécessaire, comme une bordure ou une ombre */
 }
 
 /* Styles pour les cœurs */
 .hearts {
     position: fixed;
-    top: 17px;
-    right: 17px;
+    bottom: 50px;
+    left: 50px;
     display: flex;
     gap: 5px; /* Espace entre les cœurs */
 }
@@ -71,6 +69,6 @@ body {
 .heart {
     width: 70px; /* Ajustez la taille du cœur selon vos besoins */
     height: 70px;
-    background: url('img/coeur2.webp') no-repeat center center;
+    background: url('../img/coeur2.webp') no-repeat center center;
     background-size: contain; /* Ajustez la taille de l'image de fond pour contenir l'élément */
 }

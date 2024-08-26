@@ -8,7 +8,7 @@ html, body {
 }
 
 body {
-    background: url("plateau_joueur_attaquant/img/cote_attaquant.jpeg") no-repeat center center fixed;
+    background: url("../img/cote_attaquant.jpeg") no-repeat center center fixed;
     background-size: cover;
     font: 1rem "Lato", Arial, sans-serif;
     color: #9E9E9E;
@@ -71,6 +71,6 @@ body {
 .heart {
     width: 70px; /* Ajustez la taille du cœur selon vos besoins */
     height: 70px;
-    background: url('img/coeur2.webp') no-repeat center center;
+    background: url('../img/coeur2.webp') no-repeat center center;
     background-size: contain; /* Ajustez la taille de l'image de fond pour contenir l'élément */
 }
