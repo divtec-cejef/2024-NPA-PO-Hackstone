@@ -28,9 +28,9 @@ body {
 }
 
 .case_carte, .case_carte_stockage {
-    width: 270px;   /* largeur du rectangle */
-    height: 380px;  /* hauteur du rectangle */
-    border: 4px solid white;  /* bordure */
+    width: 270px; /* largeur du rectangle */
+    height: 380px; /* hauteur du rectangle */
+    border: 4px solid white; /* bordure */
 }
 
 .case_carte_stockage {
@@ -43,6 +43,30 @@ body {
     display: flex;
     gap: 147px;
     justify-content: center; /* Centre les rectangles horizontalement */
+}
+
+#attaque_1 {
+    background: url("../img/img_attaque/cheval_troie.png");
+}
+
+#attaque_2 {
+    background: url("../img/img_attaque/panne_reseau.png");
+}
+
+#attaque_3 {
+    background: url("../img/img_attaque/hacker.png");
+}
+
+#defense_1{
+    background: url("../img/img_defense/firewall.png");
+}
+
+#defense_2 {
+    background: url("../img/img_defense/white_hat.png");
+}
+
+#defense_3 {
+    background: url("../img/img_defense/VPN.png");
 }
 
 .container {
@@ -66,7 +90,7 @@ body {
 }
 
 /* Styles pour les cœurs */
-.hearts {
+.coeurs {
     position: fixed;
     top: 17px;
     right: 17px;
@@ -74,12 +98,28 @@ body {
     gap: 5px; /* Espace entre les cœurs */
 }
 
-.heart {
+.coeur {
     width: 70px; /* Ajustez la taille du cœur selon vos besoins */
     height: 70px;
-    background: url('../img/coeur2.webp') no-repeat center center;
+    background: url('../img/coeur.webp') no-repeat center center;
     background-size: contain; /* Ajustez la taille de l'image de fond pour contenir l'élément */
 }
+
+/*rendre les coeurs invisible*/
+/*
+#coeur_1 {
+    visibility: hidden;
+}
+
+#coeur_2 {
+    visibility: hidden;
+}
+
+#coeur_3 {
+    visibility: hidden;
+}
+*/
+
 /**Cadenas*/
 .lock {
     position: relative;
@@ -98,7 +138,7 @@ body {
     border: 10px solid azure;
     border-bottom: none;
     border-radius: 20px 20px 0 0;
-    animation: openShackle 4s ease-in-out infinite 2s; /* Répétition infinie */
+    animation: openShackle 2s ease-in-out forwards;
 }
 
 .base {
@@ -112,6 +152,7 @@ body {
     border-radius: 10px;
 }
 
+/** Animation pour l'ouverture du cadenas */
 @keyframes openShackle {
     0% {
         transform: translateX(-50%);
@@ -120,6 +161,58 @@ body {
         transform: translateX(-50%) rotate(45deg) translateY(-20px);
     }
     100% {
-        transform: translateX(-50%);
+        transform: translateX(-50%) rotate(45deg) translateY(-20px);
     }
 }
+
+/** Animation pour l'explosion du cadenas */
+@keyframes explode {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+        filter: blur(10px); /* Ajoute un flou pour simuler une dispersion */
+    }
+}
+
+/* Cadenas en état ouvert avec explosion */
+.lock.opened {
+    animation: explode 1s forwards;
+}
+
+/* Bordure du rectangle en blanc lorsque le cadenas est ouvert */
+.case_carte_stockage.opened {
+    border-color: white; /* Changer la bordure en blanc */
+}
+
+
+/** Animation pour la réapparition du cadenas */
+@keyframes reappear {
+    0% {
+        opacity: 0;
+        transform: scale(2);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Réapparition du cadenas avec animation inverse de l'explosion */
+.lock.reappeared {
+    animation: reappear 1s forwards;
+}
+
+/* La serrure reste fermée lors de la réapparition */
+.serrure.reappeared {
+    transform: translateX(-50%); /* Position initiale pour la serrure fermée */
+    animation: none;
+}
+

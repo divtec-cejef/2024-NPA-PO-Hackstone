@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>bonjour</title>
+    <title>Hackstone</title>
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
 
 <div class="container">
     <div class="cases_carte">
-        <div class="case_carte"></div>
-        <div class="case_carte"></div>
-        <div class="case_carte"></div>
-        <div class="case_carte_stockage">
+        <div class="case_carte" id="defense_1"></div>
+        <div class="case_carte" id="defense_2"></div>
+        <div class="case_carte" id="defense_3"></div>
+        <div class="case_carte_stockage"  id="defense_4">
             <div class="lock">
                 <div class="serrure"></div>
                 <div class="base"></div>
@@ -21,24 +21,23 @@
     </div>
     <img src="../img/ligne.png" alt="Ligne" class="line">
     <div class="cases_carte">
-        <div class="case_carte"></div>
-        <div class="case_carte"></div>
-        <div class="case_carte"></div>
+        <div class="case_carte" id="attaque_1"></div>
+        <div class="case_carte" id="attaque_2"></div>
+        <div class="case_carte" id="attaque_3"></div>
     </div>
 </div>
 <img class="compteur" src="../img/compteur_0.png" alt="compteur a 0"/>
 
 <!-- Ajouter les cœurs -->
-<div class="hearts">
-    <div class="heart"></div>
-    <div class="heart"></div>
-    <div class="heart"></div>
-    <div class="heart"></div>
-    <div class="heart"></div>
+<div class="coeurs">
+    <div class="coeur" id="coeur_1"></div>
+    <div class="coeur" id="coeur_2"></div>
+    <div class="coeur" id="coeur_3"></div>
+    <div class="coeur" id="coeur_4"></div>
+    <div class="coeur" id="coeur_5"></div>
 </div>
 
-<!--<img class="compteur" src="img/cote_attaquant.jpeg" alt="compteur à 1"/>-->
-
+<script src="case_stockage.js"></script>
 
 </body>
 </html>
