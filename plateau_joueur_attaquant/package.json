@@ -1,0 +1,22 @@
+{
+  "cards": [
+    {
+      "uid": "04 6B 37 FA 60 5B 84",
+      "name": "Anonymous",
+      "description_vie": "oui",
+      "description_jeu": "oui",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "défense",
+      "level": "bas niveau"
+    },
+    {
+      "uid": "04 66 39 FA 60 5B 84",
+      "name": "Backup",
+      "description_vie": "Une sauvegarde, c'est une copie de secours de tes données importantes pour les récupérer si ton appareil a un problème.",
+      "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "attaque",
+      "level": "haut niveau"
+    }
+  ]
+}
