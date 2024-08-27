@@ -6,16 +6,116 @@
       "description_vie": "oui",
       "description_jeu": "oui",
       "image": "http://localhost/rfid-7case/img/DDOS.jpg",
-      "type": "défense",
-      "level": "bas niveau"
+      "type": "attaque",
+      "level": "haut niveau"
     },
     {
       "uid": "04 66 39 FA 60 5B 84",
+      "name": "Brutforce",
+      "description_vie": "oui",
+      "description_jeu": "Cette carte te permet de ",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "attaque",
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Cheval de troie",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de ",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "attaque",
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "DDOS",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de ",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "attaque",
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Élévation de privilège",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de ",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "attaque",
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Hacker",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "attaque",
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Logiciel malveillant",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "attaque",
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Panne réseau",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de ",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "attaque",
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Virus",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "attaque",
+      "level": "bas niveau"
+    },
+
+    {
+      "uid": "On verra",
       "name": "Backup",
       "description_vie": "Une sauvegarde, c'est une copie de secours de tes données importantes pour les récupérer si ton appareil a un problème.",
       "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
       "image": "http://localhost/rfid-7case/img/DDOS.jpg",
-      "type": "attaque",
+      "type": "défense",
+      "level": "haut niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Backup",
+      "description_vie": "Une sauvegarde, c'est une copie de secours de tes données importantes pour les récupérer si ton appareil a un problème.",
+      "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "défense",
+      "level": "haut niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Backup",
+      "description_vie": "Une sauvegarde, c'est une copie de secours de tes données importantes pour les récupérer si ton appareil a un problème.",
+      "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "défense",
+      "level": "haut niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Backup",
+      "description_vie": "Une sauvegarde, c'est une copie de secours de tes données importantes pour les récupérer si ton appareil a un problème.",
+      "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "défense",
       "level": "haut niveau"
     }
   ]
