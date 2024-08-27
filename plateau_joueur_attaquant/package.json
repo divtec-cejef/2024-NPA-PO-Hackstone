@@ -84,12 +84,21 @@
 
     {
       "uid": "On verra",
-      "name": "Backup",
-      "description_vie": "Une sauvegarde, c'est une copie de secours de tes données importantes pour les récupérer si ton appareil a un problème.",
-      "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
+      "name": "A2F",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de te défendre ",
       "image": "http://localhost/rfid-7case/img/DDOS.jpg",
       "type": "défense",
-      "level": "haut niveau"
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Antivirus",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de te défendre ",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "défense",
+      "level": "bas niveau"
     },
     {
       "uid": "On verra",
@@ -98,25 +107,79 @@
       "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
       "image": "http://localhost/rfid-7case/img/DDOS.jpg",
       "type": "défense",
-      "level": "haut niveau"
+      "level": "bas niveau"
     },
     {
       "uid": "On verra",
-      "name": "Backup",
-      "description_vie": "Une sauvegarde, c'est une copie de secours de tes données importantes pour les récupérer si ton appareil a un problème.",
-      "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
+      "name": "Chiffrement de données",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de te défendre contre ",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "défense",
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Firewall",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de te défendre contre ",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "défense",
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Mise à jour",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de te défendre contre ",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "défense",
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Redondance de données",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de dupliquer une autre carte.",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "défense",
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Stockage",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de dévérouiller la 4ème case du plateau du coté défenseur",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "défense",
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "Super-antivirus",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de te défendre contre ",
       "image": "http://localhost/rfid-7case/img/DDOS.jpg",
       "type": "défense",
       "level": "haut niveau"
     },
     {
       "uid": "On verra",
-      "name": "Backup",
-      "description_vie": "Une sauvegarde, c'est une copie de secours de tes données importantes pour les récupérer si ton appareil a un problème.",
-      "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
+      "name": "VPN",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de te défendre contre ",
       "image": "http://localhost/rfid-7case/img/DDOS.jpg",
       "type": "défense",
-      "level": "haut niveau"
+      "level": "bas niveau"
+    },
+    {
+      "uid": "On verra",
+      "name": "White hat",
+      "description_vie": "",
+      "description_jeu": "Cette carte te permet de te défendre contre ",
+      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "type": "défense",
+      "level": "bas niveau"
     }
   ]
 }
