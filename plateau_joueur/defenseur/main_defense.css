@@ -8,7 +8,7 @@ html, body {
 }
 
 body {
-    background: url("../img/cote_defenseur.png") no-repeat center center fixed;
+    background: url("../../img/img_defense/cote_defenseur.png") no-repeat center center fixed;
     background-size: cover;
     font: 1rem "Lato", Arial, sans-serif;
     color: #9E9E9E;
@@ -45,27 +45,27 @@ body {
 }
 
 #attaque_1 {
-    background: url("../img/img_attaque/cheval_troie.png");
+    background: url("../../img/img_attaque/cheval_troie.png");
 }
 
 #attaque_2 {
-    background: url("../img/img_attaque/panne_reseau.png");
+    background: url("../../img/img_attaque/panne_reseau.png");
 }
 
 #attaque_3 {
-    background: url("../img/img_attaque/hacker.png");
+    background: url("../../img/img_attaque/hacker.png");
 }
 
 #defense_1{
-    background: url("../img/img_defense/firewall.png");
+    background: url("../../img/img_defense/firewall.png");
 }
 
 #defense_2 {
-    background: url("../img/img_defense/white_hat.png");
+    background: url("../../img/img_defense/white_hat.png");
 }
 
 #defense_3 {
-    background: url("../img/img_defense/VPN.png");
+    background: url("../../img/img_defense/VPN.png");
 }
 
 #defense_4 {
@@ -103,7 +103,7 @@ body {
 .coeur {
     width: 70px; /* Ajustez la taille du cœur selon vos besoins */
     height: 70px;
-    background: url('../img/coeur.webp') no-repeat center center;
+    background: url('../../img/coeur.webp') no-repeat center center;
     background-size: contain; /* Ajustez la taille de l'image de fond pour contenir l'élément */
 }
 /*Permet d'effacer les coeurs
