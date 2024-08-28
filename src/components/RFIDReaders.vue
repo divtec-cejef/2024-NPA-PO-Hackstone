@@ -1,8 +1,19 @@
 <template>
-  <div>
-    <div class="readers">
-      <div v-for="reader in readers" :key="reader.id" :id="'reader' + reader.id" class="reader">
-        <img :src="reader.image" alt="Card Image" style="max-width: 100%; height: auto;">
+  <div class="container">
+    <div class="line-container">
+
+      <div class="readers top">
+        <div v-for="reader in topReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
+          <img :src="reader.image" alt="Card Image" style="max-width: 100%; height: auto;">
+        </div>
+      </div>
+
+      <img src="../img_carte/ligne.png" alt="Ligne" class="line">
+
+      <div class="readers bottom">
+        <div v-for="reader in bottomReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
+          <img :src="reader.image" alt="Card Image" style="max-width: 100%; height: auto;">
+        </div>
       </div>
     </div>
     <div v-if="showOverlay" id="overlay">
@@ -17,11 +28,9 @@
   </div>
 </template>
 
-
-
 <script>
 import io from 'socket.io-client';
-import '../assets/RFIDReaders.css'; // Import du fichier CSS
+import '@/assets/RFIDReaders.css';
 
 export default {
   data() {
@@ -40,6 +49,14 @@ export default {
       socket: null,
     };
   },
+  computed: {
+    topReaders() {
+      return this.readers.slice(0, 3); // Les 3 premiers lecteurs
+    },
+    bottomReaders() {
+      return this.readers.slice(3); // Les 4 derniers lecteurs
+    }
+  },
   mounted() {
     this.socket = io('http://localhost:3000');
     this.socket.on('rfidData', (data) => {
@@ -57,7 +74,6 @@ export default {
     });
   },
 
-
   methods: {
     closeOverlay() {
       this.showOverlay = false;
@@ -65,3 +81,4 @@ export default {
   }
 };
 </script>
+

@@ -1,3 +1,5 @@
+
+
 *, *:before, *:after {
     box-sizing: border-box;
 }
@@ -5,38 +7,27 @@
 html, body {
     margin: 0;
     padding: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 body {
-    background: url("../img/cote_attaquant.jpeg") no-repeat center center fixed;
+    /* Si 'plateau_defenseur.png' se trouve dans 'src/assets/img_carte' */
+    background: url('../img_carte/plateau_defenseur.png') no-repeat center center fixed;
     background-size: cover;
     font: 1rem "Lato", Arial, sans-serif;
     color: #9E9E9E;
     margin: 0;
     padding: 0;
-    height: 100vh; /* S'assure que le corps prend toute la hauteur de la fenêtre */
-}
-
-.line {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    max-width: 100%; /* S'assure que l'image ne dépasse pas la largeur de l'écran */
-    height: auto; /* Maintient les proportions de l'image */
-    mix-blend-mode: lighten;
-    opacity: 0.9;
-    rotate: 180deg
+    height: 100%; /* S'assure que le corps prend toute la hauteur de la fenêtre */
 }
 
 .case_carte, .case_carte_stockage {
-    width: 270px; /* largeur du rectangle */
-    height: 380px; /* hauteur du rectangle */
-    border: 4px solid white; /* bordure */
-}
-
-.case_carte_stockage {
-    border-color: red;
-    text-align: center;
-    align-content: center;
+    width: 270px;   /* largeur du rectangle */
+    height: 380px;  /* hauteur du rectangle */
+    border: 4px solid white;  /* bordure */
 }
 
 .cases_carte {
@@ -45,35 +36,36 @@ body {
     justify-content: center; /* Centre les rectangles horizontalement */
 }
 
-#attaque_1 {
-    background: url("../img/img_attaque/cheval_troie.png");
+.case_carte_stockage {
+    border-color: red;
+    text-align: center;
+    align-content: center;
 }
 
 .container {
-    flex-direction: column;
-    height: 100%;
+    position: relative;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    gap: 15px; /* Espace  */
+    text-align: center;
+    height: auto; /* Ajuster à la hauteur des contenus */
 }
 
 .compteur {
     position: fixed;
-    bottom: 0;
-    margin-bottom: 50px;
-    margin-left: 50px;
-    left: 0;
+    top: 50px;
+    right: 50px;
     width: 300px;
     height: 300px;
+
     /* Ajoutez d'autres styles si nécessaire, comme une bordure ou une ombre */
 }
 
 /* Styles pour les cœurs */
 .coeurs {
     position: fixed;
-    top: 17px;
-    right: 17px;
+    bottom: 50px;
+    left: 50px;
     display: flex;
     gap: 5px; /* Espace entre les cœurs */
 }
@@ -81,25 +73,15 @@ body {
 .coeur {
     width: 70px; /* Ajustez la taille du cœur selon vos besoins */
     height: 70px;
-    background: url('../img/coeur.webp') no-repeat center center;
+    background: url('../img_carte/coeur2.webp') no-repeat center center fixed;
     background-size: contain; /* Ajustez la taille de l'image de fond pour contenir l'élément */
 }
+/*Permet d'effacer les coeurs
 
-/*rendre les coeurs invisible*/
-/*
-#coeur_1 {
-    visibility: hidden;
-}
-
-#coeur_2 {
-    visibility: hidden;
-}
-
-#coeur_3 {
-    visibility: hidden;
+#coeur_1, #coeur_2, #coeur_3, #coeur_4, #coeur_4 {
+    visibility: collapse;
 }
 */
-
 /**Cadenas*/
 .lock {
     position: relative;
@@ -194,5 +176,105 @@ body {
 .serrure.reappeared {
     transform: translateX(-50%); /* Position initiale pour la serrure fermée */
     animation: none;
+}
+
+.line-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: auto;
+}
+
+.line {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    max-width: 100%;
+    height: auto;
+    mix-blend-mode: lighten;
+    opacity: 0.9;
+}
+
+.readers {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.readers.top {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px; /* Espace entre la ligne et les lecteurs du haut */
+}
+
+.readers.bottom {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Espace entre la ligne et les lecteurs du bas */
+}
+
+.reader {
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+/* Pour l'overlay */
+#overlay {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.card-details {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 80%;
+    text-align: center;
+}
+
+.card-details img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.reader img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.reader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top:60px
 }
 
