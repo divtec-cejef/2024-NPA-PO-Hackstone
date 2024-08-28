@@ -1,5 +1,3 @@
-
-
 *, *:before, *:after {
     box-sizing: border-box;
 }
@@ -7,184 +5,49 @@
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 body {
-    /* Si 'plateau_defenseur.png' se trouve dans 'src/assets/img_carte' */
-    background: url('../img_carte/plateau_defenseur.png') no-repeat center center fixed;
-    background-size: cover;
-    font: 1rem "Lato", Arial, sans-serif;
-    color: #9E9E9E;
+    color: rgb(158, 158, 158);
+    height: 100vh;
+    background: url('../img_carte/plateau_defenseur.png') center center / cover no-repeat fixed;
+    font: 1rem Lato, Arial, sans-serif;
     margin: 0;
     padding: 0;
-    height: 100%; /* S'assure que le corps prend toute la hauteur de la fenêtre */
 }
 
-.case_carte, .case_carte_stockage {
-    width: 270px;   /* largeur du rectangle */
-    height: 380px;  /* hauteur du rectangle */
-    border: 4px solid white;  /* bordure */
-}
-
-.cases_carte {
-    display: flex;
-    gap: 147px;
-    justify-content: center; /* Centre les rectangles horizontalement */
-}
-
-.case_carte_stockage {
-    border-color: red;
-    text-align: center;
-    align-content: center;
+body {
+    display: block;
 }
 
 .container {
-    position: relative;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    height: auto; /* Ajuster à la hauteur des contenus */
-}
-
-.compteur {
-    position: fixed;
-    top: 50px;
-    right: 50px;
-    width: 300px;
-    height: 300px;
-
-    /* Ajoutez d'autres styles si nécessaire, comme une bordure ou une ombre */
-}
-
-/* Styles pour les cœurs */
-.coeurs {
-    position: fixed;
-    bottom: 50px;
-    left: 50px;
+    height: 100vh;
     display: flex;
-    gap: 5px; /* Espace entre les cœurs */
-}
-
-.coeur {
-    width: 70px; /* Ajustez la taille du cœur selon vos besoins */
-    height: 70px;
-    background: url('../img_carte/coeur2.webp') no-repeat center center fixed;
-    background-size: contain; /* Ajustez la taille de l'image de fond pour contenir l'élément */
-}
-/*Permet d'effacer les coeurs
-
-#coeur_1, #coeur_2, #coeur_3, #coeur_4, #coeur_4 {
-    visibility: collapse;
-}
-*/
-/**Cadenas*/
-.lock {
-    position: relative;
-    width: 80px;
-    height: 100px;
-    margin: 0 auto;
-}
-
-.serrure {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 60px;
-    border: 10px solid azure;
-    border-bottom: none;
-    border-radius: 20px 20px 0 0;
-    animation: openShackle 2s ease-in-out forwards;
-}
-
-.base {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 60px;
-    background-color: red;
-    border-radius: 10px;
-}
-
-/** Animation pour l'ouverture du cadenas */
-@keyframes openShackle {
-    0% {
-        transform: translateX(-50%);
-    }
-    50% {
-        transform: translateX(-50%) rotate(45deg) translateY(-20px);
-    }
-    100% {
-        transform: translateX(-50%) rotate(45deg) translateY(-20px);
-    }
-}
-
-/** Animation pour l'explosion du cadenas */
-@keyframes explode {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.5);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(2);
-        opacity: 0;
-        filter: blur(10px); /* Ajoute un flou pour simuler une dispersion */
-    }
-}
-
-/* Cadenas en état ouvert avec explosion */
-.lock.opened {
-    animation: explode 1s forwards;
-}
-
-/* Bordure du rectangle en blanc lorsque le cadenas est ouvert */
-.case_carte_stockage.opened {
-    border-color: white; /* Changer la bordure en blanc */
-}
-
-
-/** Animation pour la réapparition du cadenas */
-@keyframes reappear {
-    0% {
-        opacity: 0;
-        transform: scale(2);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* Réapparition du cadenas avec animation inverse de l'explosion */
-.lock.reappeared {
-    animation: reappear 1s forwards;
-}
-
-/* La serrure reste fermée lors de la réapparition */
-.serrure.reappeared {
-    transform: translateX(-50%); /* Position initiale pour la serrure fermée */
-    animation: none;
-}
-
-.line-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    text-align: center;
-    height: auto;
+    align-content: center;
+    gap: 15px;
+}
+
+.readers {
+    display: flex;
+    justify-content: center;
+    gap: 147px;
+}
+
+.reader {
+    width: 270px;
+    height: 380px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: white;
+    border-image: initial;
+
+    font-size: 24px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
 }
 
 .line {
@@ -196,85 +59,39 @@ body {
     opacity: 0.9;
 }
 
-.readers {
+.hearts {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    gap: 5px;
+    position: absolute;
+    bottom: 50px; /* Positionner les cœurs en haut */
+    left: 50px; /* Positionner les cœurs en haut */
 }
 
-.readers.top {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px; /* Espace entre la ligne et les lecteurs du haut */
+.heart {
+    width: 70px; /* Taille des cœurs */
+    height: 70px;
 }
 
-.readers.bottom {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px; /* Espace entre la ligne et les lecteurs du bas */
+.stacked-images {
+    position: absolute;
+    top: 50px;
+    right: 50px; /* Positionner les images en haut à droite */
 }
 
-.reader {
-    width: 150px;
-    height: 150px;
-    margin: 10px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-}
-
-/* Pour l'overlay */
-#overlay {
-    display: flex;
-    position: fixed;
+.stacked-image {
+    width: 300px;
+    height: 300px;
+    position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    justify-content: center;
-    align-items: center;
+    right: 0;
 }
 
-.card-details {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 600px;
-    width: 80%;
-    text-align: center;
-}
-
-.card-details img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
-
-.reader img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
-
-.reader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-}
-
-#app {
+div#app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top:60px
+    margin-top: 0;
 }
-

@@ -1,30 +1,23 @@
 <template>
   <div class="container">
-    <div class="line-container">
 
-      <div class="readers top">
-        <div v-for="reader in topReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
-          <img :src="reader.image" alt="Card Image" style="max-width: 100%; height: auto;">
-        </div>
-      </div>
-
-      <img src="../img_carte/ligne.png" alt="Ligne" class="line">
-
-      <div class="readers bottom">
-        <div v-for="reader in bottomReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
-          <img :src="reader.image" alt="Card Image" style="max-width: 100%; height: auto;">
-        </div>
+    <div class="readers ">
+      <div v-for="reader in topReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
+        <img :src="reader.image" alt="Card Image" style="max-width: 100%; height: auto;">
       </div>
     </div>
-    <div v-if="showOverlay" id="overlay">
-      <div class="card-details">
-        <h2>{{ overlayCard.name }}</h2>
-        <img :src="overlayCard.image" alt="Card Image">
-        <p>{{ overlayCard.description_vie }}</p>
-        <p>{{ overlayCard.description_jeu }}</p>
-        <button @click="closeOverlay">Close</button>
+    <img src="../img_carte/ligne.png" alt="Ligne" class="line">
+    <div class="readers">
+      <div v-for="reader in bottomReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
+        <img :src="reader.image" alt="Card Image" style="max-width: 100%; height: auto;">
       </div>
     </div>
+  </div>
+  <div class="hearts">
+    <img v-for="n in 5" :key="n" src="../img_carte/coeur.webp" alt="Heart" class="heart">
+</div>
+  <div class="stacked-images">
+    <img v-for="(image, index) in images_compteur" :key="index" :src="image" alt="Stacked Image" class="stacked-image">
   </div>
 </template>
 
@@ -47,6 +40,13 @@ export default {
       showOverlay: false,
       overlayCard: {},
       socket: null,
+      images_compteur: [  // Utilisez require pour les chemins relatifs
+        require('@/img_carte/compteur/compteur_1.png'),
+        require('@/img_carte/compteur/compteur_2.png'),
+        require('@/img_carte/compteur/compteur_3.png'),
+        require('@/img_carte/compteur/compteur_4.png'),
+        require('@/img_carte/compteur/compteur_5.png')
+      ]
     };
   },
   computed: {
