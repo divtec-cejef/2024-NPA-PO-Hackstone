@@ -17,7 +17,9 @@
     <img v-for="n in 5" :key="n" src="../img_carte/coeur.webp" alt="Heart" class="heart">
 </div>
   <div class="stacked-images">
-    <img v-for="(image, index) in images_compteur" :key="index" :src="image" alt="Stacked Image" class="stacked-image">
+    <img v-for="(image, index) in images_compteur" :key="index" :src="image" alt="Stacked Image"
+         :style="{ visibility: visibility[index] ? 'visible' : 'hidden' }"
+         class="stacked-image">
   </div>
 </template>
 
@@ -46,7 +48,8 @@ export default {
         require('@/img_carte/compteur/compteur_3.png'),
         require('@/img_carte/compteur/compteur_4.png'),
         require('@/img_carte/compteur/compteur_5.png')
-      ]
+      ],
+      visibility: [true, true, true, true, true]  // Initialement toutes les images sont visibles
     };
   },
   computed: {
@@ -70,6 +73,10 @@ export default {
       if (readerID === '7') {  // Ou toute autre condition que vous souhaitez pour afficher le popup
         this.overlayCard = card;
         this.showOverlay = true;
+
+        if (card.uid === '04 5F 38 FA 60 5B 84') {
+          this.updateVisibility();
+        }
       }
     });
   },
@@ -77,6 +84,15 @@ export default {
   methods: {
     closeOverlay() {
       this.showOverlay = false;
+    }
+  },
+  updateVisibility() {
+    // Cache les images du compteur une par une
+    for (let i = this.visibility.length - 1; i >= 0; i--) {
+      if (this.visibility[i]) {
+        this.visibility[i] = false;
+        break;
+      }
     }
   }
 };
