@@ -1,183 +1,241 @@
 {
   "cards": [
     {
-      "uid": "04 5F 38 FA 60 5B 84",
+      "uid": "04 66 39 FA 60 5B 84",
       "name": "Anonymous",
       "description_vie": "oui",
       "description_jeu": "oui",
-      "image": "http://localhost/rfid-project/img/DDOS.png",
+      "image": "img_carte/img_attaque/anonymous.png",
       "type": "attaque",
       "level": "haut niveau"
     },
     {
-      "uid": "04 66 39 FA 60 5B 84",
+      "uid": [
+        "04 77 38 FA 60 5B 84",
+        "04 8F 38 FA 60 5B 84",
+        "04 A0 37 FA 60 5B 84"
+      ],
       "name": "Brutforce",
       "description_vie": "oui",
-      "description_jeu": "Cette carte te permet de ",
-      "image": "http://localhost/rfid-project/img/DDOS.png",
+      "description_jeu": "Cette carte te permet de hahahahhahahah",
+      "image": "img_carte/img_attaque/brutforce.png",
       "type": "attaque",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 5F 38 FA 60 5B 84",
+        "04 2D 38 FA 60 5B 85"
+      ],
       "name": "Cheval de troie",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de ",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_attaque/cheval_troie.png",
       "type": "attaque",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 7F 38 FA 60 5B 84",
+        "04 EF 34 FA 60 5B 84",
+        "04 F7 34 FA 60 5B 84"
+      ],
       "name": "DDOS",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de ",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_attaque/DDOS.png",
       "type": "attaque",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 87 38 FA 60 5B 84",
+        "04 12 34 FA 60 5B 85",
+        " 04 0A 34 FA 60 5B 85"
+      ],
       "name": "Élévation de privilège",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de ",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_attaque/elevation_privilege.png",
       "type": "attaque",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 97 38 FA 60 5B 84",
+        "04 01 34 FA 60 5B 85",
+        "04 E7 34 FA 60 5B 84"
+      ],
       "name": "Hacker",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_attaque/hacker.png",
       "type": "attaque",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 B7 36 FA 60 5B 84",
+        "04 BF 36 FA 60 5B 84",
+        "04 E0 35 FA 60 5B 84"
+      ],
       "name": "Logiciel malveillant",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_attaque/logiciel_malveillant.png",
       "type": "attaque",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 AF 36 FA 60 5B 84",
+        "04 D8 35 FA 60 5B 84",
+        "04 D1 36 FA 60 5B 84"
+      ],
       "name": "Panne réseau",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de ",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_attaque/panne_reseau.png",
       "type": "attaque",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 A8 37 FA 60 5B 84",
+        "04 D1 36 FA 60 5B 84"
+      ],
       "name": "Virus",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_attaque/virus.png",
       "type": "attaque",
       "level": "bas niveau"
     },
 
     {
-      "uid": "On verra",
+      "uid": [
+        "04 C5 37 FA 60 5B 84",
+        "04 22 34 FA 60 5B 85"
+      ],
       "name": "A2F",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre ",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_defense/A2F.png",
       "type": "défense",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 1B 35 FA 60 5B 85",
+        "04 23 35 FA 60 5B 85",
+        "04 3D 35 FA 60 5B 85"
+      ],
       "name": "Antivirus",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre ",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_defense/antivirus.png",
       "type": "défense",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 3D 34 FA 60 5B 85",
+        "04 F7 35 FA 60 5B 84"
+      ],
       "name": "Backup",
       "description_vie": "Une sauvegarde, c'est une copie de secours de tes données importantes pour les récupérer si ton appareil a un problème.",
       "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_defense/backup.png",
       "type": "défense",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 45 34 FA 60 5B 85",
+        "04 2B 34 FA 60 5B 85"
+      ],
       "name": "Chiffrement de données",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_defense/chiffrement_donnee.png",
       "type": "défense",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 B5 37 FA 60 5B 84",
+        "04 2B 35 FA 60 5B 85"
+      ],
       "name": "Firewall",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_defense/firewall.png",
       "type": "défense",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 EF 35 FA 60 5B 84",
+        "04 03 35 FA 60 5B 85"
+      ],
       "name": "Mise à jour",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_defense/mise_a_jour.png",
       "type": "défense",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 13 35 FA 60 5B 85",
+        "04 0B 35 FA 60 5B 85"
+      ],
       "name": "Redondance de données",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de dupliquer une autre carte.",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_defense/redondance_donnee.png",
       "type": "défense",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": "04 FC 39 FA 60 5B 84",
       "name": "Stockage",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de dévérouiller la 4ème case du plateau du coté défenseur",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_defense/stockage.png",
       "type": "défense",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": "04 35 34 FA 60 5B 85",
       "name": "Super-antivirus",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_defense/super_antivirus.png",
       "type": "défense",
       "level": "haut niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 DB 36 FA 60 5B 84",
+        "04 CF 37 FA 60 5B 84"
+      ],
       "name": "VPN",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_defense/VPN.png",
       "type": "défense",
       "level": "bas niveau"
     },
     {
-      "uid": "On verra",
+      "uid": [
+        "04 35 35 FA 60 5B 85",
+        "04 E7 35 FA 60 5B 84"
+      ],
       "name": "White hat",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
-      "image": "http://localhost/rfid-7case/img/DDOS.jpg",
+      "image": "img_carte/img_defense/white_hat.png",
       "type": "défense",
       "level": "bas niveau"
     }
