@@ -6,6 +6,7 @@
         <img :src="reader.image" alt="Card Image" style="max-width: 100%; height: auto;">
       </div>
     </div>
+    <button>Piocher</button>
     <img src="../img_carte/ligne.png" alt="Ligne" class="line">
     <div class="readers">
       <div v-for="reader in bottomReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
@@ -15,12 +16,13 @@
   </div>
   <div class="hearts">
     <img v-for="n in 5" :key="n" src="../img_carte/coeur.webp" alt="Heart" class="heart">
-</div>
+  </div>
   <div class="stacked-images">
     <img v-for="(image, index) in images_compteur" :key="index" :src="image" alt="Stacked Image"
          :style="{ visibility: visibility[index] ? 'visible' : 'hidden' }"
          class="stacked-image">
   </div>
+
 </template>
 
 <script>
