@@ -35,7 +35,6 @@ app2.use(bodyParser.json());
 // Servir les fichiers statiques
 app1.use(express.static(path.join(__dirname, 'dist/plateauDefense')));
 app2.use(express.static(path.join(__dirname, 'dist/plateauAttaque')));
-app2.use('/dist/plateauAttaque', express.static(path.join(__dirname, 'dist/plateauAttaque')));
 
 // Servir plateauDefense.html pour le port 3000
 app1.get('/', (req, res) => {

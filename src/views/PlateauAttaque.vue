@@ -16,13 +16,13 @@ export default {
 </script>
 
 <style>
-#app {
+#app1 {
   background: url("../img_carte/plateau_attaquant.webp")  center center / cover no-repeat fixed;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0;
 }
 </style>
