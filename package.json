@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "C:\\laragon\\www\\ict133b\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service serve",
-    "build": "C:\\laragon\\www\\ict133b\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build",
+    "build:plateauAttaque": "C:\\laragon\\www\\ict133b\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/plateauAttaque",
+    "build:plateauDefense": "C:\\laragon\\www\\ict133b\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/plateauDefense",
     "lint": "C:\\laragon\\www\\ict133b\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service lint"
   },
   "dependencies": {

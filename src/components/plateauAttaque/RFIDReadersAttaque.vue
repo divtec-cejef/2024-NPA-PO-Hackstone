@@ -6,7 +6,7 @@
         <p v-else></p>
       </div>
     </div>
-    <img src="../img_carte/ligne.png" alt="Ligne" class="line">
+    <img src="../../img_carte/ligne.png" alt="Ligne" class="line">
     <div class="readers">
       <div v-for="reader in bottomReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
         <img v-if="reader.image" :src="getImagePath(reader.image)" alt="Card Image" style="max-width: 100%; height: auto;">
@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="hearts">
-    <img v-for="n in 5" :key="n" src="../img_carte/coeur.webp" alt="Heart" class="heart">
+    <img v-for="n in 5" :key="n" src="../../img_carte/coeur.webp" alt="Heart" class="heart">
   </div>
   <div class="stacked-images">
     <img v-for="(image, index) in images_compteur" :key="index" :src="image" alt="Stacked Image"
@@ -26,8 +26,7 @@
 
 <script>
 import io from 'socket.io-client';
-// Assurez-vous que le chemin est correct et que vous utilisez bien cette variable
-import '@/assets/RFIDReaders.css';
+import '@/assets/plateauAttaque/RFIDReadersAttaque.css';
 
 export default {
   data() {
@@ -56,19 +55,27 @@ export default {
   },
   computed: {
     topReaders() {
-      return this.readers.slice(0, 3);
+      const top = this.readers.slice(0, 4);
+      console.log("Top Readers:", top);  // Pour vérifier les valeurs
+      return top;
     },
     bottomReaders() {
-      return this.readers.slice(3);
+      const bottom = this.readers.slice(4, 7);
+      console.log("Bottom Readers:", bottom);  // Pour vérifier les valeurs
+      return bottom;
     }
   },
   mounted() {
-    this.socket = io('http://localhost:3000');
+    console.log('Trying to connect to WebSocket on port 3001');
+    this.socket = io('http://localhost:3001');
+    this.socket.on('connect', () => {
+      console.log('Connected to WebSocket server on port 3001');
+    });
+
     this.socket.on('rfidData', (data) => {
       const { readerID, card } = data;
       console.log(`Received readerID: ${readerID}`);
       const reader = this.readers.find(r => r.id === parseInt(readerID));
-
       if (reader) {
         reader.name = card.name;
         reader.image = card.image;
