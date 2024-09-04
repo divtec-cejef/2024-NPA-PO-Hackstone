@@ -5,26 +5,37 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 
-const pathToStatic = path.join(__dirname, 'dist/plateauAttaque');
-
-// Liste les fichiers dans le répertoire pour débogage
-fs.readdir(pathToStatic, (err, files) => {
-    if (err) {
-        console.error('Error reading directory:', err);
-    } else {
-        console.log('Files in directory:', files);
-    }
-});
-
-
 const app1 = express();
 const app2 = express();
+
+const cors = require('cors');
+
+// Pour app1
+app1.use(cors({
+    origin: 'http://localhost:3001' // Autorise l'origine sur le port 3001
+}));
+
+// Pour app2
+app2.use(cors({
+    origin: 'http://localhost:3000' // Autorise l'origine sur le port 3000
+}));
 
 const server1 = http.createServer(app1);
 const server2 = http.createServer(app2);
 
-const io1 = socketIo(server1);
-const io2 = socketIo(server2);
+const io1 = socketIo(server1, {
+    cors: {
+        origin: "http://localhost:3001",
+        methods: ["GET", "POST"]
+    }
+});
+
+const io2 = socketIo(server2, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+    }
+});
 
 app1.use(bodyParser.urlencoded({ extended: true }));
 app2.use(bodyParser.urlencoded({ extended: true }));
