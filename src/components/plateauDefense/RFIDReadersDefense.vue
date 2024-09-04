@@ -79,6 +79,7 @@ export default {
       const { readerID, card } = data;
       console.log(`Received readerID: ${readerID}`);
       console.log(`Received card ID: ${card.uid}`); // Suppose que le card ID est dans data
+
       if (card.type === 'défense') {
         // Mapping des capteurs RFID aux readers
         let mappedReaderID = null;
@@ -111,16 +112,14 @@ export default {
         if (!reader) {
           console.log(`No reader found with mapped ID ${mappedReaderID}.`);
         } else if (card.uid === this.authorizedID) {
-          // La carte avec l'ID autorisé a été scannée
-          this.accessEnabled = true;
-          this.triggerLockAnimation(reader);
+          if (reader.id === 7) {
+            // La carte avec l'ID autorisé a été scannée
+            this.accessEnabled = true;
 
-          // Déverrouiller le lecteur 7
-          const reader7 = this.readers.find(r => r.id === 7);
-          if (reader7) {
-            reader7.accessible = true;
+            // Déverrouiller le lecteur 7 uniquement si la carte est autorisée
+            reader.accessible = true;
+            this.triggerLockAnimation(); // Déclenche l'animation
             console.log(`Authorized card scanned. Reader 7 is now accessible.`);
-            console.log("Access enabled:", this.accessEnabled);
           }
         } else if (reader.id === 4 || reader.id === 5 || reader.id === 6 || (this.accessEnabled && reader.id === 7)) { // Autoriser les autres lecteurs si l'accès est activé
 
@@ -162,28 +161,17 @@ export default {
         }
       }
     },
-    triggerLockAnimation(reader) {
-      if (reader.id === 7) {
-        reader.accessible = true;
-
-        // Ajouter la classe 'opening' pour déclencher l'ouverture
-        const lockElement = document.querySelector('.lock');
-        if (lockElement) {
-          lockElement.classList.add('opening');
-        }
-
-        // Attendre que l'animation d'ouverture soit terminée
+    triggerLockAnimation() {
+      // Sélectionner le cadenas avec id 'reader_defense7'
+      const lockElement = document.querySelector('#reader_defense7 .lock');
+      if (lockElement) {
+        lockElement.classList.add('opening');
         setTimeout(() => {
-          // Ajouter la classe 'opened' pour déclencher l'explosion après l'ouverture
-          if (lockElement) {
-            lockElement.classList.remove('opening');
-            lockElement.classList.add('opened');
-          }
-          reader.opened = true;
+          lockElement.classList.remove('opening');
+          lockElement.classList.add('opened');
         }, 2000); // Correspond à la durée de l'animation 'openShackle'
       }
     }
   }
 };
 </script>
-

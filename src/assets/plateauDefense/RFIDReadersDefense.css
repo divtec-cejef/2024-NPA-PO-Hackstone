@@ -163,15 +163,14 @@ div#reader_defense7 {
     }
 }
 
-.lock .serrure, .lock .base {
+.lock .serrure {
     animation: none;
 }
 
-.lock.opening .serrure {
+.lock.opening .serrure{
     animation: openShackle 2s ease-in-out forwards;
 }
 
-.lock.opened .serrure, .lock.opened .base {
+.lock.opened {
     animation: explode 1s forwards; /* Applique l'explosion à la serrure et à la base */
 }
-
