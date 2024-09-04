@@ -95,3 +95,12 @@ div#app {
     color: #2c3e50;
     margin-top: 0;
 }
+
+/* Ajoutez une classe conditionnelle pour le lecteur avec ID 7 */
+.reader_defense.accessible {
+    border-color: white;
+}
+
+div#reader_defense7 {
+    border-color: red;
+}

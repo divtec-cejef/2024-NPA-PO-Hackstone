@@ -95,3 +95,7 @@ div#app {
     color: #2c3e50;
     margin-top: 0;
 }
+
+div#reader_attaque4 {
+    border-color: red;
+}

@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="readers">
-      <div v-for="reader in topReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
-        <img v-if="reader.image" :src="getImagePath(reader.image)" alt="Card Image" style="max-width: 100%; height: auto;">
+      <div v-for="reader_attaque in topReaders" :key="reader_attaque.id" :id="'reader_attaque' + reader_attaque.id" class="reader">
+        <img v-if="reader_attaque.image" :src="getImagePath(reader_attaque.image)" alt="Card Image" style="max-width: 100%; height: auto;">
         <p v-else></p>
       </div>
     </div>
