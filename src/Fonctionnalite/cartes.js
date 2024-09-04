@@ -1,8 +1,3 @@
-const CAMP = {
-    ATTAQUE: 'attaque',
-    DEFENSE : 'defense'
-};
-
 //Récupère les valeurs présentes dans le fichier json
 cards= require('../../cards.json');
 const data = {
@@ -57,7 +52,6 @@ function genererDeckDefense() {
             }
         }
     }
-
     cartesDefense.splice(0, 1);
     return cartesDefense;
 }
@@ -89,6 +83,7 @@ function piocher(cartesDeck, cartesEnMain) {
         cartesDeck.splice(index, 1);
     }
 }
+
 cartesDefense = genererDeckDefense();
 cartesAttaque = genererDeckAttaque();
 cartesEnMains = [];
