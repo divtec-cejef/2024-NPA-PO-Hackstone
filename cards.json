@@ -152,7 +152,7 @@
       "description_jeu": "Cette carte te permet de dévérouiller la 4ème case du plateau du coté défenseur",
       "image": "http://localhost/rfid-7case/img/DDOS.jpg",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "haut niveau"
     },
     {
       "uid": "On verra",
