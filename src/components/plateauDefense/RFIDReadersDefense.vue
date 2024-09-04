@@ -8,7 +8,7 @@
     </div>
     <img src="../../img_carte/ligne.png" alt="Ligne" class="line">
     <div class="readers">
-      <div v-for="reader_defense in bottomReaders" :key="reader_defense.id" :id="'reader_defense' + reader_defense.id" :class="['reader', { accessible: reader_defense.id === 7 && reader_defense.accessible }]">
+      <div v-for="reader_defense in bottomReaders" :key="reader_defense.id" :id="'reader_defense' + reader_defense.id" :class="['reader', { accessible: reader_defense.accessible }]">
         <img v-if="reader_defense.image" :src="getImagePath(reader_defense.image)" alt="Card Image" style="max-width: 100%; height: auto;">
         <p v-else></p>
       </div>
@@ -103,7 +103,7 @@ export default {
         console.log(`No reader found with mapped ID ${mappedReaderID}.`);
       } else if (card.uid === this.authorizedID) {
         // La carte avec l'ID autorisé a été scannée
-        this.accessEnabled = true; // Activer l'accès pour tous les lecteurs
+        this.accessEnabled = true;
 
         // Déverrouiller le lecteur 7
         const reader7 = this.readers.find(r => r.id === 7);
@@ -112,12 +112,13 @@ export default {
           console.log(`Authorized card scanned. Reader 7 is now accessible.`);
           console.log("Access enabled:", this.accessEnabled);
         }
-        //console.log(`Authorized card scanned. Reader 7 is now accessible.`);
       } else if (reader.id === 4 || reader.id === 5 || reader.id === 6 || (this.accessEnabled && reader.id === 7)) { // Autoriser les autres lecteurs si l'accès est activé
-        // Pour ne pas mettre à jour le lecteur 7 si l'accès est déjà activé
+
         console.log("Access enabled:", this.accessEnabled);
+
         reader.name = card.name;
         reader.image = card.image;
+
         console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
         console.log(reader.id);
       } else if (reader.id === 1) {

@@ -96,8 +96,7 @@ div#app {
     margin-top: 0;
 }
 
-/* Ajoutez une classe conditionnelle pour le lecteur avec ID 7 */
-.reader_defense.accessible {
+div#reader_defense7.reader.accessible {
     border-color: white;
 }
 
