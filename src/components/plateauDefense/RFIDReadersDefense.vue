@@ -8,10 +8,19 @@
     </div>
     <img src="../../img_carte/ligne.png" alt="Ligne" class="line">
     <div class="readers">
-      <div v-for="reader_defense in bottomReaders" :key="reader_defense.id" :id="'reader_defense' + reader_defense.id" :class="['reader', { accessible: reader_defense.accessible }]">
+      <div v-for="reader_defense in bottomReaders"
+           :key="reader_defense.id"
+           :id="'reader_defense' + reader_defense.id"
+           :class="['reader', { accessible: reader_defense.accessible, 'unlock-animation': reader_defense.accessible && reader_defense.id === 7 }]">
         <img v-if="reader_defense.image" :src="getImagePath(reader_defense.image)" alt="Card Image" style="max-width: 100%; height: auto;">
         <p v-else></p>
+
+        <div v-if="reader_defense.id === 7" class="lock" :class="{ opening: reader_defense.accessible, opened: reader_defense.opened }">
+          <div class="serrure"></div>
+          <div class="base"></div>
+        </div>
       </div>
+
     </div>
   </div>
   <div class="hearts">
@@ -104,6 +113,7 @@ export default {
       } else if (card.uid === this.authorizedID) {
         // La carte avec l'ID autorisé a été scannée
         this.accessEnabled = true;
+        this.triggerLockAnimation(reader);
 
         // Déverrouiller le lecteur 7
         const reader7 = this.readers.find(r => r.id === 7);
@@ -132,6 +142,8 @@ export default {
   },
 
   methods: {
+
+
     getImagePath(image) {
       try {
         return require(`@/${image}`);
@@ -150,7 +162,29 @@ export default {
           break;
         }
       }
+    },
+    triggerLockAnimation(reader) {
+      if (reader.id === 7) {
+        reader.accessible = true;
+
+        // Ajouter la classe 'opening' pour déclencher l'ouverture
+        const lockElement = document.querySelector('.lock');
+        if (lockElement) {
+          lockElement.classList.add('opening');
+        }
+
+        // Attendre que l'animation d'ouverture soit terminée
+        setTimeout(() => {
+          // Ajouter la classe 'opened' pour déclencher l'explosion après l'ouverture
+          if (lockElement) {
+            lockElement.classList.remove('opening');
+            lockElement.classList.add('opened');
+          }
+          reader.opened = true;
+        }, 2000); // Correspond à la durée de l'animation 'openShackle'
+      }
     }
+
   }
 };
 </script>

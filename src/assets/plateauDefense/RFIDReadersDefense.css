@@ -103,3 +103,76 @@ div#reader_defense7.reader.accessible {
 div#reader_defense7 {
     border-color: red;
 }
+
+/**Cadenas*/
+.lock {
+    position: relative;
+    width: 80px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.serrure {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 60px;
+    border: 10px solid azure;
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+}
+
+.base {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 60px;
+    background-color: red;
+    border-radius: 10px;
+}
+
+@keyframes openShackle {
+    0% {
+        transform: translateX(-50%);
+    }
+    50% {
+        transform: translateX(-50%) rotate(45deg) translateY(-20px);
+    }
+    100% {
+        transform: translateX(-50%) rotate(45deg) translateY(-20px);
+    }
+}
+
+/** Animation pour l'explosion du cadenas */
+@keyframes explode {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+        filter: blur(10px); /* Ajoute un flou pour simuler une dispersion */
+    }
+}
+
+.serrure {
+    /* Par défaut, l'animation est désactivée */
+    animation: none;
+}
+
+.lock.opened {
+    animation: explode 1s forwards; /* Animation pour la disparition */
+}
+
+.lock.opening .serrure {
+    animation: openShackle 2s ease-in-out forwards; /* Animation pour l'ouverture */
+}
