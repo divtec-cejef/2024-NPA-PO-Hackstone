@@ -102,10 +102,13 @@ export default {
         reader.name = card.name;
         reader.image = card.image;
         console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
+        console.log(reader.id);
       } else if (reader.id === 1) {
         this.updateVisibility();
       } else if (reader.id === 2) {
         this.showOverlay = true;
+      } else if (reader.id === 3) {
+        console.log("Haha je t'attaque")
       }
     });
   },

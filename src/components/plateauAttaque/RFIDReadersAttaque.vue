@@ -66,22 +66,51 @@ export default {
     }
   },
   mounted() {
-    console.log('Trying to connect to WebSocket on port 3001');
-    this.socket = io('http://localhost:3001');
-    this.socket.on('connect', () => {
-      console.log('Connected to WebSocket server on port 3001');
-    });
-
+    this.socket = io('http://localhost:3000');
     this.socket.on('rfidData', (data) => {
       const { readerID, card } = data;
       console.log(`Received readerID: ${readerID}`);
-      const reader = this.readers.find(r => r.id === parseInt(readerID));
-      if (reader) {
+
+      // Mapping des capteurs RFID aux readers
+      let mappedReaderID = null;
+      switch (parseInt(readerID)) {
+        case 1:
+          mappedReaderID = 1; // Capteur 1 -> Reader 1
+          break;
+        case 2:
+          mappedReaderID = 2; // Capteur 2 -> Reader 2
+          break;
+        case 3:
+          mappedReaderID = 5; // Capteur 3 -> Reader 4
+          break;
+        case 4:
+          mappedReaderID = 6; // Capteur 4 -> Reader 6
+          break;
+        case 5:
+          mappedReaderID = 3; // Capteur 5 -> Reader 3
+          break;
+        case 6:
+          mappedReaderID = 7; // Capteur 6 -> Reader 7
+          break;
+        case 7:
+          mappedReaderID = 4; // Capteur 7 -> Reader 4
+          break;
+      }
+
+      const reader = this.readers.find(r => r.id === mappedReaderID);
+
+      if (!reader) {
+        console.log(`No reader found with mapped ID ${mappedReaderID}.`);
+      } else if (reader.id === 5 || reader.id === 6 || reader.id === 7) {
         reader.name = card.name;
         reader.image = card.image;
-        console.log(`Reader ${readerID} updated with image: ${reader.image}`);
-      } else {
-        console.log(`No reader found with ID ${readerID}.`);
+        console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
+      } else if (reader.id === 1) {
+        this.updateVisibility();
+      } else if (reader.id === 2) {
+        this.showOverlay = true;
+      } else if (reader.id === 3) {
+        console.log("Haha je t'attaque")
       }
     });
   },
