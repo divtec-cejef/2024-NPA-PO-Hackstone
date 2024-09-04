@@ -59,32 +59,32 @@ body {
     opacity: 0.9;
 }
 
-.hearts {
+.coeurs-attaque {
     display: flex;
     justify-content: center;
     gap: 5px;
     position: absolute;
-    bottom: 50px; /* Positionner les cœurs en haut */
-    left: 50px; /* Positionner les cœurs en haut */
+    top: 50px; /* Positionner les cœurs en haut */
+    right: 50px; /* Positionner les cœurs en haut */
 }
 
-.heart {
+.coeur-attaque {
     width: 70px; /* Taille des cœurs */
     height: 70px;
 }
 
-.stacked-images {
+.compteurs-attaque {
     position: absolute;
-    top: 50px;
-    right: 50px; /* Positionner les images en haut à droite */
+    bottom: 50px;
+    left: 50px; /* Positionner les images en haut à droite */
 }
 
-.stacked-image {
+.compteur-attaque {
     width: 300px;
     height: 300px;
     position: absolute;
-    top: 0;
-    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 div#app {

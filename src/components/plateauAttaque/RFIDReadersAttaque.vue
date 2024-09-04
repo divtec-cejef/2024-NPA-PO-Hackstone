@@ -14,13 +14,13 @@
       </div>
     </div>
   </div>
-  <div class="hearts">
-    <img v-for="n in 5" :key="n" src="../../img_carte/coeur.webp" alt="Heart" class="heart">
+  <div class="coeurs-attaque">
+    <img v-for="n in 5" :key="n" src="../../img_carte/coeur.webp" alt="Heart" class="coeur-attaque">
   </div>
-  <div class="stacked-images">
+  <div class="compteurs-attaque">
     <img v-for="(image, index) in images_compteur" :key="index" :src="image" alt="Stacked Image"
          :style="{ visibility: visibility[index] ? 'visible' : 'hidden' }"
-         class="stacked-image">
+         class="compteur-attaque">
   </div>
 </template>
 
