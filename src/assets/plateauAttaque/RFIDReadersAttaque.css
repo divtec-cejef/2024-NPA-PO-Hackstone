@@ -96,6 +96,51 @@ div#app {
     margin-top: 0;
 }
 
-div#reader_attaque4 {
+div#reader_attaque4.reader {
     border-color: red;
+}
+
+/**Cadenas*/
+.lock {
+    position: relative;
+    width: 80px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.serrure {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 60px;
+    border: 10px solid azure;
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+    animation: openShackle 2s ease-in-out forwards;
+}
+
+.base {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 60px;
+    background-color: red;
+    border-radius: 10px;
+}
+
+/** Animation pour l'ouverture du cadenas */
+@keyframes openShackle {
+    0% {
+        transform: translateX(-50%);
+    }
+    50% {
+        transform: translateX(-50%) rotate(45deg) translateY(-20px);
+    }
+    100% {
+        transform: translateX(-50%) rotate(45deg) translateY(-20px);
+    }
 }

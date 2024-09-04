@@ -1,4 +1,5 @@
 //Récupère les valeurs présentes dans le fichier json
+let cards = []
 cards= require('../cards.json');
 const data = {
     cards
@@ -13,8 +14,8 @@ const cartes = data.cards.cards;
  * @returns le deck de l'attaquant
  */
 function genererDeckAttaque () {
-    cartesAttaque = [];
-    for (i = 0; i < cartes.length; i++) {
+    let cartesAttaque = [];
+    for (let i = 0; i < cartes.length; i++) {
 
         if (cartes[i].type === "attaque") {
             cartesAttaque.push(cartes[i]);
@@ -37,8 +38,8 @@ function genererDeckAttaque () {
  * @returns le deck du défenseur
  */
 function genererDeckDefense() {
-    cartesDefense = [];
-    for (i = 0; i < cartes.length; i++) {
+    let cartesDefense = [];
+    for (let i = 0; i < cartes.length; i++) {
 
         if (cartes[i].type === "défense") {
             cartesDefense.push(cartes[i])
@@ -73,23 +74,24 @@ function getNombreAleatoire(min, max) {
  */
 function piocher(cartesDeck, cartesEnMain) {
     if (cartesEnMain.length >= 5 ) {
-        index = getNombreAleatoire(0, cartesDeck.length - 1);
+        let index = getNombreAleatoire(0, cartesDeck.length - 1);
         cartesEnMain.push(cartesDeck[index]);
         cartesDeck.splice(index, 1);
     }
     while (cartesEnMain.length < 5){
-        index = getNombreAleatoire(0, cartesDeck.length-1);
+        let index = getNombreAleatoire(0, cartesDeck.length-1);
         cartesEnMain.push(cartesDeck[index]);
         cartesDeck.splice(index, 1);
     }
 }
 
-cartesDefense = genererDeckDefense();
-cartesAttaque = genererDeckAttaque();
-cartesEnMains = [];
+let cartesDefense = genererDeckDefense();
+let cartesAttaque = genererDeckAttaque();
+let cartesEnMains = [];
 console.log(cartesAttaque.length);
 piocher(cartesAttaque, cartesEnMains);
 piocher(cartesAttaque, cartesEnMains);
 console.log(cartesEnMains);
 console.log(cartesAttaque.length);
+console.log(cartesDefense.length);
 console.log(cartesAttaque);

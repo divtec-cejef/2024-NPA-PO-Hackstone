@@ -1,11 +1,20 @@
 <template>
   <div class="container">
     <div class="readers">
-      <div v-for="reader_attaque in topReaders" :key="reader_attaque.id" :id="'reader_attaque' + reader_attaque.id" class="reader">
+      <div v-for="reader_attaque in topReaders"
+           :key="reader_attaque.id"
+           :id="'reader_attaque' + reader_attaque.id"
+           :class="['reader', { accessible: reader_attaque.accessible, 'unlock-animation': reader_attaque.accessible && reader_attaque.id === 4 }]">
         <img v-if="reader_attaque.image" :src="getImagePath(reader_attaque.image)" alt="Card Image" style="max-width: 100%; height: auto;">
         <p v-else></p>
+
+        <div v-if="reader_attaque.id === 4" class="lock">
+          <div class="serrure"></div>
+          <div class="base"></div>
+        </div>
       </div>
     </div>
+
     <img src="../../img_carte/ligne.png" alt="Ligne" class="line">
     <div class="readers">
       <div v-for="reader in bottomReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
@@ -71,46 +80,51 @@ export default {
       const { readerID, card } = data;
       console.log(`Received readerID: ${readerID}`);
 
-      // Mapping des capteurs RFID aux readers
-      let mappedReaderID = null;
-      switch (parseInt(readerID)) {
-        case 1:
-          mappedReaderID = 1; // Capteur 1 -> Reader 1
-          break;
-        case 2:
-          mappedReaderID = 2; // Capteur 2 -> Reader 2
-          break;
-        case 3:
-          mappedReaderID = 5; // Capteur 3 -> Reader 4
-          break;
-        case 4:
-          mappedReaderID = 6; // Capteur 4 -> Reader 6
-          break;
-        case 5:
-          mappedReaderID = 3; // Capteur 5 -> Reader 3
-          break;
-        case 6:
-          mappedReaderID = 7; // Capteur 6 -> Reader 7
-          break;
-        case 7:
-          mappedReaderID = 4; // Capteur 7 -> Reader 4
-          break;
-      }
+      // Vérifier si la carte est de type attaque
+      if (card.type === 'attaque') {
+        // Mapping des capteurs RFID aux readers
+        let mappedReaderID = null;
+        switch (parseInt(readerID)) {
+          case 1:
+            mappedReaderID = 1; // Capteur 1 -> Reader 1
+            break;
+          case 2:
+            mappedReaderID = 2; // Capteur 2 -> Reader 2
+            break;
+          case 3:
+            mappedReaderID = 5; // Capteur 3 -> Reader 4
+            break;
+          case 4:
+            mappedReaderID = 6; // Capteur 4 -> Reader 6
+            break;
+          case 5:
+            mappedReaderID = 3; // Capteur 5 -> Reader 3
+            break;
+          case 6:
+            mappedReaderID = 7; // Capteur 6 -> Reader 7
+            break;
+          case 7:
+            mappedReaderID = 4; // Capteur 7 -> Reader 4
+            break;
+        }
 
-      const reader = this.readers.find(r => r.id === mappedReaderID);
+        const reader = this.readers.find(r => r.id === mappedReaderID);
 
-      if (!reader) {
-        console.log(`No reader found with mapped ID ${mappedReaderID}.`);
-      } else if (reader.id === 5 || reader.id === 6 || reader.id === 7) {
-        reader.name = card.name;
-        reader.image = card.image;
-        console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
-      } else if (reader.id === 1) {
-        this.updateVisibility();
-      } else if (reader.id === 2) {
-        this.showOverlay = true;
-      } else if (reader.id === 3) {
-        console.log("Haha je t'attaque")
+        if (!reader) {
+          console.log(`No reader found with mapped ID ${mappedReaderID}.`);
+        } else if (reader.id === 5 || reader.id === 6 || reader.id === 7) {
+          reader.name = card.name;
+          reader.image = card.image;
+          console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
+        } else if (reader.id === 1) {
+          this.updateVisibility();
+        } else if (reader.id === 2) {
+          this.showOverlay = true;
+        } else if (reader.id === 3) {
+          console.log("Haha je t'attaque")
+        }
+      } else {
+        console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);
       }
     });
   },
