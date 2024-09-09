@@ -15,16 +15,30 @@ body {
     font: 1rem Lato, Arial, sans-serif;
     margin: 0;
 
-    display: flex; /* Active Flexbox */
-    flex-direction: row; /* Aligne les boutons côte à côte */
-    justify-content: center; /* Centre horizontalement */
-    align-items: flex-end; /* Aligne les éléments vers le bas */
-    padding-bottom: 200px; /* Ajuste la distance depuis le bas */
-    gap: 800px; /* Séparation des boutons */
+    display: flex;
+    flex-direction: column; /* Réorganise en colonne pour le centrage du bouton tutoriel */
+    justify-content: space-between; /* Espace entre le bouton tutoriel et les autres */
+    align-items: center; /* Centre horizontalement tous les éléments */
+}
+
+.tutoriel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 800px; /* Séparation des boutons attaque et défense */
+    padding-bottom: 200px;
 }
 
 button {
-    margin: 0; /* Retire les marges auto pour éviter de désaligner les boutons */
+    margin: 0;
     justify-content: center;
     width: 270px;
     height: 70px;
@@ -33,22 +47,33 @@ button {
     color: white;
     align-items: center;
     border-radius: 100px;
+}
 
-    transition: background-color 0.5s ease, border-color 0.5s ease;
+button {
+    transition: transform 0.1s linear;
+}
+
+button:hover {
+    transform: scale(1.1); /* Agrandit le bouton de 10% */
 }
 
 button.attaque {
-    border: 3px solid red; /* Bordure rouge */
+    border: 3px solid red;
     background-color: red;
     box-shadow: 0 0 50px rgba(255, 0, 0, 100);
 }
 
 button.defense {
-    border: 3px solid blue; /* Bordure bleue */
+    border: 3px solid blue;
     background-color: blue;
     box-shadow: 0 0 50px rgba(0, 0, 255, 100);
 }
 
-button:hover {
-    opacity: 0.8; /* Effet de survol pour les boutons */
+button.tutoriel {
+    background: transparent;
+    border-color: transparent;
+    color: red;
 }
+
+
+
