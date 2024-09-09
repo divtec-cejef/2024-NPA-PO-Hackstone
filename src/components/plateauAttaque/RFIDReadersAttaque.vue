@@ -6,6 +6,7 @@
         <p v-else></p>
       </div>
     </div>
+    <button @button-click="handleButtonClick" id="bouton" type="button">Piocher</button>
     <img src="../../img_carte/ligne.png" alt="Ligne" class="line">
     <div class="readers">
       <div v-for="reader in bottomReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
@@ -27,6 +28,7 @@
 <script>
 import io from 'socket.io-client';
 import '@/assets/plateauAttaque/RFIDReadersAttaque.css';
+import fonctionnaliteAttaque from "./fonctionnaliteAttaque.vue";
 
 export default {
   data() {
@@ -112,6 +114,8 @@ export default {
       } else if (reader.id === 3) {
         console.log("Haha je t'attaque")
       }
+      let deck = fonctionnaliteAttaque.methods.genererDeckAttaque();
+      console.log(deck);
     });
   },
   methods: {
@@ -133,7 +137,14 @@ export default {
           break;
         }
       }
+    },
+    handleButtonClick(){
+      let deckAttaque = [];
+      deckAttaque = fonctionnaliteAttaque.methods.genererDeckAttaque();
+      console.log(deckAttaque);
+
     }
   }
 };
+
 </script>

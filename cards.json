@@ -1,7 +1,9 @@
 {
   "cards": [
     {
-      "uid": "04 66 39 FA 60 5B 84",
+      "uid": [
+       "04 66 39 FA 60 5B 84"
+      ],
       "name": "Anonymous",
       "description_vie": "oui",
       "description_jeu": "oui",
@@ -198,7 +200,9 @@
       "level": "bas niveau"
     },
     {
-      "uid": "04 FC 39 FA 60 5B 84",
+      "uid": [
+        "04 FC 39 FA 60 5B 84"
+      ],
       "name": "Stockage",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de dévérouiller la 4ème case du plateau du coté défenseur",
@@ -207,7 +211,9 @@
       "level": "bas niveau"
     },
     {
-      "uid": "04 35 34 FA 60 5B 85",
+      "uid": [
+        "04 35 34 FA 60 5B 85"
+      ],
       "name": "Super-antivirus",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",

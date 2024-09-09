@@ -1,4 +1,5 @@
 <template>
+<!--  <script src="../../cartes.js"></script>-->
   <div class="container">
     <div class="readers">
       <div v-for="reader in topReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
@@ -6,6 +7,7 @@
         <p v-else></p>
       </div>
     </div>
+    <button type="button">Piocher</button>
     <img src="../../img_carte/ligne.png" alt="Ligne" class="line">
     <div class="readers">
       <div v-for="reader_defense in bottomReaders"
@@ -37,6 +39,8 @@
 import io from 'socket.io-client';
 // Assurez-vous que le chemin est correct et que vous utilisez bien cette variable
 import '@/assets/plateauDefense/RFIDReadersDefense.css';
+//import fonctionnaliteAttaque from "@/components/plateauAttaque/fonctionnaliteAttaque.vue";
+import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 
 export default {
   data() {
@@ -138,6 +142,8 @@ export default {
       } else if (reader.id === 3) {
         console.log("Haha je t'attaque");
       }
+      let deck = fonctionnaliteDefense.methods.genererDeckDefense();
+      console.log(deck);
     });
   },
 
