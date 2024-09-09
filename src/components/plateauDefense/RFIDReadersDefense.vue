@@ -1,5 +1,5 @@
 <template>
-<!--  <script src="../../cartes.js"></script>-->
+  <!--  <script src="../../cartes.js"></script>-->
   <div class="container">
     <div class="readers">
       <div v-for="reader in topReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
@@ -7,7 +7,6 @@
         <p v-else></p>
       </div>
     </div>
-    <button type="button">Piocher</button>
     <img src="../../img_carte/ligne.png" alt="Ligne" class="line">
     <div class="readers">
       <div v-for="reader_defense in bottomReaders"
@@ -41,7 +40,10 @@ import io from 'socket.io-client';
 import '@/assets/plateauDefense/RFIDReadersDefense.css';
 //import fonctionnaliteAttaque from "@/components/plateauAttaque/fonctionnaliteAttaque.vue";
 import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
-
+//let premierTour = true;
+let deck = [];
+let cartesEnMain = [];
+deck = fonctionnaliteDefense.methods.genererDeckDefense();
 export default {
   data() {
     return {
@@ -136,14 +138,20 @@ export default {
         console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
         console.log(reader.id);
       } else if (reader.id === 1) {
+
+        //if (premierTour)
+          fonctionnaliteDefense.methods.DebutTour(deck, cartesEnMain);
+
+       // fonctionnaliteDefense.methods.DebutTour(deck, cartesEnMain);
+        console.log(cartesEnMain);
+        console.log(deck);
         this.updateVisibility();
       } else if (reader.id === 2) {
         this.showOverlay = true;
       } else if (reader.id === 3) {
         console.log("Haha je t'attaque");
       }
-      let deck = fonctionnaliteDefense.methods.genererDeckDefense();
-      console.log(deck);
+
     });
   },
 
@@ -162,6 +170,7 @@ export default {
       this.showOverlay = false;
     },
     updateVisibility() {
+      //premierTour = false;
       for (let i = this.visibility.length - 1; i >= 0; i--) {
         if (this.visibility[i]) {
           this.visibility[i] = false;
