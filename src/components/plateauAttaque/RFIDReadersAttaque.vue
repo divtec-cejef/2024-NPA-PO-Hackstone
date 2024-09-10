@@ -36,7 +36,12 @@
 <script>
 import io from 'socket.io-client';
 import '@/assets/plateauAttaque/RFIDReadersAttaque.css';
+import fonctionnaliteAttaque from "./fonctionnaliteAttaque.vue";
 
+
+let deck = [];
+let cartesEnMain = [];
+deck = fonctionnaliteAttaque.methods.genererDeckDefense();
 export default {
   data() {
     return {
@@ -110,21 +115,39 @@ export default {
 
         const reader = this.readers.find(r => r.id === mappedReaderID);
 
-        if (!reader) {
-          console.log(`No reader found with mapped ID ${mappedReaderID}.`);
-        } else if (reader.id === 5 || reader.id === 6 || reader.id === 7) {
-          reader.name = card.name;
-          reader.image = card.image;
-          console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
-        } else if (reader.id === 1) {
-          this.updateVisibility();
-        } else if (reader.id === 2) {
-          this.showOverlay = true;
-        } else if (reader.id === 3) {
-          console.log("Haha je t'attaque")
-        }
-      } else {
-        console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);
+      if (!reader) {
+        console.log(`No reader found with mapped ID ${mappedReaderID}.`);
+      } else if (reader.id === 5 || reader.id === 6 || reader.id === 7) {
+        reader.name = card.name;
+        reader.image = card.image;
+        console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
+      } else if (reader.id === 1) {
+
+
+        //if (premierTour)
+        fonctionnaliteAttaque.methods.DebutTour(deck, cartesEnMain);
+        let case2 = this.readers.find(test => test.id === 2);
+        let case3 = this.readers.find(test => test.id === 3);
+
+        if (reader.image === null)
+          fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, reader)
+
+        if (case2.image === null)
+          fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, case2)
+
+        if (case3.image === null)
+          fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, case3)
+
+        console.log("Cartes en main : ");
+        console.log(cartesEnMain);
+        console.log("Cartes restantes dans le deck : ")
+        console.log(deck);
+
+        this.updateVisibility();
+      } else if (reader.id === 2) {
+        this.showOverlay = true;
+      } else if (reader.id === 3) {
+        console.log("Haha je t'attaque")
       }
     });
   },
@@ -150,4 +173,5 @@ export default {
     }
   }
 };
+
 </script>
