@@ -141,13 +141,19 @@ export default {
         //if (premierTour)
         fonctionnaliteDefense.methods.DebutTour(deck, cartesEnMain);
         let cartePosee = fonctionnaliteDefense.methods.poserCarte(cartesEnMain);
-        reader.name = cartePosee.name;
-        reader.image = cartePosee.image;
-
+        let test = this.readers.find(test => test.id === 2);
+        let test2 = this.readers.find(test => test.id === 3);
+        //console.log(test); // Affiche 'Reader 2'
+        reader.name = cartePosee[0].name;
+        reader.image = cartePosee[0].image;
+        test.image = cartePosee[1].image;
+        test2.image = cartePosee[2].image;
         console.log("Cartes en main : ");
+
         console.log(cartesEnMain);
         console.log("Cartes restantes dans le deck : ")
         console.log(deck);
+        //console.log(this.readers[1]);
 
         this.updateVisibility();
 

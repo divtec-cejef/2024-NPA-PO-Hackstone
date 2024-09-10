@@ -1,8 +1,9 @@
 <script>
 // Importation du fichier JSON des CARTES
-let cardsData = [];
+//import RFIDReadersDefense from "@/components/plateauDefense/RFIDReadersDefense.vue";
+//let cardsData = [];
 
-cardsData = require('../../../cards.json');
+const cardsData = require('../../../cards.json');
 const DECK = {
   cardsData
 };
@@ -27,7 +28,7 @@ export default {
     },
 
     /**
-     * Génération d'un nombre entier aléatoire
+     * Génération d'un nombre entier  aléatoire
      * @param min fourchette minimale
      * @param max fourchette maximale
      * @returns {*} nombre entier aléatoire
@@ -62,16 +63,20 @@ export default {
      * @param cartesDeck cartes présentent dans le deck
      * @param cartesEnMains cartes présentent dans la main de l'ordinateur
      */
-    DebutTour(cartesDeck, cartesEnMains){
+    DebutTour(cartesDeck, cartesEnMains) {
       this.piocher(cartesDeck, cartesEnMains);
     },
     poserCarte(cartesEnMains) {
       //console.log(cartesEnMains);
       let index = 0;
-      index = this.getNombreAleatoire(0, cartesEnMains.length);
-      let cartePosee = cartesEnMains[index];
-      cartesEnMains.splice(index, 1);
-      return cartePosee;
+      let cartePosee = [];
+      for (let i = 0; i < 3; i++) {
+        index = this.getNombreAleatoire(0, cartesEnMains.length-1);
+        cartePosee.push(cartesEnMains[index]);
+        cartesEnMains.splice(index, 1);
+        console.log(cartePosee);
+      }
+return cartePosee;
     }
   }
 };
