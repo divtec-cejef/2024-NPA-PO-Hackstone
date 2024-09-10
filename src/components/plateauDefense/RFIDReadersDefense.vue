@@ -6,7 +6,7 @@
         <p v-else></p>
       </div>
     </div>
-    <img src="../../img_carte/ligne.png" alt="Ligne" class="line">
+    <img src="../../img/ligne.png" alt="Ligne" class="line">
     <div class="readers">
       <div v-for="reader_defense in bottomReaders"
            :key="reader_defense.id"
@@ -24,7 +24,7 @@
     </div>
   </div>
   <div class="hearts">
-    <img v-for="n in 5" :key="n" src="../../img_carte/coeur.webp" alt="Heart" class="heart">
+    <img v-for="n in 5" :key="n" src="../../img/coeur.webp" alt="Heart" class="heart">
   </div>
   <div class="stacked-images">
     <img v-for="(image, index) in images_compteur" :key="index" :src="image" alt="Stacked Image"
@@ -56,11 +56,11 @@ export default {
       overlayCard: {},
       socket: null,
       images_compteur: [
-        require('@/img_carte/compteur/compteur_1.png'),
-        require('@/img_carte/compteur/compteur_2.png'),
-        require('@/img_carte/compteur/compteur_3.png'),
-        require('@/img_carte/compteur/compteur_4.png'),
-        require('@/img_carte/compteur/compteur_5.png')
+        require('@/img/compteur/compteur_1.png'),
+        require('@/img/compteur/compteur_2.png'),
+        require('@/img/compteur/compteur_3.png'),
+        require('@/img/compteur/compteur_4.png'),
+        require('@/img/compteur/compteur_5.png')
       ],
       visibility: [true, true, true, true, true]
     };

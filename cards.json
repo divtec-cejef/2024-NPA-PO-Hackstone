@@ -5,7 +5,7 @@
       "name": "Anonymous",
       "description_vie": "oui",
       "description_jeu": "oui",
-      "image": "img_carte/img_attaque/anonymous.png",
+      "image": "img/img_carte/img_attaque/anonymous.png",
       "type": "attaque",
       "level": "haut niveau"
     },
@@ -18,7 +18,7 @@
       "name": "Brutforce",
       "description_vie": "oui",
       "description_jeu": "Cette carte te permet de hahahahhahahah",
-      "image": "img_carte/img_attaque/brutforce.png",
+      "image": "img/img_carte/img_attaque/brutforce.png",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -30,7 +30,7 @@
       "name": "Cheval de troie",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de ",
-      "image": "img_carte/img_attaque/cheval_troie.png",
+      "image": "img/img_carte/img_attaque/cheval_troie.png",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -43,7 +43,7 @@
       "name": "DDOS",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de ",
-      "image": "img_carte/img_attaque/DDOS.png",
+      "image": "img/img_carte/img_attaque/DDOS.png",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -56,7 +56,7 @@
       "name": "Élévation de privilège",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de ",
-      "image": "img_carte/img_attaque/elevation_privilege.png",
+      "image": "img/img_carte/img_attaque/elevation_privilege.png",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -69,7 +69,7 @@
       "name": "Hacker",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de",
-      "image": "img_carte/img_attaque/hacker.png",
+      "image": "img/img_carte/img_attaque/hacker.png",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -82,7 +82,7 @@
       "name": "Logiciel malveillant",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de",
-      "image": "img_carte/img_attaque/logiciel_malveillant.png",
+      "image": "img/img_carte/img_attaque/logiciel_malveillant.png",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -95,7 +95,7 @@
       "name": "Panne réseau",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de ",
-      "image": "img_carte/img_attaque/panne_reseau.png",
+      "image": "img/img_carte/img_attaque/panne_reseau.png",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -107,7 +107,7 @@
       "name": "Virus",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de",
-      "image": "img_carte/img_attaque/virus.png",
+      "image": "img/img_carte/img_attaque/virus.png",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -120,7 +120,7 @@
       "name": "A2F",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre ",
-      "image": "img_carte/img_defense/A2F.png",
+      "image": "img/img_carte/img_defense/A2F.png",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -133,7 +133,7 @@
       "name": "Antivirus",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre ",
-      "image": "img_carte/img_defense/antivirus.png",
+      "image": "img/img_carte/img_defense/antivirus.png",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -145,7 +145,7 @@
       "name": "Backup",
       "description_vie": "Une sauvegarde, c'est une copie de secours de tes données importantes pour les récupérer si ton appareil a un problème.",
       "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
-      "image": "img_carte/img_defense/backup.png",
+      "image": "img/img_carte/img_defense/backup.png",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -157,7 +157,7 @@
       "name": "Chiffrement de données",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
-      "image": "img_carte/img_defense/chiffrement_donnee.png",
+      "image": "img/img_carte/img_defense/chiffrement_donnee.png",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -169,7 +169,7 @@
       "name": "Firewall",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
-      "image": "img_carte/img_defense/firewall.png",
+      "image": "img/img_carte/img_defense/firewall.png",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -181,7 +181,7 @@
       "name": "Mise à jour",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
-      "image": "img_carte/img_defense/mise_a_jour.png",
+      "image": "img/img_carte/img_defense/mise_a_jour.png",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -193,7 +193,7 @@
       "name": "Redondance de données",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de dupliquer une autre carte.",
-      "image": "img_carte/img_defense/redondance_donnee.png",
+      "image": "img/img_carte/img_defense/redondance_donnee.png",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -202,7 +202,7 @@
       "name": "Stockage",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de dévérouiller la 4ème case du plateau du coté défenseur",
-      "image": "img_carte/img_defense/stockage.png",
+      "image": "img/img_carte/img_defense/stockage.png",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -211,7 +211,7 @@
       "name": "Super-antivirus",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
-      "image": "img_carte/img_defense/super_antivirus.png",
+      "image": "img/img_carte/img_defense/super_antivirus.png",
       "type": "défense",
       "level": "haut niveau"
     },
@@ -223,7 +223,7 @@
       "name": "VPN",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
-      "image": "img_carte/img_defense/VPN.png",
+      "image": "img/img_carte/img_defense/VPN.png",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -235,7 +235,7 @@
       "name": "White hat",
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
-      "image": "img_carte/img_defense/white_hat.png",
+      "image": "img/img_carte/img_defense/white_hat.png",
       "type": "défense",
       "level": "bas niveau"
     }

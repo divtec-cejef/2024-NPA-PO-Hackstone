@@ -10,7 +10,7 @@ html, body {
 body {
     color: rgb(158, 158, 158);
     height: 100vh;
-    background: url('../../img_carte/plateau_defenseur.png') center center / cover no-repeat fixed;
+    background: url('../../img/plateau_defenseur.png') center center / cover no-repeat fixed;
     font: 1rem Lato, Arial, sans-serif;
     margin: 0;
     padding: 0;
