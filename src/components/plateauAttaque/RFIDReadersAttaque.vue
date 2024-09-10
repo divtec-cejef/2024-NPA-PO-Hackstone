@@ -115,39 +115,40 @@ export default {
 
         const reader = this.readers.find(r => r.id === mappedReaderID);
 
-      if (!reader) {
-        console.log(`No reader found with mapped ID ${mappedReaderID}.`);
-      } else if (reader.id === 5 || reader.id === 6 || reader.id === 7) {
-        reader.name = card.name;
-        reader.image = card.image;
-        console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
-      } else if (reader.id === 1) {
+        if (!reader) {
+          console.log(`No reader found with mapped ID ${mappedReaderID}.`);
+        } else if (reader.id === 5 || reader.id === 6 || reader.id === 7) {
+          reader.name = card.name;
+          reader.image = card.image;
+          console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
+        } else if (reader.id === 1) {
 
 
-        //if (premierTour)
-        fonctionnaliteAttaque.methods.DebutTour(deck, cartesEnMain);
-        let case2 = this.readers.find(test => test.id === 2);
-        let case3 = this.readers.find(test => test.id === 3);
+          //if (premierTour)
+          fonctionnaliteAttaque.methods.DebutTour(deck, cartesEnMain);
+          let case2 = this.readers.find(test => test.id === 2);
+          let case3 = this.readers.find(test => test.id === 3);
 
-        if (reader.image === null)
-          fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, reader)
+          if (reader.image === null)
+            fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, reader)
 
-        if (case2.image === null)
-          fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, case2)
+          if (case2.image === null)
+            fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, case2)
 
-        if (case3.image === null)
-          fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, case3)
+          if (case3.image === null)
+            fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, case3)
 
-        console.log("Cartes en main : ");
-        console.log(cartesEnMain);
-        console.log("Cartes restantes dans le deck : ")
-        console.log(deck);
+          console.log("Cartes en main : ");
+          console.log(cartesEnMain);
+          console.log("Cartes restantes dans le deck : ")
+          console.log(deck);
 
-        this.updateVisibility();
-      } else if (reader.id === 2) {
-        this.showOverlay = true;
-      } else if (reader.id === 3) {
-        console.log("Haha je t'attaque")
+          this.updateVisibility();
+        } else if (reader.id === 2) {
+          this.showOverlay = true;
+        } else if (reader.id === 3) {
+          console.log("Haha je t'attaque")
+        }
       }
     });
   },
@@ -160,9 +161,9 @@ export default {
         return ''; // Return a default or empty string if image not found
       }
     },
-    closeOverlay() {
-      this.showOverlay = false;
-    },
+    // closeOverlay() {
+    //   this.showOverlay = false;
+    // },
     updateVisibility() {
       for (let i = this.visibility.length - 1; i >= 0; i--) {
         if (this.visibility[i]) {

@@ -118,35 +118,7 @@ export default {
         let reader3 = this.readers.find(test => test.id === 3);
 
         const reader = this.readers.find(r => r.id === mappedReaderID);
-      // Mapping des capteurs RFID aux readers
-      let mappedReaderID = null;
-      switch (parseInt(readerID)) {
-        case 1:
-          mappedReaderID = 1; // Capteur 1 -> Reader 1
-          break;
-        case 2:
-          mappedReaderID = 2; // Capteur 2 -> Reader 2
-          break;
-        case 3:
-          mappedReaderID = 4; // Capteur 3 -> Reader 4
-          break;
-        case 4:
-          mappedReaderID = 5; // Capteur 4 -> Reader 5
-          break;
-        case 5:
-          mappedReaderID = 3; // Capteur 5 -> Reader 3
-          break;
-        case 6:
-          mappedReaderID = 6; // Capteur 6 -> Reader 6
-          break;
-        case 7:
-          mappedReaderID = 7; // Capteur 7 -> Reader 7
-          break;
-      }
-      let reader1 = this.readers.find(test => test.id === 1);
-      let reader2 = this.readers.find(test => test.id === 2);
-      let reader3 = this.readers.find(test => test.id === 3);
-      const reader = this.readers.find(r => r.id === mappedReaderID);
+        // Mapping des capteurs RFID aux readers
 
         if (!reader) {
           console.log(`No reader found with mapped ID ${mappedReaderID}.`);
@@ -162,36 +134,37 @@ export default {
           }
         } else if (reader.id === 4 || reader.id === 5 || reader.id === 6 || (this.accessEnabled && reader.id === 7)) { // Autoriser les autres lecteurs si l'accès est activé
 
-        console.log("Access enabled:", this.accessEnabled);
-        fonctionnaliteDefense.methods.retirerCarte(this.readers);
-        reader.name = card.name;
-        reader.image = card.image;
+          console.log("Access enabled:", this.accessEnabled);
+          fonctionnaliteDefense.methods.retirerCarte(this.readers);
+          reader.name = card.name;
+          reader.image = card.image;
 
-        console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
-        console.log(reader.id);
-      } else if (reader.id === 1) {
-        fonctionnaliteDefense.methods.DebutTour(deck, cartesEnMain);
+          console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
+          console.log(reader.id);
+        } else if (reader.id === 1) {
+          fonctionnaliteDefense.methods.DebutTour(deck, cartesEnMain);
 
-        if (reader1.image === null)
-          fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader1)
+          if (reader1.image === null)
+            fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader1);
 
-        if (reader2.image === null)
-          fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader2)
+          if (reader2.image === null)
+            fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader2);
 
-        if (reader3.image === null)
-          fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader3)
+          if (reader3.image === null)
+            fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader3);
 
-        console.log("Cartes en main : ");
-        console.log(cartesEnMain);
-        console.log("Cartes restantes dans le deck : ")
-        console.log(deck);
+          console.log("Cartes en main : ");
+          console.log(cartesEnMain);
+          console.log("Cartes restantes dans le deck : ")
+          console.log(deck);
 
-        this.updateVisibility();
+          this.updateVisibility();
 
-      } else if (reader.id === 2) {
-        this.showOverlay = true;
-      } else if (reader.id === 3) {
-        console.log("Haha je t'attaque");
+        } else if (reader.id === 2) {
+          this.showOverlay = true;
+        } else if (reader.id === 3) {
+          console.log("Haha je t'attaque");
+        }
       }
     });
   },
