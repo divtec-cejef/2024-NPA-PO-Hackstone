@@ -53,7 +53,7 @@
       "uid": [
         "04 87 38 FA 60 5B 84",
         "04 12 34 FA 60 5B 85",
-        " 04 0A 34 FA 60 5B 85"
+        "04 0A 34 FA 60 5B 85"
       ],
       "name": "Élévation de privilège",
       "description_vie": "",
@@ -104,7 +104,7 @@
     {
       "uid": [
         "04 A8 37 FA 60 5B 84",
-        "04 D1 36 FA 60 5B 84"
+        "04 C7 36 FA 60 5B 84"
       ],
       "name": "Virus",
       "description_vie": "",

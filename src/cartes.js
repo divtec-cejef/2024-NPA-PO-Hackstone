@@ -68,9 +68,9 @@ function getNombreAleatoire(min, max) {
 }
 
 /**
- * Pioche jusqu'à ce que l'ordinateur ait 5 CARTES dans sa main, s'il en a déjà 5, il en pioche une seule
- * @param cartesDeck CARTES présentent dans le deck
- * @param cartesEnMain CARTES présentes dans la main
+ * Pioche jusqu'à ce que l'ordinateur ait 5 cartes dans sa main, s'il en a déjà 5, il en pioche une seule
+ * @param cartesDeck cartes présentent dans le deck
+ * @param cartesEnMain cartes présentes dans la main
  */
 function piocher(cartesDeck, cartesEnMain) {
     if (cartesEnMain.length >= 5 ) {
@@ -95,12 +95,3 @@ console.log(cartesEnMains);
 console.log(cartesAttaque.length);
 console.log(cartesDefense.length);
 console.log(cartesAttaque);
-const button = document.getElementById('bouton');
-button.addEventListener("click", function (){
-    // let cartesDefense =  genererDeckAttaque()
-    // piocher(cartesDefense, cartesEnMains);
-    // button.innerHTML = cartesDefense[1];
-    button.hidden = true;
-
-
-})
