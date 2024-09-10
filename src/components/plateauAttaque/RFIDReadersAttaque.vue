@@ -6,7 +6,6 @@
         <p v-else></p>
       </div>
     </div>
-    <button @button-click="handleButtonClick" id="bouton" type="button">Piocher</button>
     <img src="../../img_carte/ligne.png" alt="Ligne" class="line">
     <div class="readers">
       <div v-for="reader in bottomReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
@@ -29,7 +28,11 @@
 import io from 'socket.io-client';
 import '@/assets/plateauAttaque/RFIDReadersAttaque.css';
 import fonctionnaliteAttaque from "./fonctionnaliteAttaque.vue";
+//import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 
+let deck = [];
+let cartesEnMain = [];
+deck = fonctionnaliteAttaque.methods.genererDeckDefense();
 export default {
   data() {
     return {
@@ -108,14 +111,26 @@ export default {
         reader.image = card.image;
         console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
       } else if (reader.id === 1) {
+
+
+        //if (premierTour)
+        fonctionnaliteAttaque.methods.DebutTour(deck, cartesEnMain);
+        let cartePosee = fonctionnaliteAttaque.methods.poserCarte(cartesEnMain);
+        reader.name = cartePosee.name;
+        reader.image = cartePosee.image;
+
+        console.log("Cartes en main : ");
+        console.log(cartesEnMain);
+        console.log("Cartes restantes dans le deck : ")
+        console.log(deck);
+
         this.updateVisibility();
       } else if (reader.id === 2) {
         this.showOverlay = true;
       } else if (reader.id === 3) {
         console.log("Haha je t'attaque")
       }
-      let deck = fonctionnaliteAttaque.methods.genererDeckAttaque();
-      console.log(deck);
+
     });
   },
   methods: {

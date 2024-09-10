@@ -1,45 +1,29 @@
 <script>
-// Importation du fichier JSON des cartes
+// Importation du fichier JSON des CARTES
 let cardsData = [];
 
 cardsData = require('../../../cards.json');
-const deck = {
+const DECK = {
   cardsData
 };
-
-const cartes = deck.cardsData.cards;
+const CARTES = DECK.cardsData.cards;
 export default {
-  data() {
-    return {
-      // Initialisation des decks et de la main
-      //cartes: cardsData,
-      cartesAttaque: [],
-      cartesDefense: [],
-      cartesEnMains: [],
-      buttonHidden: false
-    };
-  },
-  created() {
-    // Générer les decks au chargement du composant
-    this.cartesAttaque = this.genererDeckAttaque();
-    this.cartesDefense = this.genererDeckDefense();
-
-  },
   methods: {
 
     /**
      * Génère le deck du défenseur à partir d'un fichier json
-     * @returns cartesDefense cartes présentent dans le deck
+     * @returns cartesAttaque cartes présentent dans le deck
      */
-    genererDeckDefense() {
-      let cartesDefense = [];
-      for (let i = 0; i < cartes.length; i++) {
-        if (cartes[i].type === 'défense') {
-          for (let j = 0; j < cartes[i].uid.length; j++)
-            cartesDefense.push(cartes[i]);
+    genererDeckAttaque() {
+      let cartesAttaque = [];
+      for (let i = 0; i < CARTES.length; i++) {
+        if (CARTES[i].type === 'attaque') {
+          //Retrouve le nombre de fois qu'une carte est présente dans le deck grâce à son nombre d'ID
+          for (let j = 0; j < CARTES[i].uid.length; j++)
+            cartesAttaque.push(CARTES[i]);
         }
       }
-      return cartesDefense;
+      return cartesAttaque;
     },
 
     /**
@@ -74,23 +58,20 @@ export default {
     },
 
     /**
-     * Effectue toutes les actions nécessaires lors du premier tour de la partie
-     * @param cartesDeck cartes présentent dans le deck
-     * @param cartesEnMains cartes présentent dans la main de l'ordinateur
-     */
-    premierTour(cartesDeck, cartesEnMains) {
-      cartesDeck = this.genererDeckDefense();
-      this.piocher(cartesDeck, cartesEnMains);
-      console.log(cartesDeck);
-    },
-
-    /**
      * Effectue toutes les actions nécessaires au début de n'importe quel tour (excepté le premier)
      * @param cartesDeck cartes présentent dans le deck
      * @param cartesEnMains cartes présentent dans la main de l'ordinateur
      */
     DebutTour(cartesDeck, cartesEnMains){
       this.piocher(cartesDeck, cartesEnMains);
+    },
+    poserCarte(cartesEnMains) {
+      //console.log(cartesEnMains);
+      let index = 0;
+      index = this.getNombreAleatoire(0, cartesEnMains.length);
+      let cartePosee = cartesEnMains[index];
+      cartesEnMains.splice(index, 1);
+      return cartePosee;
     }
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <!--  <script src="../../cartes.js"></script>-->
+  <!--  <script src="../../CARTES.js"></script>-->
   <div class="container">
     <div class="readers">
       <div v-for="reader in topReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
@@ -40,10 +40,9 @@ import io from 'socket.io-client';
 import '@/assets/plateauDefense/RFIDReadersDefense.css';
 //import fonctionnaliteAttaque from "@/components/plateauAttaque/fonctionnaliteAttaque.vue";
 import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
-//let premierTour = true;
 let deck = [];
 let cartesEnMain = [];
-deck = fonctionnaliteDefense.methods.genererDeckDefense();
+deck = fonctionnaliteDefense.methods.genererDeckAttaque();
 export default {
   data() {
     return {
@@ -140,12 +139,18 @@ export default {
       } else if (reader.id === 1) {
 
         //if (premierTour)
-          fonctionnaliteDefense.methods.DebutTour(deck, cartesEnMain);
+        fonctionnaliteDefense.methods.DebutTour(deck, cartesEnMain);
+        let cartePosee = fonctionnaliteDefense.methods.poserCarte(cartesEnMain);
+        reader.name = cartePosee.name;
+        reader.image = cartePosee.image;
 
-       // fonctionnaliteDefense.methods.DebutTour(deck, cartesEnMain);
+        console.log("Cartes en main : ");
         console.log(cartesEnMain);
+        console.log("Cartes restantes dans le deck : ")
         console.log(deck);
+
         this.updateVisibility();
+
       } else if (reader.id === 2) {
         this.showOverlay = true;
       } else if (reader.id === 3) {
@@ -156,8 +161,6 @@ export default {
   },
 
   methods: {
-
-
     getImagePath(image) {
       try {
         return require(`@/${image}`);
@@ -170,7 +173,6 @@ export default {
       this.showOverlay = false;
     },
     updateVisibility() {
-      //premierTour = false;
       for (let i = this.visibility.length - 1; i >= 0; i--) {
         if (this.visibility[i]) {
           this.visibility[i] = false;
