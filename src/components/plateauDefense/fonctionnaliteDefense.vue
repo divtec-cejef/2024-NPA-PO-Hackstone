@@ -1,6 +1,5 @@
 <script>
 // Importation du fichier JSON des CARTES
-//import RFIDReadersDefense from "@/components/plateauDefense/RFIDReadersDefense.vue";
 //let cardsData = [];
 
 const cardsData = require('../../../cards.json');
@@ -66,17 +65,23 @@ export default {
     DebutTour(cartesDeck, cartesEnMains) {
       this.piocher(cartesDeck, cartesEnMains);
     },
-    poserCarte(cartesEnMains) {
-      //console.log(cartesEnMains);
+
+    /**
+     * Pose une carte aléatoire présente dans la main sur la case saisie
+     * @param cartesEnMains cartes présentent dans la main
+     * @param reader case sur laquelle la carte va être affichée
+     */
+    poserCarte(cartesEnMains, reader) {
       let index = 0;
-      let cartePosee = [];
-      for (let i = 0; i < 3; i++) {
-        index = this.getNombreAleatoire(0, cartesEnMains.length-1);
-        cartePosee.push(cartesEnMains[index]);
-        cartesEnMains.splice(index, 1);
-        console.log(cartePosee);
-      }
-return cartePosee;
+      let cartePosee;
+      index = this.getNombreAleatoire(0, cartesEnMains.length-1);
+      cartePosee = cartesEnMains[index];
+      reader.image = cartePosee.image;
+      cartesEnMains.splice(index, 1);
+      console.log(cartePosee);
+    },
+    retirerCarte(reader){
+      reader.image = null;
     }
   }
 };

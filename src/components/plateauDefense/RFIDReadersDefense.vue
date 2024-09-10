@@ -40,9 +40,12 @@ import io from 'socket.io-client';
 import '@/assets/plateauDefense/RFIDReadersDefense.css';
 //import fonctionnaliteAttaque from "@/components/plateauAttaque/fonctionnaliteAttaque.vue";
 import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
+
+
 let deck = [];
 let cartesEnMain = [];
 deck = fonctionnaliteDefense.methods.genererDeckAttaque();
+
 export default {
   data() {
     return {
@@ -110,7 +113,9 @@ export default {
           mappedReaderID = 7; // Capteur 7 -> Reader 7
           break;
       }
-
+      let reader1 = this.readers.find(test => test.id === 1);
+      let reader2 = this.readers.find(test => test.id === 2);
+      let reader3 = this.readers.find(test => test.id === 3);
       const reader = this.readers.find(r => r.id === mappedReaderID);
 
       if (!reader) {
@@ -130,30 +135,28 @@ export default {
       } else if (reader.id === 4 || reader.id === 5 || reader.id === 6 || (this.accessEnabled && reader.id === 7)) { // Autoriser les autres lecteurs si l'accès est activé
 
         console.log("Access enabled:", this.accessEnabled);
-
+        fonctionnaliteDefense.methods.retirerCarte(this.readers);
         reader.name = card.name;
         reader.image = card.image;
 
         console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
         console.log(reader.id);
       } else if (reader.id === 1) {
-
-        //if (premierTour)
         fonctionnaliteDefense.methods.DebutTour(deck, cartesEnMain);
-        let cartePosee = fonctionnaliteDefense.methods.poserCarte(cartesEnMain);
-        let test = this.readers.find(test => test.id === 2);
-        let test2 = this.readers.find(test => test.id === 3);
-        //console.log(test); // Affiche 'Reader 2'
-        reader.name = cartePosee[0].name;
-        reader.image = cartePosee[0].image;
-        test.image = cartePosee[1].image;
-        test2.image = cartePosee[2].image;
-        console.log("Cartes en main : ");
 
+        if (reader1.image === null)
+          fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader1)
+
+        if (reader2.image === null)
+          fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader2)
+
+        if (reader3.image === null)
+          fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader3)
+
+        console.log("Cartes en main : ");
         console.log(cartesEnMain);
         console.log("Cartes restantes dans le deck : ")
         console.log(deck);
-        //console.log(this.readers[1]);
 
         this.updateVisibility();
 
@@ -211,3 +214,4 @@ export default {
   }
 };
 </script>
+

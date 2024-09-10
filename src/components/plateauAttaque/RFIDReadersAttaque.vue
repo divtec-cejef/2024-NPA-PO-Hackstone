@@ -28,7 +28,7 @@
 import io from 'socket.io-client';
 import '@/assets/plateauAttaque/RFIDReadersAttaque.css';
 import fonctionnaliteAttaque from "./fonctionnaliteAttaque.vue";
-//import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
+
 
 let deck = [];
 let cartesEnMain = [];
@@ -115,9 +115,17 @@ export default {
 
         //if (premierTour)
         fonctionnaliteAttaque.methods.DebutTour(deck, cartesEnMain);
-        let cartePosee = fonctionnaliteAttaque.methods.poserCarte(cartesEnMain);
-        reader.name = cartePosee.name;
-        reader.image = cartePosee.image;
+        let case2 = this.readers.find(test => test.id === 2);
+        let case3 = this.readers.find(test => test.id === 3);
+
+        if (reader.image === null)
+          fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, reader)
+
+        if (case2.image === null)
+          fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, case2)
+
+        if (case3.image === null)
+          fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, case3)
 
         console.log("Cartes en main : ");
         console.log(cartesEnMain);

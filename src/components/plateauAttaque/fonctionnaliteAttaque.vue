@@ -72,13 +72,14 @@ export default {
     DebutTour(cartesDeck, cartesEnMains) {
       this.piocher(cartesDeck, cartesEnMains);
     },
-    poserCarte(cartesEnMains) {
-      //console.log(cartesEnMains);
+    poserCarte(cartesEnMains, reader) {
       let index = 0;
-      index = this.getNombreAleatoire(0, cartesEnMains.length);
-      let cartePosee = cartesEnMains[index];
+      let cartePosee;
+      index = this.getNombreAleatoire(0, cartesEnMains.length-1);
+      cartePosee = cartesEnMains[index];
+      reader.image = cartePosee.image;
       cartesEnMains.splice(index, 1);
-      return cartePosee;
+      console.log(cartePosee);
     }
   }
 };
