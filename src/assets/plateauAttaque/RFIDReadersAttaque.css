@@ -59,6 +59,10 @@ body {
     opacity: 0.9;
 }
 
+#ligne_attaque.line {
+    rotate: 180deg;
+}
+
 .coeurs-attaque {
     display: flex;
     justify-content: center;

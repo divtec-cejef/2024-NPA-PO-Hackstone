@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <img src="../../img/ligne.png" alt="Ligne" class="line">
+    <img src="../../img/ligne.png" alt="Ligne" class="line" id="ligne_attaque">
     <div class="readers">
       <div v-for="reader in bottomReaders" :key="reader.id" :id="'reader' + reader.id" class="reader">
         <img v-if="reader.image" :src="getImagePath(reader.image)" alt="Card Image" style="max-width: 100%; height: auto;">
