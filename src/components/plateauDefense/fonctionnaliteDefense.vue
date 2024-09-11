@@ -67,19 +67,25 @@ export default {
     },
 
     /**
-     * Pose une carte aléatoire présente dans la main sur la case saisie
+     * Pose une carte aléatoire présente dans la main sur la case saisie, si la case est vide
      * @param cartesEnMains cartes présentent dans la main
      * @param reader case sur laquelle la carte va être affichée
      */
     poserCarte(cartesEnMains, reader) {
-      let index = 0;
-      let cartePosee;
-      index = this.getNombreAleatoire(0, cartesEnMains.length-1);
-      cartePosee = cartesEnMains[index];
-      reader.image = cartePosee.image;
-      cartesEnMains.splice(index, 1);
-      console.log(cartePosee);
+      if (reader.image === null) {
+        let index = 0;
+        let cartePosee;
+        index = this.getNombreAleatoire(0, cartesEnMains.length - 1);
+        cartePosee = cartesEnMains[index];
+        reader.image = cartePosee.image;
+        cartesEnMains.splice(index, 1);
+        console.log(cartePosee);
+      }
     },
+    /**
+     * Retire une carte d'une case
+     * @param reader case sur laquelle l'image va être retirée
+     */
     retirerCarte(reader){
       reader.image = null;
     }

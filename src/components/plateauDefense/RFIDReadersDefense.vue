@@ -142,28 +142,21 @@ export default {
           console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
           console.log(reader.id);
         } else if (reader.id === 1) {
+          //Pioche des cartes et en pose trois si je termine mon tour
           fonctionnaliteDefense.methods.DebutTour(deck, cartesEnMain);
-
-          if (reader1.image === null)
-            fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader1);
-
-          if (reader2.image === null)
-            fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader2);
-
-          if (reader3.image === null)
-            fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader3);
+          fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader1);
+          fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader2);
+          fonctionnaliteDefense.methods.poserCarte(cartesEnMain, reader3);
 
           console.log("Cartes en main : ");
           console.log(cartesEnMain);
           console.log("Cartes restantes dans le deck : ")
           console.log(deck);
-
           this.updateVisibility();
-
         } else if (reader.id === 2) {
           this.showOverlay = true;
         } else if (reader.id === 3) {
-          console.log("Haha je t'attaque");
+          console.log(`Haha je t'attaque avec ${card.uid}`);
         }
       }
     });

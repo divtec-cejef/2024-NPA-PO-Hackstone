@@ -84,6 +84,7 @@ export default {
     this.socket.on('rfidData', (data) => {
       const { readerID, card } = data;
       console.log(`Received readerID: ${readerID}`);
+      console.log(`Received card id: ${card.uid}`);
 
       // Vérifier si la carte est de type attaque
       if (card.type === 'attaque') {
@@ -112,7 +113,9 @@ export default {
             mappedReaderID = 4; // Capteur 7 -> Reader 4
             break;
         }
-
+        let reader1 = this.readers.find(test => test.id === 1);
+        let reader2 = this.readers.find(test => test.id === 2);
+        let reader3 = this.readers.find(test => test.id === 3);
         const reader = this.readers.find(r => r.id === mappedReaderID);
 
         if (!reader) {
@@ -126,17 +129,9 @@ export default {
 
           //if (premierTour)
           fonctionnaliteAttaque.methods.DebutTour(deck, cartesEnMain);
-          let case2 = this.readers.find(test => test.id === 2);
-          let case3 = this.readers.find(test => test.id === 3);
-
-          if (reader.image === null)
-            fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, reader)
-
-          if (case2.image === null)
-            fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, case2)
-
-          if (case3.image === null)
-            fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, case3)
+          fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, reader1);
+          fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, reader2);
+          fonctionnaliteAttaque.methods.poserCarte(cartesEnMain, reader3);
 
           console.log("Cartes en main : ");
           console.log(cartesEnMain);
@@ -148,6 +143,7 @@ export default {
           this.showOverlay = true;
         } else if (reader.id === 3) {
           console.log("Haha je t'attaque")
+          fonctionnaliteAttaque.methods.attaquer(card, this.readers);
         }
       }
     });

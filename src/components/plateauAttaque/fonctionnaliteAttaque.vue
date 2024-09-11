@@ -1,7 +1,7 @@
 <script>
 // Importation du fichier JSON des CARTES
 let cardsData = [];
-
+let carteEnJeu = [];
 cardsData = require('../../../cards.json');
 const DECK = {
   cardsData
@@ -73,13 +73,58 @@ export default {
       this.piocher(cartesDeck, cartesEnMains);
     },
     poserCarte(cartesEnMains, reader) {
-      let index = 0;
-      let cartePosee;
-      index = this.getNombreAleatoire(0, cartesEnMains.length-1);
-      cartePosee = cartesEnMains[index];
-      reader.image = cartePosee.image;
-      cartesEnMains.splice(index, 1);
-      console.log(cartePosee);
+      if (reader.image === null) {
+        let index = 0;
+        let cartePosee;
+        index = this.getNombreAleatoire(0, cartesEnMains.length - 1);
+        cartePosee = cartesEnMains[index];
+        reader.image = cartePosee.image;
+        reader.name = cartePosee.name;
+        cartesEnMains.splice(index, 1);
+        console.log(cartePosee);
+        carteEnJeu.push(cartePosee);
+      }
+    },
+
+    /**
+     *Permet a l'utilisateur d'attaquer les cartes de l'ordinateur,
+     * les attaques se font automatiquement sur la bonne carte
+     * @param card carte qui va attaquer
+     * @param readers lecteur sur lesquelles les cartes sont posées
+     */
+    attaquer(card, readers){
+      //Liste des cartes qui contrent les cartes présentent sur le jeu
+      let counterCarteEnJeu = carteEnJeu[0].counter;
+
+      //Fonction permettant d'arrêter les deux boucles à un moment donné
+      outerLoop:
+          //Boucle passant sur chaque case de l'ordinateur
+          for (let j = 0; j < carteEnJeu.length; j++) {
+
+            //Boucle passant tous les contre des cartes
+            for (let i = 0; i < counterCarteEnJeu[i].length; i++) {
+
+              //Test si la carte qui attaque à un contre présent sur le terrain
+              if (counterCarteEnJeu[i].includes(card.name)) {
+
+                //Retrouve les cases sur lesquelles les cartes sont présentes
+                let carte = readers.find(carte => carte.name === carteEnJeu[j].name);
+                let carte2 = readers.find(carte2 => carte2.name === card.name);
+
+                //Retire le nom et l'image de la carte détruite de leur case
+                carte.image = null;
+                carte.name = null;
+                carte2.image = null;
+                carte2.name = null;
+                //Retire la carte détruite de la liste
+                carteEnJeu.splice(carteEnJeu[j], 1);
+
+                //Termine la fonction une fois qu'une carte a été détruite
+                break outerLoop;
+              }
+            }
+
+          }
     }
   }
 };

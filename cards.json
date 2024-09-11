@@ -2,14 +2,25 @@
   "cards": [
     {
       "uid": [
-       "04 66 39 FA 60 5B 84"
+        "04 66 39 FA 60 5B 84"
       ],
       "name": "Anonymous",
       "description_vie": "oui",
       "description_jeu": "oui",
       "image": "img_carte/img_attaque/anonymous.png",
       "type": "attaque",
-      "level": "haut niveau"
+      "level": "haut niveau",
+      "counter": [
+        "Antivirus",
+        "Chiffrement de données",
+        "Firewall",
+        "Mises à jour",
+        "A2F",
+        "Backup",
+        "VPN",
+        "White hat",
+        "Super-antivirus"
+      ]
     },
     {
       "uid": [
@@ -22,7 +33,12 @@
       "description_jeu": "Cette carte te permet de hahahahhahahah",
       "image": "img_carte/img_attaque/brutforce.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "A2F"
+      ]
     },
     {
       "uid": [
@@ -34,7 +50,12 @@
       "description_jeu": "Cette carte te permet de ",
       "image": "img_carte/img_attaque/cheval_troie.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "Antivirus"
+      ]
     },
     {
       "uid": [
@@ -47,7 +68,12 @@
       "description_jeu": "Cette carte te permet de ",
       "image": "img_carte/img_attaque/DDOS.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "Firewall"
+      ]
     },
     {
       "uid": [
@@ -60,7 +86,12 @@
       "description_jeu": "Cette carte te permet de ",
       "image": "img_carte/img_attaque/elevation_privilege.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "Chiffrement de données"
+      ]
     },
     {
       "uid": [
@@ -73,7 +104,12 @@
       "description_jeu": "Cette carte te permet de",
       "image": "img_carte/img_attaque/hacker.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "VPN"
+      ]
     },
     {
       "uid": [
@@ -86,7 +122,12 @@
       "description_jeu": "Cette carte te permet de",
       "image": "img_carte/img_attaque/logiciel_malveillant.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "Mise à jour"
+      ]
     },
     {
       "uid": [
@@ -99,7 +140,12 @@
       "description_jeu": "Cette carte te permet de ",
       "image": "img_carte/img_attaque/panne_reseau.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "Backup"
+      ]
     },
     {
       "uid": [
@@ -111,9 +157,13 @@
       "description_jeu": "Cette carte te permet de",
       "image": "img_carte/img_attaque/virus.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "Antivirus"
+      ]
     },
-
     {
       "uid": [
         "04 C5 37 FA 60 5B 84",
@@ -124,7 +174,11 @@
       "description_jeu": "Cette carte te permet de te défendre ",
       "image": "img_carte/img_defense/A2F.png",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Brutforce",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -137,7 +191,12 @@
       "description_jeu": "Cette carte te permet de te défendre ",
       "image": "img_carte/img_defense/antivirus.png",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Virus",
+        "Cheval de troie",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -149,7 +208,11 @@
       "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
       "image": "img_carte/img_defense/backup.png",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Panne réseau",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -161,7 +224,11 @@
       "description_jeu": "Cette carte te permet de te défendre contre ",
       "image": "img_carte/img_defense/chiffrement_donnee.png",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Élévation de privilège",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -173,7 +240,11 @@
       "description_jeu": "Cette carte te permet de te défendre contre ",
       "image": "img_carte/img_defense/firewall.png",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "DDOS",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -185,7 +256,11 @@
       "description_jeu": "Cette carte te permet de te défendre contre ",
       "image": "img_carte/img_defense/mise_a_jour.png",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Logiciel malveillant",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -197,7 +272,10 @@
       "description_jeu": "Cette carte te permet de dupliquer une autre carte.",
       "image": "img_carte/img_defense/redondance_donnee.png",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -208,7 +286,10 @@
       "description_jeu": "Cette carte te permet de dévérouiller la 4ème case du plateau du coté défenseur",
       "image": "img_carte/img_defense/stockage.png",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -216,10 +297,21 @@
       ],
       "name": "Super-antivirus",
       "description_vie": "",
-      "description_jeu": "Cette carte te permet de te défendre contre ",
+      "description_jeu": "Cette carte te permet de te défendre contre toutes les attaques.",
       "image": "img_carte/img_defense/super_antivirus.png",
       "type": "défense",
-      "level": "haut niveau"
+      "level": "haut niveau",
+      "counter": [
+        "Anonymous",
+        "Brutforce",
+        "Cheval de troie",
+        "DDOS",
+        "Élévation de privilège",
+        "Hacker",
+        "Logiciel malveillant",
+        "Panne réseau",
+        "Virus"
+      ]
     },
     {
       "uid": [
@@ -228,10 +320,14 @@
       ],
       "name": "VPN",
       "description_vie": "",
-      "description_jeu": "Cette carte te permet de te défendre contre ",
+      "description_jeu": "Cette carte te permet de te défendre contre un hacker.",
       "image": "img_carte/img_defense/VPN.png",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Hacker",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -240,10 +336,21 @@
       ],
       "name": "White hat",
       "description_vie": "",
-      "description_jeu": "Cette carte te permet de te défendre contre ",
+      "description_jeu": "Cette carte te permet de te défendre contre toutes les attaques.",
       "image": "img_carte/img_defense/white_hat.png",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Anonymous",
+        "Brutforce",
+        "Cheval de troie",
+        "DDOS",
+        "Élévation de privilège",
+        "Hacker",
+        "Logiciel malveillant",
+        "Panne réseau",
+        "Virus"
+      ]
     }
   ]
 }
