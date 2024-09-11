@@ -1,16 +1,17 @@
 <template>
   <div id="app1">
-    <RFIDReadersAttaque/>
+    <PlateauFinaleAttaquant/>
   </div>
 </template>
 
 <script>
-import RFIDReadersAttaque from '@/components/plateauAttaque/RFIDReadersAttaque.vue';
+import PlateauFinaleAttaquant from '@/components/plateauAttaque/PlateauFinaleAttaquant.vue';
+
 
 export default {
   name: 'App',
   components: {
-    RFIDReadersAttaque
+    PlateauFinaleAttaquant,
   }
 };
 </script>

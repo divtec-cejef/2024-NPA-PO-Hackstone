@@ -64,9 +64,9 @@ button.attaque {
 }
 
 button.defense {
-    border: 3px solid blue;
-    background-color: blue;
-    box-shadow: 0 0 50px rgba(0, 0, 255, 100);
+    border: 3px solid #4d4dff;
+    background-color: #4d4dff;
+    box-shadow: 0 0 50px rgb(77, 77, 255);
 }
 
 button.tutoriel {
