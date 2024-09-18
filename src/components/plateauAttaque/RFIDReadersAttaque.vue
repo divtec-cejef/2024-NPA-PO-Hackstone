@@ -142,8 +142,8 @@ export default {
         } else if (reader.id === 2) {
           this.showOverlay = true;
         } else if (reader.id === 3) {
-          console.log("Haha je t'attaque")
           fonctionnaliteAttaque.methods.attaquer(card, this.readers);
+          console.log("Haha je t'attaque")
         }
       }
     });

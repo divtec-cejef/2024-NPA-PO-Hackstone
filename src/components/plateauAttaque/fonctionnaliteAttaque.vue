@@ -1,5 +1,6 @@
 <script>
 // Importation du fichier JSON des CARTES
+
 let cardsData = [];
 let carteEnJeu = [];
 cardsData = require('../../../cards.json');
@@ -70,61 +71,102 @@ export default {
      * @param cartesEnMains cartes présentent dans la main de l'ordinateur
      */
     DebutTour(cartesDeck, cartesEnMains) {
+      for (let i = 0; i < cartesDeck.length; i++){
+        if (cartesDeck[i].name === ("Stockage")){
+          cartesDeck.splice(i, 1);
+        }
+      }
       this.piocher(cartesDeck, cartesEnMains);
     },
+
+    /**
+     * Permet à l'ordinateur de remplir son terrain grâce aux cartes qu'il a dans sa main
+     * @param cartesEnMains carte dans la main de l'ordinateur
+     * @param reader lecteurs sur lesquels les cartes sont posées
+     */
     poserCarte(cartesEnMains, reader) {
+      //Pose une carte seulement s'il n'y en a pas de déjà posé
       if (reader.image === null) {
         let index = 0;
         let cartePosee;
-        index = this.getNombreAleatoire(0, cartesEnMains.length - 1);
-        cartePosee = cartesEnMains[index];
+
+        //Empêche la redondance de données d'être la première carte posée sur le terrain
+        // afin qu'elle puisse copier une carte déjà présente
+        do {
+          index = this.getNombreAleatoire(0, cartesEnMains.length - 1);
+          cartePosee = cartesEnMains[index];
+          console.log(cartePosee)
+        }while (cartePosee.name === "Redondance de données" && carteEnJeu.length === 0);
+
+        //La carte redondance de données devient une copie de la carte sur la case de gauche.
+        if(cartePosee.name === "Redondance de données") {
+          alert("Redondance de données");
+          cartePosee = carteEnJeu[0];
+        }
+
         reader.image = cartePosee.image;
         reader.name = cartePosee.name;
         cartesEnMains.splice(index, 1);
         console.log(cartePosee);
+
         carteEnJeu.push(cartePosee);
+        console.log(carteEnJeu);
       }
     },
 
     /**
-     *Permet a l'utilisateur d'attaquer les cartes de l'ordinateur,
+     *Permet à l'utilisateur d'attaquer les cartes de l'ordinateur,
      * les attaques se font automatiquement sur la bonne carte
      * @param card carte qui va attaquer
      * @param readers lecteur sur lesquelles les cartes sont posées
      */
-    attaquer(card, readers){
-      //Liste des cartes qui contrent les cartes présentent sur le jeu
-      let counterCarteEnJeu = carteEnJeu[0].counter;
-
+    attaquer(card, readers) {
+      let counterCarteEnJeu = [];
+      let carteDefendu = false;
+      let pv = 5;
       //Fonction permettant d'arrêter les deux boucles à un moment donné
       outerLoop:
           //Boucle passant sur chaque case de l'ordinateur
           for (let j = 0; j < carteEnJeu.length; j++) {
+            console.log(carteEnJeu);
+            console.log(j)
+            //Liste des cartes qui contrent les cartes présentent sur le jeu
+            counterCarteEnJeu = carteEnJeu[j].counter;
 
             //Boucle passant tous les contre des cartes
-            for (let i = 0; i < counterCarteEnJeu[i].length; i++) {
-
+            if (carteEnJeu[j].name !== "Stockage")
+              console.log(counterCarteEnJeu);
+            for (let i = 0; i < counterCarteEnJeu.length; i++) {
               //Test si la carte qui attaque à un contre présent sur le terrain
-              if (counterCarteEnJeu[i].includes(card.name)) {
+              if (counterCarteEnJeu.includes(card.name)) {
+                carteDefendu = true;
 
                 //Retrouve les cases sur lesquelles les cartes sont présentes
                 let carte = readers.find(carte => carte.name === carteEnJeu[j].name);
                 let carte2 = readers.find(carte2 => carte2.name === card.name);
-
                 //Retire le nom et l'image de la carte détruite de leur case
-                carte.image = null;
-                carte.name = null;
-                carte2.image = null;
-                carte2.name = null;
+                if (carte.image !== null) {
+                  carte.image = null;
+                  carte.name = null;
+                  carte2.image = null;
+                  carte2.name = null;
+                }
                 //Retire la carte détruite de la liste
-                carteEnJeu.splice(carteEnJeu[j], 1);
-
+                console.log("Avant supp");
+                console.log(carteEnJeu);
+                carteEnJeu.splice(j, 1);
+                console.log("apres supp");
+                console.log(carteEnJeu);
+                console.log(j);
                 //Termine la fonction une fois qu'une carte a été détruite
                 break outerLoop;
               }
             }
-
           }
+      if (!carteDefendu) {
+        pv--;
+        alert("PV : " + pv);
+      }
     }
   }
 };
