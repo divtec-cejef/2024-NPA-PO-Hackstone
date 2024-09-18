@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import mappedReaderID from "@/components/plateauAttaque/RFIDReadersAttaque.vue";
-import readers from "@/components/plateauAttaque/RFIDReadersAttaque.vue";
+import io from 'socket.io-client';
+
 export default {
   data() {
     return {
@@ -25,16 +25,16 @@ export default {
   },
 
   mounted() {
+    this.socket = io('http://localhost:3001');
+
     this.socket.on('rfidData', (data) => {
       const { readerID } = data;
-      const reader = readers.find(r => r.id === mappedReaderID);
 
       // Vérifier si le readerID est 1
-      if (reader.id === 1) {
+      if (readerID === '1)') {
         this.updateVisibility();
-      } else {
-        console.log(`Carte non prise en charge: readerID ${readerID}`);
       }
+
     });
   },
   methods: {

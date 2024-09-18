@@ -1,31 +1,19 @@
 <template>
   <div class="plateau-finale-attaque">
-    <!-- Case de la défense -->
-
-    <CaseDefenseur_attaque :readers="readers" :socket="socket" />
-    <img src="../../img/ligne.png" alt="Ligne" class="line" id="ligne_attaque">
-    <CaseAttaquant_attaque :readers="readers" :socket="socket" />
-    <!-- Case de l'attaque -->
-
-
-    <!-- Overlay de confirmation d'attaque
-
-    <div v-if="showOverlay" class="overlay">
-      <div class="overlay-content">
-        <h2>Attaque Confirmée</h2>
-        <button @click="closeOverlay">Fermer</button>
-      </div>
-    </div>
-    -->
     <!-- PV du défenseur -->
     <PVDefenseur_attaque />
+
+    <!-- Case de la défense -->
+    <CaseDefenseur_attaque :readers="readers" :socket="socket" />
+
+    <img src="../../img/ligne.png" alt="Ligne" class="line" id="ligne_attaque">
 
     <!-- Compteurs de l'attaque -->
     <TourAttaquant_attaque :socket="socket" />
 
-
+    <!-- Case de l'attaque -->
+    <CaseAttaquant_attaque :readers="readers" :socket="socket" />
   </div>
-
 </template>
 
 <script>
@@ -59,14 +47,11 @@ export default {
     };
   },
   mounted() {
-    this.socket = io('http://localhost:3000');
+    this.socket = io('http://localhost:3001');
     this.socket.on('rfidData', (data) => {
-      const {readerID, card} = data;
-      console.log(`Received readerID: ${readerID}`);
+      const { readerID, card } = data;
 
-      // Vérifier si la carte est de type attaque
       if (card.type === 'attaque') {
-        // Mapping des capteurs RFID aux readers
         let mappedReaderID = null;
         switch (parseInt(readerID)) {
           case 1:
@@ -76,7 +61,7 @@ export default {
             mappedReaderID = 2; // Capteur 2 -> Reader 2
             break;
           case 3:
-            mappedReaderID = 5; // Capteur 3 -> Reader 4
+            mappedReaderID = 5; // Capteur 3 -> Reader 5
             break;
           case 4:
             mappedReaderID = 6; // Capteur 4 -> Reader 6
@@ -92,14 +77,17 @@ export default {
             break;
         }
 
+        console.log('Mapped Reader ID:', mappedReaderID);
+
         const reader = this.readers.find(r => r.id === mappedReaderID);
 
         if (!reader) {
           console.log(`No reader found with mapped ID ${mappedReaderID}.`);
         } else if (reader.id === 2) {
+          console.log("bonjour")
           this.showOverlay = true;
         } else if (reader.id === 3) {
-          console.log("Haha je t'attaque")
+          console.log("Haha je t'attaque");
         }
       } else {
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);
@@ -136,5 +124,4 @@ export default {
   align-items: center;
   gap: 15px;
 }
-
 </style>

@@ -7,7 +7,6 @@
 <script>
 import PlateauFinaleAttaquant from '@/components/plateauAttaque/PlateauFinaleAttaquant.vue';
 
-
 export default {
   name: 'App',
   components: {
@@ -17,6 +16,11 @@ export default {
 </script>
 
 <style>
+body {
+  display: block;
+  margin: 0;
+}
+
 #app1 {
   background: url("../img/plateau_attaquant.webp")  center center / cover no-repeat fixed;
   font-family: Avenir, Helvetica, Arial, sans-serif;

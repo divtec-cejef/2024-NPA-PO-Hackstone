@@ -5,6 +5,7 @@
          class="compteur-defense">
   </div>
 </template>
+
 <script>
 import io from 'socket.io-client';
 

@@ -1,6 +1,5 @@
 <template>
   <div class="bottomReaders_defense">
-    <!-- Assure-toi que les indices correspondent bien aux bons lecteurs -->
     <Case_1_Defenseur_defense :id="readers[2].id" :image="readers[2].image"/>
     <Case_2_Defenseur_defense :id="readers[3].id" :image="readers[3].image"/>
     <Case_3_Defenseur_defense :id="readers[5].id" :image="readers[5].image"/>
@@ -43,25 +42,28 @@ export default {
     this.socket = io('http://localhost:3000');
     this.socket.on('rfidData', (data) => {
       let { readerID, card } = data;
+      if (card.type === 'défense') {
 
-      // Nettoie readerID pour enlever les caractères non numériques
-      readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
+        // Nettoie readerID pour enlever les caractères non numériques
+        readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
-      console.log("Cleaned readerID:", readerID); // Vérifie la valeur nettoyée
+        console.log("Cleaned readerID:", readerID); // Vérifie la valeur nettoyée
 
-      this.card = card;
-      this.card.image = card.image;
-      this.readerID = readerID;
+        this.card = card;
+        this.card.image = card.image;
+        this.readerID = readerID;
 
-      // Convertir readerID en nombre
-      const readerIndex = this.readers.findIndex(r => r.id === Number(readerID));
-      console.log("Reader Index:", readerIndex); // Vérifie l'index trouvé
+        // Convertir readerID en nombre
+        const readerIndex = this.readers.findIndex(r => r.id === Number(readerID));
+        console.log("Reader Index:", readerIndex); // Vérifie l'index trouvé
 
-      if (readerIndex !== -1) {
-        this.readers[readerIndex] = { ...this.readers[readerIndex], image: card.image };
+        if (readerIndex !== -1) {
+          this.readers[readerIndex] = { ...this.readers[readerIndex], image: card.image };
+        }
+        console.log("Updated reader:", this.readers[readerIndex]);
+      } else {
+        console.log(`Carte non valide: type ${card.type}. Seules les cartes de type défense sont autorisées.`);
       }
-
-      console.log("Updated reader:", this.readers[readerIndex]);
     });
   }
 };

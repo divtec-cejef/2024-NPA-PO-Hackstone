@@ -13,9 +13,7 @@
 
     <!-- PV restant du défenseur -->
     <PVDefenseur_defense/>
-
   </div>
-
 </template>
 
 <script>
@@ -56,9 +54,7 @@ export default {
     this.socket.on('rfidData', (data) => {
       const {readerID, card} = data;
 
-      // Vérifier si la carte est de type défense
       if (card.type === 'défense') {
-        // Mapping des capteurs RFID aux readers
         let mappedReaderID = null;
         switch (parseInt(readerID)) {
           case 1:

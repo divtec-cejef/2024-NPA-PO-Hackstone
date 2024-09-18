@@ -1,64 +1,71 @@
 <template>
   <div class="bottomReaders_attaque">
-    <!-- Case de l'attaque -->
-    <div v-for="bottomReader_attaque in bottomReaders_attaque"
-         :key="bottomReader_attaque.id"
-         :id="'bottomReader_attaque' + bottomReader_attaque.id"
-         class="bottomReader_attaque">
-      <img v-if="bottomReader_attaque.image" :src="getImagePath(bottomReader_attaque.image)" alt="Card Image" style="max-width: 100%; height: auto;">
-      <p v-else></p>
-    </div>
+    <Case_1_Attaquant_Attaque :id="readers[2].id" :image="readers[2].image"/>
+    <Case_2_Attaquant_Attaque :id="readers[3].id" :image="readers[3].image"/>
+    <Case_3_Attaquant_Attaque :id="readers[5].id" :image="readers[5].image"/>
   </div>
 </template>
 
 <script>
-import mappedReaderID from "@/components/plateauAttaque/RFIDReadersAttaque.vue";
+import Case_1_Attaquant_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_1_Defenseur_Attaque.vue";
+import Case_2_Attaquant_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_2_Defenseur_Attaque.vue";
+import Case_3_Attaquant_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_3_Defenseur_Attaque.vue";
+import io from "socket.io-client";
 
 export default {
-  props: {
-    readers: {
-      type: Array,
-      required: true
-    },
-    socket: {
-      type: Object,
-      required: true
-    }
+  components: {
+    Case_1_Attaquant_Attaque,
+    Case_2_Attaquant_Attaque,
+    Case_3_Attaquant_Attaque
   },
-  computed: {
-    bottomReaders_attaque() {
-      const bottom = this.readers.slice(4, 7);
-      console.log("Bottom Readers:", bottom);  // Pour vérifier les valeurs
-      return bottom;
-    },
+  data() {
+    return {
+      readers: [
+        { id: 1, name: 'Reader 1', image: null},
+        { id: 2, name: 'Reader 2', image: null},
+        { id: 3, name: 'Reader 3', image: null},
+        { id: 4, name: 'Reader 4', image: null},
+        { id: 5, name: 'Reader 5', image: null},
+        { id: 6, name: 'Reader 6', image: null},
+        { id: 7, name: 'Reader 7', image: null},
+      ],
+      card: {},
+      readerID: null
+    };
   },
 
   mounted() {
-    // Ecouter les données RFID via socket
+    this.socket = io('http://localhost:3001');
+
+    this.socket.on('connect', () => {
+      console.log('Successfully connected to WebSocket on port 3001');
+    });
+
     this.socket.on('rfidData', (data) => {
-      const { readerID, card } = data;
-      console.log(`Received readerID: ${readerID} with card: ${card.name}`);
+      let { readerID, card } = data;
+      if (card.type === 'attaque') {
 
-      const reader = this.readers.find(r => r.id === mappedReaderID);
+        // Nettoie readerID pour enlever les caractères non numériques
+        readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
-      if (reader.id === 5 || reader.id === 6 || reader.id === 7) {
-        reader.name = card.name;
-        reader.image = card.image;
-        console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
+        console.log("Cleaned readerID:", readerID); // Vérifie la valeur nettoyée
+
+        this.card = card;
+        this.card.image = card.image;
+        this.readerID = readerID;
+
+        // Convertir readerID en nombre
+        const readerIndex = this.readers.findIndex(r => r.id === Number(readerID));
+        console.log("Reader Index:", readerIndex); // Vérifie l'index trouvé
+
+        if (readerIndex !== -1) {
+          this.readers[readerIndex] = { ...this.readers[readerIndex], image: card.image };
+        }
+        console.log("Updated reader:", this.readers[readerIndex]);
       } else {
-        console.log(`No reader found with mapped ID ${mappedReaderID}.`);
+        console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);
       }
     });
-  },
-  methods: {
-    getImagePath(image) {
-      try {
-        return require(`@/${image}`);
-      } catch (e) {
-        console.error("Image not found:", image);
-        return ''; // Return a default or empty string if image not found
-      }
-    }
   }
 };
 </script>
@@ -68,19 +75,5 @@ export default {
   display: flex;
   justify-content: center;
   gap: 147px;
-}
-
-.bottomReader_attaque {
-  width: 270px;
-  height: 380px;
-  border-width: 4px;
-  border-style: solid;
-  border-color: white;
-  border-image: initial;
-
-  font-size: 24px;
-  justify-content: center;
-  display: flex;
-  align-items: center;
 }
 </style>
