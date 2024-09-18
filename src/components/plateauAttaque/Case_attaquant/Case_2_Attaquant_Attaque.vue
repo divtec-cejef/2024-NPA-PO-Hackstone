@@ -1,7 +1,7 @@
 <template>
   <div class="bottomReader2_attaque">
     <img v-if="image" :src="getImagePath(image)" alt="Defense Card" class="defense-card">
-    <p v-else>Case Défense {{ id }} - Aucune image reçue</p>
+    <p v-else></p>
   </div>
 </template>
 

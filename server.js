@@ -47,12 +47,12 @@ app2.use(bodyParser.json());
 app1.use(express.static(path.join(__dirname, 'dist/plateauDefense')));
 app2.use(express.static(path.join(__dirname, 'dist/plateauAttaque')));
 
-// Servir plateauDefense.html pour le port 3000
+// Servir plateauDefense.html pour le port 3001 (server 1)
 app1.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/plateauDefense', 'plateauDefense.html'));
 });
 
-// Servir plateauAttaque.html pour le port 3001
+// Servir plateauAttaque.html pour le port 3000 (server 2)
 app2.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/plateauAttaque', 'plateauAttaque.html'));
 });
@@ -146,10 +146,12 @@ app2.post('/send_rfid_data', (req, res) => {
     res.send('RFID data processed');
 });
 
+// Écoute sur le port 3001 pour le plateauDefense
 server1.listen(3001, () => {
-    console.log('listening on *:3001');
+    console.log('Server 1 listening on *:3001 (plateauDefense)');
 });
 
+// Écoute sur le port 3000 pour le plateauAttaque
 server2.listen(3000, () => {
-    console.log('listening on *:3000');
+    console.log('Server 2 listening on *:3000 (plateauAttaque)');
 });
