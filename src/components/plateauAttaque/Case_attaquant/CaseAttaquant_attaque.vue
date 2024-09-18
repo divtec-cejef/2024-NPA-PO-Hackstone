@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import Case_1_Attaquant_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_1_Defenseur_Attaque.vue";
-import Case_2_Attaquant_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_2_Defenseur_Attaque.vue";
-import Case_3_Attaquant_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_3_Defenseur_Attaque.vue";
+import Case_1_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
+import Case_2_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
+import Case_3_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
 import io from "socket.io-client";
 
 export default {
@@ -35,11 +35,7 @@ export default {
   },
 
   mounted() {
-    this.socket = io('http://localhost:3001');
-
-    this.socket.on('connect', () => {
-      console.log('Successfully connected to WebSocket on port 3001');
-    });
+    this.socket = io('http://localhost:3000');
 
     this.socket.on('rfidData', (data) => {
       let { readerID, card } = data;

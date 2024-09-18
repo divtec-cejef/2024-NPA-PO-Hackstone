@@ -47,7 +47,7 @@ export default {
     };
   },
   mounted() {
-    this.socket = io('http://localhost:3001');
+    this.socket = io('http://localhost:3000');
     this.socket.on('rfidData', (data) => {
       const { readerID, card } = data;
 

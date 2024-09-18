@@ -9,16 +9,15 @@ const app1 = express();
 const app2 = express();
 
 const cors = require('cors');
-const io = require("socket.io-client");
 
 // Pour app1
 app1.use(cors({
-    origin: 'http://localhost:3000' // Autorise l'origine sur le port 3001
+    origin: 'http://localhost:3001' // Autorise l'origine sur le port 3001
 }));
 
 // Pour app2
 app2.use(cors({
-    origin: 'http://localhost:3001' // Autorise l'origine sur le port 3000
+    origin: 'http://localhost:3000' // Autorise l'origine sur le port 3000
 }));
 
 const server1 = http.createServer(app1);
@@ -26,14 +25,14 @@ const server2 = http.createServer(app2);
 
 const io1 = socketIo(server1, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "http://localhost:3001",
         methods: ["GET", "POST"]
     }
 });
 
 const io2 = socketIo(server2, {
     cors: {
-        origin: "http://localhost:3001",
+        origin: "http://localhost:3000",
         methods: ["GET", "POST"]
     }
 });
@@ -68,7 +67,7 @@ io1.on('connection', (socket) => {
         const card = cardsData.cards.find(card => card.uid === uid);
         if (card) {
             io1.emit('rfidData', { readerID, card });
-            console.log('Emitted card data on server 1:', { readerID, card });
+            console.log('Emitted card data:', { readerID, card });
         } else {
             io1.emit('rfidData', { readerID, card: { name: 'Carte inconnue', image: '', description_vie: '', description_jeu: '' } });
             console.log('Emitted unknown card data for UID:', uid);
@@ -82,16 +81,12 @@ io1.on('connection', (socket) => {
 
 io2.on('connection', (socket) => {
     console.log('User connected on server 2');
-
     socket.on('rfidData', (data) => {
-        console.log('RFID data received on server 2:', data);  // Log des données reçues
         const [readerID, uid] = data.split(':').map(item => item.trim());
         const card = cardsData.cards.find(card => card.uid === uid);
-
         if (card) {
-            console.log('Card found:', card); // Log la carte trouvée
-            io2.emit('rfidData', { readerID, card });  // Émission des données vers le client
-            console.log('Emitted card data on server 2:', { readerID, card });
+            io2.emit('rfidData', { readerID, card });
+            console.log('Emitted card data:', { readerID, card });
         } else {
             io2.emit('rfidData', { readerID, card: { name: 'Carte inconnue', image: '', description_vie: '', description_jeu: '' } });
             console.log('Emitted unknown card data for UID:', uid);
@@ -115,7 +110,7 @@ app1.post('/send_rfid_data', (req, res) => {
         const card = cardsData.cards.find(card => card.uid.includes(uid));
         if (card) {
             io1.emit('rfidData', { readerID, card });
-            console.log('Emitted card data on server 1:', { readerID, card });
+            console.log('Emitted card data:', { readerID, card });
         } else {
             io1.emit('rfidData', { readerID, card: { name: 'Carte inconnue', image: '', description_vie: '', description_jeu: '' } });
             console.log('Emitted unknown card data for UID:', uid);
@@ -139,7 +134,7 @@ app2.post('/send_rfid_data', (req, res) => {
         const card = cardsData.cards.find(card => card.uid.includes(uid));
         if (card) {
             io2.emit('rfidData', { readerID, card });
-            console.log('Emitted card data on server 2:', { readerID, card });
+            console.log('Emitted card data:', { readerID, card });
         } else {
             io2.emit('rfidData', { readerID, card: { name: 'Carte inconnue', image: '', description_vie: '', description_jeu: '' } });
             console.log('Emitted unknown card data for UID:', uid);
@@ -151,10 +146,10 @@ app2.post('/send_rfid_data', (req, res) => {
     res.send('RFID data processed');
 });
 
-server1.listen(3000, () => {
-    console.log('listening on *:3000');
+server1.listen(3001, () => {
+    console.log('listening on *:3001');
 });
 
-server2.listen(3001, () => {
-    console.log('listening on *:3001');
+server2.listen(3000, () => {
+    console.log('listening on *:3000');
 });
