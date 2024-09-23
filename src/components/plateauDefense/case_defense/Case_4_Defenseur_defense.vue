@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import io from "socket.io-client";
+
 export default {
   props: {
     id: {
@@ -36,21 +38,20 @@ export default {
     };
   },
 
-  watch: {
-    card(newCard) {
-      if (newCard) {
-        if (newCard.name === 'Stockage') {
-          this.isStockageCard = true;
-          this.triggerLockAnimation();
-          this.isAccessible = true;
-        } else {
-          this.isStockageCard = false;
-          this.isCardVisible = this.isAccessible === true;
-        }
+  mounted() {
+    this.socket = io('http://localhost:3001');
+    this.socket.on('rfidData', (data) => {
+      let { readerID, card } = data;
+      if (card.type === 'défense' && card.name === 'Stockage' && readerID === '7)') {
+        this.isStockageCard = true;
+        this.triggerLockAnimation();
+        this.isAccessible = true;
+      } else {
+        this.isStockageCard = false;
+        this.isCardVisible = this.isAccessible === true;
       }
-    }
+    });
   },
-
   methods: {
     getImagePath(image) {
       try {

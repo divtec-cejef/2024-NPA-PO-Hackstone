@@ -42,7 +42,7 @@ export default {
     this.socket = io('http://localhost:3001');
     this.socket.on('rfidData', (data) => {
       let { readerID, card } = data;
-      if (card.type === 'défense') {
+      if (card.type === 'défense' && card.name !== 'Stockage') {
 
         // Nettoie readerID pour enlever les caractères non numériques
         readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
