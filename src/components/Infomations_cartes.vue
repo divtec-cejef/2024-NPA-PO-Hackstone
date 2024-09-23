@@ -76,6 +76,8 @@ export default {
 .container-2 {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .container-3 {
@@ -90,7 +92,6 @@ h1 {
 }
 
 .affichage_carte {
-  width: 400px;
   border: 4px solid white;
   display: flex;
   align-items: center;
@@ -100,7 +101,8 @@ h1 {
 
 img {
   border-radius: 5px;
-  height: 98%;
+  height: 645px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 3px 8px;
 }
 
 .description_jeu, .description_vie {
