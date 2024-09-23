@@ -6,6 +6,7 @@
     "serve": "C:\\laragon\\www\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service serve",
     "build:plateauAttaque": "C:\\laragon\\www\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/plateauAttaque",
     "build:plateauDefense": "C:\\laragon\\www\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/plateauDefense",
+    "build:informationCarte": "C:\\laragon\\www\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/informationCarte",
     "lint": "C:\\laragon\\www\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service lint"
   },
   "dependencies": {

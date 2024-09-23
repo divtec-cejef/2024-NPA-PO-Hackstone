@@ -11,6 +11,11 @@ module.exports = {
       template: 'public/plateauDefense.html',
       filename: 'plateauDefense.html',
     },
+    InfoCarte: {
+      entry: 'src/main-infoCarte.js',
+      template: 'public/infoCarte.html',
+      filename: 'infoCarte.html',
+    },
   },
 };
 
