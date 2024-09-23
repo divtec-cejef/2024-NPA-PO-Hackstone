@@ -22,12 +22,10 @@ body {
 }
 
 #app3 {
-  background: url("../img/coeur.webp")  center center / cover no-repeat fixed;
+  //background: url("../img/coeur.webp")  center center / cover no-repeat fixed;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 0;
 }
 </style>
