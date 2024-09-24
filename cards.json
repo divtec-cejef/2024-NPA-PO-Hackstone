@@ -6,6 +6,7 @@
       "description_vie": "oui",
       "description_jeu": "oui",
       "image": "img/img_carte/img_attaque/anonymous.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "attaque",
       "level": "haut niveau"
     },
@@ -19,6 +20,7 @@
       "description_vie": "oui",
       "description_jeu": "Cette carte te permet de hahahahhahahah",
       "image": "img/img_carte/img_attaque/brutforce.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -31,6 +33,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de ",
       "image": "img/img_carte/img_attaque/cheval_troie.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -44,6 +47,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de ",
       "image": "img/img_carte/img_attaque/DDOS.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -57,6 +61,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de ",
       "image": "img/img_carte/img_attaque/elevation_privilege.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -70,6 +75,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de",
       "image": "img/img_carte/img_attaque/hacker.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -83,6 +89,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de",
       "image": "img/img_carte/img_attaque/logiciel_malveillant.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -96,6 +103,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de ",
       "image": "img/img_carte/img_attaque/panne_reseau.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -108,6 +116,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de",
       "image": "img/img_carte/img_attaque/virus.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "attaque",
       "level": "bas niveau"
     },
@@ -121,6 +130,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre ",
       "image": "img/img_carte/img_defense/A2F.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -134,6 +144,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre ",
       "image": "img/img_carte/img_defense/antivirus.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -146,6 +157,7 @@
       "description_vie": "Une sauvegarde, c'est une copie de secours de tes données importantes pour les récupérer si ton appareil a un problème.",
       "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
       "image": "img/img_carte/img_defense/backup.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -158,6 +170,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
       "image": "img/img_carte/img_defense/chiffrement_donnee.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -170,6 +183,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
       "image": "img/img_carte/img_defense/firewall.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -182,6 +196,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
       "image": "img/img_carte/img_defense/mise_a_jour.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -194,6 +209,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de dupliquer une autre carte.",
       "image": "img/img_carte/img_defense/redondance_donnee.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -203,6 +219,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de dévérouiller la 4ème case du plateau du coté défenseur",
       "image": "img/img_carte/img_defense/stockage.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -212,6 +229,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
       "image": "img/img_carte/img_defense/super_antivirus.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
       "level": "haut niveau"
     },
@@ -224,6 +242,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
       "image": "img/img_carte/img_defense/VPN.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
       "level": "bas niveau"
     },
@@ -236,6 +255,7 @@
       "description_vie": "",
       "description_jeu": "Cette carte te permet de te défendre contre ",
       "image": "img/img_carte/img_defense/white_hat.png",
+      "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
       "level": "bas niveau"
     }
