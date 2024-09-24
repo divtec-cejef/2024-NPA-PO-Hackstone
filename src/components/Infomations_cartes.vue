@@ -8,12 +8,12 @@
       </div>
       <div class="container-3">
         <div class="description_jeu">
-          <p><b> Déscription jeu : </b></p>
+          <p><b> Description jeu : </b></p>
           <P>{{ descriptionJeu }}</P>
         </div>
 
         <div class="description_vie">
-          <p><b>Déscription vie :</b></p>
+          <p><b>Description vie :</b></p>
           <p>{{ descriptionVie }}</p>
         </div>
       </div>
@@ -39,13 +39,13 @@ export default {
     this.socket.on('rfidData', (data) => {
       console.log('Données RFID reçues:', data);
       let { readerID, card } = data;
-
+      console.log(card)
       // Nettoie readerID pour enlever les caractères non numériques
       readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
       if (readerID === '2') {
         this.cardName = card.name
-        this.image = card.image
+        this.image = card.image_info
         this.descriptionJeu = card.description_jeu
         this.descriptionVie = card.description_vie
       }
@@ -92,11 +92,14 @@ h1 {
 }
 
 .affichage_carte {
+  height: 100%;
   border: 4px solid white;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 130px;
+  margin-right: 80px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .24);
+  border-radius: 10px;
 }
 
 img {
@@ -114,7 +117,12 @@ img {
   justify-content: center;
   box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
   padding-left: 20px;
-  margin: 15px
+}
+.description_jeu {
+  margin: 0 0 15px 0;
+}
+.description_vie {
+  margin: 15px 0 0 0;
 }
 
 p {
