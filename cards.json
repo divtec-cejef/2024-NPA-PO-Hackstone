@@ -221,7 +221,7 @@
       "image": "img/img_carte/img_defense/stockage.png",
       "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "haut niveau"
     },
     {
       "uid": ["04 35 34 FA 60 5B 85"],

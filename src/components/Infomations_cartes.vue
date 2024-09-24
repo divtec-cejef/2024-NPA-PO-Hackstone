@@ -10,6 +10,8 @@
         <div class="description_jeu">
           <p><b> Description jeu : </b></p>
           <P>{{ descriptionJeu }}</P>
+          <P><b>Type en jeu : </b>{{ cardType }}</P>
+          <P><b>Level en jeu : </b>{{ cardLevel }}</P>
         </div>
 
         <div class="description_vie">
@@ -28,6 +30,8 @@ export default {
   data() {
     return {
       cardName: '', // Ajout de la propriété réactive pour stocker le nom de la carte
+      cardType: '',
+      cardLevel:'',
       image: '',    // Si tu souhaites également gérer l'image de la carte
       descriptionJeu: '',
       descriptionVie: ''
@@ -45,7 +49,9 @@ export default {
 
       if (readerID === '2') {
         this.cardName = card.name
-        this.image = card.image_info
+        this.cardType = card.type
+        this.cardLevel = card.level
+        this.image = card.image   //_info
         this.descriptionJeu = card.description_jeu
         this.descriptionVie = card.description_vie
       }
