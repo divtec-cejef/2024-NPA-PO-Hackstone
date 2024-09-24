@@ -41,8 +41,6 @@ export default {
         {id: 6, name: 'Reader 6', image: null},
         {id: 7, name: 'Reader 7', image: null},
       ],
-      showOverlay: false,
-      overlayCard: {},
       socket: null,
     };
   },
@@ -83,21 +81,14 @@ export default {
 
         if (!reader) {
           console.log(`No reader found with mapped ID ${mappedReaderID}.`);
-        } else if (reader.id === 2) {
-          console.log("bonjour")
-          this.showOverlay = true;
         } else if (reader.id === 3) {
-          console.log("Haha je t'attaque");
+          alert("Haha je t'attaque !");
+          //console.log("Haha je t'attaque");
         }
       } else {
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);
       }
     });
-  },
-  methods: {
-    closeOverlay() {
-      this.showOverlay = false;
-    }
   }
 }
 </script>
