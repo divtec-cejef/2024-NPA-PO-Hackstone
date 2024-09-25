@@ -1,23 +1,17 @@
 <script>
 // Importation du fichier JSON des CARTES
-
-let cardsData = [];
 let carteEnJeu = [];
-cardsData = require('../../../cards.json');
+let pv = 5;
+let pvAnonymous = 2;
+let pvSuperAntivirus = 2;
+let cardsData = require('../../../cards.json');
 const DECK = {
   cardsData
 };
 const CARTES = DECK.cardsData.cards;
 export default {
 
-  created() {
-    // Générer les decks au chargement du composant
-    this.cartesAttaque = this.genererDeckAttaque();
-    this.cartesAttaque = this.genererDeckDefense();
-
-  },
   methods: {
-
     /**
      * Génère le deck du défenseur à partir d'un fichier json
      * @returns cartesAttaque cartes présentent dans le deck
@@ -62,7 +56,6 @@ export default {
         cartesDeck.splice(index, 1);
       }
       cartesEnMain.splice(cartesEnMain.length, 1);
-
     },
 
     /**
@@ -85,7 +78,7 @@ export default {
      * @param reader lecteurs sur lesquels les cartes sont posées
      */
     poserCarte(cartesEnMains, reader) {
-      //Pose une carte seulement s'il n'y en a pas de déjà posé
+      //Pose une carte seulement s'il n'y en a pas une de déjà posé
       if (reader.image === null) {
         let index = 0;
         let cartePosee;
@@ -95,7 +88,7 @@ export default {
         do {
           index = this.getNombreAleatoire(0, cartesEnMains.length - 1);
           cartePosee = cartesEnMains[index];
-          console.log(cartePosee)
+          console.log(cartePosee);
         }while (cartePosee.name === "Redondance de données" && carteEnJeu.length === 0);
 
         //La carte redondance de données devient une copie de la carte sur la case de gauche.
@@ -106,6 +99,9 @@ export default {
 
         reader.image = cartePosee.image;
         reader.name = cartePosee.name;
+        if (cartePosee.name === "Super-antivirus")
+          pvSuperAntivirus = 2;
+
         cartesEnMains.splice(index, 1);
         console.log(cartePosee);
 
@@ -123,19 +119,16 @@ export default {
     attaquer(card, readers) {
       let counterCarteEnJeu = [];
       let carteDefendu = false;
-      let pv = 5;
       //Fonction permettant d'arrêter les deux boucles à un moment donné
       outerLoop:
           //Boucle passant sur chaque case de l'ordinateur
           for (let j = 0; j < carteEnJeu.length; j++) {
             console.log(carteEnJeu);
-            console.log(j)
+            console.log(j);
             //Liste des cartes qui contrent les cartes présentent sur le jeu
             counterCarteEnJeu = carteEnJeu[j].counter;
 
             //Boucle passant tous les contre des cartes
-            if (carteEnJeu[j].name !== "Stockage")
-              console.log(counterCarteEnJeu);
             for (let i = 0; i < counterCarteEnJeu.length; i++) {
               //Test si la carte qui attaque à un contre présent sur le terrain
               if (counterCarteEnJeu.includes(card.name)) {
@@ -144,20 +137,21 @@ export default {
                 //Retrouve les cases sur lesquelles les cartes sont présentes
                 let carte = readers.find(carte => carte.name === carteEnJeu[j].name);
                 let carte2 = readers.find(carte2 => carte2.name === card.name);
+
                 //Retire le nom et l'image de la carte détruite de leur case
-                if (carte.image !== null) {
+                //et détruit l'Anonymous et le super-antivirus uniquement s'ils ont déjà été attaqués une fois
+                if ((carte.name === "Super-antivirus" && pvSuperAntivirus === 1) || carte.name !== "Super-antivirus") {
                   carte.image = null;
                   carte.name = null;
+                  carteEnJeu.splice(j, 1);
+                } else
+                  pvSuperAntivirus = 1;
+
+                if ((carte2.name === "Anonymous" && pvAnonymous === 1) || carte2.name !== "Anonymous") {
                   carte2.image = null;
                   carte2.name = null;
-                }
-                //Retire la carte détruite de la liste
-                console.log("Avant supp");
-                console.log(carteEnJeu);
-                carteEnJeu.splice(j, 1);
-                console.log("apres supp");
-                console.log(carteEnJeu);
-                console.log(j);
+                } else
+                  pvAnonymous = 1;
                 //Termine la fonction une fois qu'une carte a été détruite
                 break outerLoop;
               }
@@ -165,7 +159,18 @@ export default {
           }
       if (!carteDefendu) {
         pv--;
-        alert("PV : " + pv);
+        alert(pv);
+      }
+      if (pv === 0){
+        alert("Bravo")
+      }
+    },
+    arriveeAnonymous(card, reader) {
+      if(card.name === "Anonymous"){
+        for (let i = 0; i < 3; i++){
+          reader[i].name = null;
+          reader[i].image = null;
+        }
       }
     }
   }

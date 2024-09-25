@@ -123,6 +123,7 @@ export default {
         } else if (reader.id === 5 || reader.id === 6 || reader.id === 7) {
           reader.name = card.name;
           reader.image = card.image;
+          fonctionnaliteAttaque.methods.arriveeAnonymous(card, this.readers);
           console.log(`Reader ${mappedReaderID} updated with image: ${reader.image}`);
         } else if (reader.id === 1) {
 
