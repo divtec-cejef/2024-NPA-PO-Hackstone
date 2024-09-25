@@ -20,8 +20,9 @@ export default {
         require('@/img/compteur/compteur_4.png'),
         require('@/img/compteur/compteur_5.png')
       ],
-      visibility: [true, true, true, true, true]
+      visibility: [true, true, true, true, true],
     };
+
   },
 
   mounted() {
@@ -34,7 +35,6 @@ export default {
       if (readerID === '1)') {
         this.updateVisibility();
       }
-
     });
   },
   methods: {

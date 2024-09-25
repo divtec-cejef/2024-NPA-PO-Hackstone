@@ -88,7 +88,6 @@ export default {
         do {
           index = this.getNombreAleatoire(0, cartesEnMains.length - 1);
           cartePosee = cartesEnMains[index];
-          console.log(cartePosee);
         }while (cartePosee.name === "Redondance de données" && carteEnJeu.length === 0);
 
         //La carte redondance de données devient une copie de la carte sur la case de gauche.
@@ -99,14 +98,9 @@ export default {
 
         reader.image = cartePosee.image;
         reader.name = cartePosee.name;
-        if (cartePosee.name === "Super-antivirus")
-          pvSuperAntivirus = 2;
-
         cartesEnMains.splice(index, 1);
-        console.log(cartePosee);
 
         carteEnJeu.push(cartePosee);
-        console.log(carteEnJeu);
       }
     },
 
@@ -123,8 +117,6 @@ export default {
       outerLoop:
           //Boucle passant sur chaque case de l'ordinateur
           for (let j = 0; j < carteEnJeu.length; j++) {
-            console.log(carteEnJeu);
-            console.log(j);
             //Liste des cartes qui contrent les cartes présentent sur le jeu
             counterCarteEnJeu = carteEnJeu[j].counter;
 
@@ -136,7 +128,7 @@ export default {
 
                 //Retrouve les cases sur lesquelles les cartes sont présentes
                 let carte = readers.find(carte => carte.name === carteEnJeu[j].name);
-                let carte2 = readers.find(carte2 => carte2.name === card.name);
+                let carte2 = readers.find(caca2 => caca2.name === card.name);
 
                 //Retire le nom et l'image de la carte détruite de leur case
                 //et détruit l'Anonymous et le super-antivirus uniquement s'ils ont déjà été attaqués une fois
@@ -146,7 +138,6 @@ export default {
                   carteEnJeu.splice(j, 1);
                 } else
                   pvSuperAntivirus = 1;
-
                 if ((carte2.name === "Anonymous" && pvAnonymous === 1) || carte2.name !== "Anonymous") {
                   carte2.image = null;
                   carte2.name = null;
@@ -167,10 +158,13 @@ export default {
     },
     arriveeAnonymous(card, reader) {
       if(card.name === "Anonymous"){
-        for (let i = 0; i < 3; i++){
-          reader[i].name = null;
-          reader[i].image = null;
-        }
+
+        reader[0].name = null;
+        reader[0].image = null;
+        reader[1].name = null;
+        reader[1].image = null;
+        reader[4].name = null;
+        reader[4].image = null;
       }
     }
   }
