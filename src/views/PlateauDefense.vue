@@ -1,23 +1,28 @@
 <template>
   <div id="app2">
-    <RFIDReadersDefense/>
+    <PlateauFinaleDefenseur/>
   </div>
 </template>
 
 <script>
-import RFIDReadersDefense from '@/components/plateauDefense/RFIDReadersDefense.vue';
+import PlateauFinaleDefenseur from "@/components/plateauDefense/PlateauFinaleDefenseur.vue";
 
 export default {
   name: 'App',
   components: {
-    RFIDReadersDefense
+    PlateauFinaleDefenseur
   }
 };
 </script>
 
 <style>
+body {
+  display: block;
+  margin: 0;
+}
+
 #app2 {
-  background: url("../img_carte/plateau_defenseur.png")  center center / cover no-repeat fixed;
+  background: url("../img/plateau_defenseur.png")  center center / cover no-repeat fixed;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

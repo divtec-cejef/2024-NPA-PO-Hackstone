@@ -1,0 +1,79 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    color: rgb(158, 158, 158);
+    height: 100vh;
+    background: url('../src/img/fond_accueil.png') center center / cover no-repeat fixed;
+    font: 1rem Lato, Arial, sans-serif;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column; /* Réorganise en colonne pour le centrage du bouton tutoriel */
+    justify-content: space-between; /* Espace entre le bouton tutoriel et les autres */
+    align-items: center; /* Centre horizontalement tous les éléments */
+}
+
+.tutoriel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 800px; /* Séparation des boutons attaque et défense */
+    padding-bottom: 200px;
+}
+
+button {
+    margin: 0;
+    justify-content: center;
+    width: 270px;
+    height: 70px;
+    font-size: 40px;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    align-items: center;
+    border-radius: 100px;
+}
+
+button {
+    transition: transform 0.1s linear;
+}
+
+button:hover {
+    transform: scale(1.1); /* Agrandit le bouton de 10% */
+}
+
+button.attaque {
+    border: 3px solid red;
+    background-color: red;
+    box-shadow: 0 0 50px rgba(255, 0, 0, 100);
+}
+
+button.defense {
+    border: 3px solid #4d4dff;
+    background-color: #4d4dff;
+    box-shadow: 0 0 50px rgb(77, 77, 255);
+}
+
+button.tutoriel {
+    background: transparent;
+    border-color: transparent;
+    color: red;
+}
+
+
+
