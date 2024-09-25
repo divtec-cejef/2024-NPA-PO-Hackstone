@@ -12,7 +12,6 @@
 .attaque_pvDefenses {
   display: flex;
   justify-content: center;
-  gap: 5px;
   position: absolute;
   top: 50px; /* Positionner les cœurs en haut */
   right: 50px; /* Positionner les cœurs en haut */
@@ -20,6 +19,6 @@
 
 .attaque_pvDefense {
   width: 100px; /* Taille des cœurs */
-  height: 100px;
+  height: 120px;
 }
 </style>

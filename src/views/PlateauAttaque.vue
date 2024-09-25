@@ -22,7 +22,7 @@ body {
 }
 
 #app1 {
-  background: url("../img/plateau_attaquant.webp")  center center / cover no-repeat fixed;
+  background: url("../img/fondEcranAttaque.webp")  center center / cover no-repeat fixed;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

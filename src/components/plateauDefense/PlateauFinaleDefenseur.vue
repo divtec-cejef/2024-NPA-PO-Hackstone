@@ -92,12 +92,6 @@ export default {
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type défense sont autorisées.`);
       }
     });
-  },
-
-  methods: {
-    closeOverlay() {
-      this.showOverlay = false;
-    }
   }
 }
 </script>

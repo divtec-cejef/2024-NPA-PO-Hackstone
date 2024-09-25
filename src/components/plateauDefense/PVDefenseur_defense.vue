@@ -12,14 +12,13 @@
 .defense_pvDefenses {
   display: flex;
   justify-content: center;
-  gap: 5px;
   position: absolute;
   bottom: 50px;
   left: 50px;
 }
 
 .defense_pvDefense {
-  width: 70px; /* Taille des cœurs */
-  height: 70px;
+  width: 100px; /* Taille des cœurs */
+  height: 120px;
 }
 </style>
