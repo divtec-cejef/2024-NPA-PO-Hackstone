@@ -30,13 +30,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .bottomReader2_attaque {
-  width: 262px;
-  height: 372px;
+  width: 300px;
+  height: 420px;
   border: 4px solid white;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-size: 100%;
 }
 </style>

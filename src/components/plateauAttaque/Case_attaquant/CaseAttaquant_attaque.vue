@@ -8,8 +8,8 @@
 
 <script>
 import Case_1_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
-import Case_2_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
-import Case_3_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
+import Case_2_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_2_Attaquant_Attaque.vue";
+import Case_3_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_3_Attaquant_Attaque.vue";
 import io from "socket.io-client";
 
 export default {

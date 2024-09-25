@@ -10,8 +10,9 @@
 
 <style scoped>
 .topReader3_attaque {
-  width: 270px;
-  height: 380px;
+  width: 300px;
+  height: 420px;
+  background-size: 100%;
   border-width: 4px;
   border-style: solid;
   border-color: white;

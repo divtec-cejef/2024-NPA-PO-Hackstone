@@ -82,8 +82,9 @@ export default {
 
 <style scoped>
 .bottomReader4_defense {
-  width: 262px;
-  height: 372px;
+  width: 300px;
+  height: 420px;
+  background-size: 100%;
   border-width: 4px;
   border-style: solid;
   border-color: red;

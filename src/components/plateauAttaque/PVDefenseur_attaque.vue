@@ -4,7 +4,7 @@
 
 <template>
   <div class="attaque_pvDefenses">
-    <img v-for="n in 5" :key="n" src="../../img/coeur.webp" alt="Heart" class="attaque_pvDefense">
+    <img v-for="n in 5" :key="n" src="../../img/PV_defenseur.png" alt="Heart" class="attaque_pvDefense">
   </div>
 </template>
 
@@ -19,7 +19,7 @@
 }
 
 .attaque_pvDefense {
-  width: 70px; /* Taille des cœurs */
-  height: 70px;
+  width: 100px; /* Taille des cœurs */
+  height: 100px;
 }
 </style>

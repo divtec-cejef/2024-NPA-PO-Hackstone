@@ -4,7 +4,7 @@
 
 <template>
   <div class="defense_pvDefenses">
-    <img v-for="n in 5" :key="n" src="../../img/coeur.webp" alt="Heart" class="defense_pvDefense">
+    <img v-for="n in 5" :key="n" src="../../img/PV_defenseur.png" alt="Heart" class="defense_pvDefense">
   </div>
 </template>
 
