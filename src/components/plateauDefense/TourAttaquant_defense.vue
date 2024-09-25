@@ -4,6 +4,7 @@
          :style="{ visibility: visibility[index] ? 'visible' : 'hidden' }"
          class="compteur-defense">
   </div>
+  <div v-if="victoire" class="victoire-message">Victoire !</div>
 </template>
 
 <script>
@@ -20,7 +21,8 @@ export default {
         require('@/img/compteur/compteur_4.png'),
         require('@/img/compteur/compteur_5.png')
       ],
-      visibility: [true, true, true, true, true]
+      visibility: [true, true, true, true, true],
+      victoire: false,
     };
   },
 
@@ -29,7 +31,7 @@ export default {
 
     this.socket.on('rfidData', (data) => {
       const { readerID } = data;
-
+      this.updateVisibility();
       // Vérifier si le readerID est 1
       if (readerID === '1)') {
         this.updateVisibility();
@@ -38,14 +40,32 @@ export default {
     });
   },
   methods: {
+    checkVictory() {
+      if (this.visibility.every(v => v === false)) {
+        this.victoire = true; // Afficher le message de victoire
+      }
+    },
+
     updateVisibility() {
       for (let i = this.visibility.length - 1; i >= 0; i--) {
         if (this.visibility[i]) {
-          this.visibility[i] = false;
+          // Appliquer l'animation uniquement pour le dernier compteur
+          if (i === 0) {
+            const counterElement = document.querySelectorAll('.compteur-defense')[i];
+            counterElement.classList.add('last-counter-animation');
+
+            // Attendre la fin de l'animation avant de le cacher
+            setTimeout(() => {
+              this.visibility[i] = false;
+              this.checkVictory(); // Vérifier la victoire après l'animation
+            }, 1000); // Correspond à la durée de l'animation
+          } else {
+            this.visibility[i] = false;
+          }
           break;
         }
       }
-    }
+    },
   }
 };
 </script>
@@ -64,4 +84,30 @@ export default {
   top: 0;
   right: 0;
 }
+
+.victoire-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Pour centrer exactement */
+  font-size: 50px;
+  color: green;
+  font-weight: bold;
+}
+
+@keyframes shrinkAndFadeOut {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.last-counter-animation {
+  animation: shrinkAndFadeOut 1s forwards; /* L'animation dure 1 seconde */
+}
+
 </style>
