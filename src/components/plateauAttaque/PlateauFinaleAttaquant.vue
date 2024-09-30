@@ -76,7 +76,7 @@ export default {
             break;
         }
 
-        console.log(mappedReaderID);
+        //console.log(mappedReaderID);
 
         const reader = this.readers.find(r => r.id === mappedReaderID);
 

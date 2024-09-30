@@ -9,6 +9,7 @@
       "image_info": "img/img_carte/img_infoCarte/anonymous.png",
       "type": "attaque",
       "level": "haut niveau",
+      "poseeDepuis": 1,
       "counter": [
         "Antivirus",
         "Chiffrement de données",
@@ -34,6 +35,7 @@
       "image_info": "img/img_carte/img_infoCarte/brutforce.png",
       "type": "attaque",
       "level": "bas niveau",
+      "poseeDepuis": 1,
       "counter": [
         "Super-antivirus",
         "White hat",
@@ -52,6 +54,7 @@
       "image_info": "img/img_carte/img_infoCarte/cheval_troie.png",
       "type": "attaque",
       "level": "bas niveau",
+      "poseeDepuis": 1,
       "counter": [
         "Super-antivirus",
         "White hat",
@@ -71,6 +74,7 @@
       "image_info": "img/img_carte/img_infoCarte/ddos.png",
       "type": "attaque",
       "level": "bas niveau",
+      "poseeDepuis": 1,
       "counter": [
         "Super-antivirus",
         "White hat",
@@ -90,6 +94,7 @@
       "image_info": "img/img_carte/img_infoCarte/elevation_privilege.png",
       "type": "attaque",
       "level": "bas niveau",
+      "poseeDepuis": 1,
       "counter": [
         "Super-antivirus",
         "White hat",
@@ -109,6 +114,7 @@
       "image_info": "img/img_carte/img_infoCarte/hacker.png",
       "type": "attaque",
       "level": "bas niveau",
+      "poseeDepuis": 1,
       "counter": [
         "Super-antivirus",
         "White hat",
@@ -128,6 +134,7 @@
       "image_info": "img/img_carte/img_infoCarte/logiciel_malveillant.png",
       "type": "attaque",
       "level": "bas niveau",
+      "poseeDepuis": 1,
       "counter": [
         "Super-antivirus",
         "White hat",
@@ -147,6 +154,7 @@
       "image_info": "img/img_carte/img_infoCarte/panne_reseau.png",
       "type": "attaque",
       "level": "bas niveau",
+      "poseeDepuis": 1,
       "counter": [
         "Super-antivirus",
         "White hat",
@@ -165,6 +173,7 @@
       "image_info": "img/img_carte/img_infoCarte/virus.png",
       "type": "attaque",
       "level": "bas niveau",
+      "poseeDepuis": 1,
       "counter": [
         "Super-antivirus",
         "White hat",

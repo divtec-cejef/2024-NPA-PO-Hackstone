@@ -1,7 +1,10 @@
+
 <script>
+import { ref } from "vue"; // Importation de `ref` pour créer des variables réactives
+
+export let pv = ref(5);
 // Importation du fichier JSON des CARTES
 let carteEnJeu = [];
-let pv = 5;
 let pvAnonymous = 2;
 let pvSuperAntivirus = 2;
 let cardsData = require('../../../cards.json');
@@ -12,7 +15,6 @@ const DECK = {
 };
 const CARTES = DECK.cardsData.cards;
 export default {
-
   methods: {
     /**
      * Génère le deck du défenseur à partir d'un fichier json
@@ -66,8 +68,8 @@ export default {
      * @param cartesEnMains cartes présentent dans la main de l'ordinateur
      */
     DebutTour(cartesDeck, cartesEnMains) {
-      for (let i = 0; i < cartesDeck.length; i++){
-        if (cartesDeck[i].name === ("Stockage")){
+      for (let i = 0; i < cartesDeck.length; i++) {
+        if (cartesDeck[i].name === ("Stockage")) {
           cartesDeck.splice(i, 1);
         }
       }
@@ -90,10 +92,10 @@ export default {
         do {
           index = this.getNombreAleatoire(0, cartesEnMains.length - 1);
           cartePosee = cartesEnMains[index];
-        }while (cartePosee.name === "Redondance de données" && carteEnJeu.length === 0);
+        } while (cartePosee.name === "Redondance de données" && carteEnJeu.length === 0);
 
         //La carte redondance de données devient une copie de la carte sur la case de gauche.
-        if(cartePosee.name === "Redondance de données") {
+        if (cartePosee.name === "Redondance de données") {
           alert("Redondance de données");
           cartePosee = carteEnJeu[0];
         }
@@ -116,8 +118,10 @@ export default {
       let counterCarteEnJeu = [];
       let carteDefendu = false;
       let carteTrouvee = cartesAttaque.some(cartes => cartes.name === card.name);
+      let cartePresenteDepuis = cartesAttaque.find(carteATrouver => carteATrouver.name === card.name);
       console.log("Carte trouvee", carteTrouvee);
-      if(carteTrouvee) {
+      console.log("Carte attaque", cartePresenteDepuis);
+      if (carteTrouvee && cartePresenteDepuis.poseeDepuis === 2) {
         //Fonction permettant d'arrêter les deux boucles à un moment donné
         outerLoop:
             //Boucle passant sur chaque case de l'ordinateur
@@ -156,15 +160,17 @@ export default {
                 }
               }
             }
-        if (!carteDefendu) {
-          pv--;
-          alert(pv);
-        }
-        if (pv === 0) {
+        if (pv.value === 0) {
           alert("Bravo")
         }
-      }else {
+      } else if (!carteTrouvee) {
         alert("Carte pas présente")
+      } else {
+        alert("Vous devez attendre un tour avant de pouvoir attaquer avec cette carte !")
+      }
+      if (!carteDefendu) {
+        console.log("carte pas defendue")
+        this.perdrePvAttaquant();
       }
     },
 
@@ -175,7 +181,7 @@ export default {
      */
     arriveeAnonymous(card, reader) {
       //Vérifie si la carte est bel et bien l'anonymous et qu'elle n'a pas déjà été posée
-      if(card.name === "Anonymous" && !dejaPosee) {
+      if (card.name === "Anonymous" && !dejaPosee) {
         dejaPosee = true;
         //Vide les cases
         reader[0].name = null;
@@ -237,6 +243,13 @@ export default {
 
           carteEnJeu.push(cartePosee);
         }
+      }
+    },
+    // Gère la perte de PV de l'attaquant
+    perdrePvAttaquant() {
+      if (pv.value > 0) {
+        pv.value--;  // Décrémentation de la valeur réactive de pv
+        console.log("pv", pv.value);
       }
     }
   }

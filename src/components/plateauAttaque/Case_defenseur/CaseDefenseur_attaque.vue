@@ -14,6 +14,7 @@ import Case_3_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur
 import Case_4_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_4_Defenseur_Attaque.vue";
 import io from "socket.io-client";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
+import {cartesAttaque} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 
 let carteEnMain = [];
 let deckDefense = fonctionnaliteesAttaque.methods.genererDeckDefense();
@@ -49,7 +50,9 @@ export default {
         setTimeout(() => {
           fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[4]); // Appel de la deuxième fonction après 3 secondes
         }, 4000);
-
+        for (let i = 0; i < cartesAttaque.length; i++){
+          cartesAttaque[i].poseeDepuis = 2;
+        }
         let newReaders = [...this.readers]; // Copie des readers
         this.$emit('update-readers', newReaders);
       }
