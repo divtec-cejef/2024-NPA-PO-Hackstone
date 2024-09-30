@@ -1,8 +1,25 @@
 <template>
-  <div class="compteurs-attaque">
-    <img v-for="(image, index) in images_compteur" :key="index" :src="image" alt="Stacked Image"
-         :style="{ visibility: visibility[index] ? 'visible' : 'hidden' }"
-         class="compteur-attaque">
+  <div>
+    <!-- Affichage des compteurs -->
+    <div class="compteurs-attaque">
+      <img v-for="(image, index) in images_compteur" :key="index" :src="image" alt="Stacked Image"
+           :style="{ visibility: visibility[index] ? 'visible' : 'hidden' }"
+           class="compteur-attaque">
+    </div>
+
+    <!-- Bouton pour retirer un compteur à la fois -->
+    <button @click="updateVisibility" class="test-defeat-btn">Retirer un compteur</button>
+
+    <!-- Filtre gris et message de défaite s'affiche si tous les compteurs sont épuisés -->
+    <div v-if="hasLost">
+      <!-- Filtre gris -->
+      <div class="overlay"></div>
+
+      <!-- Message de défaite -->
+      <div class="defeat-message">
+        <h1>Vous avez perdu !</h1>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -20,7 +37,8 @@ export default {
         require('@/img/compteur/compteur_4.png'),
         require('@/img/compteur/compteur_5.png')
       ],
-      visibility: [true, true, true, true, true]
+      visibility: [true, true, true, true, true], // Tous les compteurs sont visibles au début
+      hasLost: false // Variable qui indique si le joueur a perdu
     };
   },
 
@@ -30,20 +48,26 @@ export default {
     this.socket.on('rfidData', (data) => {
       const { readerID } = data;
 
-      // Vérifier si le readerID est 1
-      if (readerID === '1)') {
+      // Vérifier si le readerID est '1'
+      if (readerID === '1') {
         this.updateVisibility();
       }
-
     });
   },
+
   methods: {
     updateVisibility() {
+      // Boucle pour masquer les compteurs un par un
       for (let i = this.visibility.length - 1; i >= 0; i--) {
         if (this.visibility[i]) {
           this.visibility[i] = false;
           break;
         }
+      }
+
+      // Vérifier si tous les compteurs sont masqués, le joueur a perdu
+      if (this.visibility.every(v => !v)) {
+        this.hasLost = true;
       }
     }
   }
@@ -54,7 +78,7 @@ export default {
 .compteurs-attaque {
   position: absolute;
   bottom: 50px;
-  left: 50px; /* Positionner les images en haut à droite */
+  left: 50px;
 }
 
 .compteur-attaque {
@@ -63,5 +87,46 @@ export default {
   position: absolute;
   bottom: 0;
   left: 0;
+}
+
+/* Style pour le filtre gris */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Filtre sombre/gris */
+  backdrop-filter: grayscale(100%); /* Applique le filtre en niveaux de gris */
+  z-index: 999; /* S'assure que le filtre soit en dessous du message */
+}
+
+/* Style pour le message de défaite */
+.defeat-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 2.5em;
+  z-index: 1000; /* S'assure que le message soit au-dessus du filtre */
+}
+
+/* Style pour le bouton */
+.test-defeat-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1000;
 }
 </style>
