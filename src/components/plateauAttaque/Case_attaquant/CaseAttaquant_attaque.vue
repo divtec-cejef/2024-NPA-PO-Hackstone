@@ -12,7 +12,7 @@ import Case_2_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant
 import Case_3_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
 import io from "socket.io-client";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-
+import {cartesAttaque} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 export default {
   components: {
     Case_1_Attaquant_Attaque,
@@ -48,8 +48,10 @@ export default {
           this.localReaders[reader] = { ...this.localReaders[reader], image: card.image}
           this.localReaders[reader] = { ...this.localReaders[reader], name: card.name}
           fonctionnaliteesAttaque.methods.arriveeAnonymous(card, this.localReaders);
+          cartesAttaque.push(card);
           let newReaders = [...this.localReaders]; // Copie des readers
           this.$emit('update-readers', newReaders);
+          console.log("Cartes en attaque", cartesAttaque);
         }
 
       } else {

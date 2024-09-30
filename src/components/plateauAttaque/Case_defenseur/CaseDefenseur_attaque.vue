@@ -42,9 +42,13 @@ export default {
       if (readerID === "1") {
 
         fonctionnaliteesAttaque.methods.DebutTour(deckDefense, carteEnMain);
-        fonctionnaliteesAttaque.methods.poserCarte(carteEnMain, this.readers[1]);
-        fonctionnaliteesAttaque.methods.poserCarte(carteEnMain, this.readers[0]);
-        fonctionnaliteesAttaque.methods.poserCarte(carteEnMain, this.readers[4]);
+        fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[0]);
+        setTimeout(() => {
+          fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[1]); // Appel de la deuxième fonction après 3 secondes
+        }, 2000);
+        setTimeout(() => {
+          fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[4]); // Appel de la deuxième fonction après 3 secondes
+        }, 4000);
 
         let newReaders = [...this.readers]; // Copie des readers
         this.$emit('update-readers', newReaders);

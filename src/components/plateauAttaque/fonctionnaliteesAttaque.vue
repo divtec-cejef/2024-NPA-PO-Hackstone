@@ -5,6 +5,8 @@ let pv = 5;
 let pvAnonymous = 2;
 let pvSuperAntivirus = 2;
 let cardsData = require('../../../cards.json');
+let dejaPosee = false;
+export let cartesAttaque = [];
 const DECK = {
   cardsData
 };
@@ -113,58 +115,128 @@ export default {
     attaquer(card, readers) {
       let counterCarteEnJeu = [];
       let carteDefendu = false;
-      //Fonction permettant d'arrêter les deux boucles à un moment donné
-      outerLoop:
-          //Boucle passant sur chaque case de l'ordinateur
-          for (let j = 0; j < carteEnJeu.length; j++) {
-            //Liste des cartes qui contrent les cartes présentent sur le jeu
-            counterCarteEnJeu = carteEnJeu[j].counter;
+      let carteTrouvee = cartesAttaque.some(cartes => cartes.name === card.name);
+      console.log("Carte trouvee", carteTrouvee);
+      if(carteTrouvee) {
+        //Fonction permettant d'arrêter les deux boucles à un moment donné
+        outerLoop:
+            //Boucle passant sur chaque case de l'ordinateur
+            for (let j = 0; j < carteEnJeu.length; j++) {
+              //Liste des cartes qui contrent les cartes présentent sur le jeu
+              counterCarteEnJeu = carteEnJeu[j].counter;
 
-            //Boucle passant tous les contre des cartes
-            for (let i = 0; i < counterCarteEnJeu.length; i++) {
-              //Test si la carte qui attaque à un contre présent sur le terrain
-              if (counterCarteEnJeu.includes(card.name)) {
-                carteDefendu = true;
+              //Boucle passant tous les contre des cartes
+              for (let i = 0; i < counterCarteEnJeu.length; i++) {
+                //Test si la carte qui attaque à un contre présent sur le terrain
+                if (counterCarteEnJeu.includes(card.name)) {
+                  carteDefendu = true;
 
-                //Retrouve les cases sur lesquelles les cartes sont présentes
-                let carte = readers.find(carte => carte.name === carteEnJeu[j].name);
-                let carte2 = readers.find(caca2 => caca2.name === card.name);
+                  //Retrouve les cases sur lesquelles les cartes sont présentes
+                  let carte = readers.find(cartes => cartes.name === carteEnJeu[j].name);
+                  let carte2 = readers.find(zone => zone.name === card.name);
 
-                //Retire le nom et l'image de la carte détruite de leur case
-                //et détruit l'Anonymous et le super-antivirus uniquement s'ils ont déjà été attaqués une fois
-                if ((carte.name === "Super-antivirus" && pvSuperAntivirus === 1) || carte.name !== "Super-antivirus") {
-                  carte.image = null;
-                  carte.name = null;
-                  carteEnJeu.splice(j, 1);
-                } else
-                  pvSuperAntivirus = 1;
-                if ((carte2.name === "Anonymous" && pvAnonymous === 1) || carte2.name !== "Anonymous") {
-                  carte2.image = null;
-                  carte2.name = null;
-                } else
-                  pvAnonymous = 1;
-                //Termine la fonction une fois qu'une carte a été détruite
-                break outerLoop;
+                  //Retire le nom et l'image de la carte détruite de leur case
+                  //et détruit l'Anonymous et le super-antivirus uniquement s'ils ont déjà été attaqués une fois
+                  if ((carte.name === "Super-antivirus" && pvSuperAntivirus === 1) || carte.name !== "Super-antivirus") {
+                    carte.image = null;
+                    carte.name = null;
+                    carteEnJeu.splice(j, 1);
+                  } else
+                    pvSuperAntivirus = 1;
+
+                  if ((carte2.name === "Anonymous" && pvAnonymous === 1) || carte2.name !== "Anonymous") {
+                    carte2.image = null;
+                    carte2.name = null;
+                    cartesAttaque.splice(cartesAttaque.indexOf(carteTrouvee), 1);
+                  } else
+                    pvAnonymous = 1;
+
+                  //Termine la fonction une fois qu'une carte a été détruite
+                  break outerLoop;
+                }
               }
             }
-          }
-      if (!carteDefendu) {
-        pv--;
-        alert(pv);
-      }
-      if (pv === 0){
-        alert("Bravo")
+        if (!carteDefendu) {
+          pv--;
+          alert(pv);
+        }
+        if (pv === 0) {
+          alert("Bravo")
+        }
+      }else {
+        alert("Carte pas présente")
       }
     },
-    arriveeAnonymous(card, reader) {
-      if(card.name === "Anonymous"){
 
+    /**
+     * Retire toutes les cartes en défense lors de l'arrivée de l'anonymous
+     * @param card carte scannée
+     * @param reader liste des cases
+     */
+    arriveeAnonymous(card, reader) {
+      //Vérifie si la carte est bel et bien l'anonymous et qu'elle n'a pas déjà été posée
+      if(card.name === "Anonymous" && !dejaPosee) {
+        dejaPosee = true;
+        //Vide les cases
         reader[0].name = null;
         reader[0].image = null;
         reader[1].name = null;
         reader[1].image = null;
         reader[4].name = null;
         reader[4].image = null;
+
+        //Vide la liste des cartes en jeu, car plus aucune n'est présente
+        carteEnJeu = [];
+      }
+    },
+    defendMalin(cartesEnMains, reader) {
+
+      let test = [];
+      for (let a = 0; a < cartesAttaque.length; a++)
+        test.push(cartesAttaque[a]);
+      console.log("Test ", test)
+
+      //Pose une carte seulement s'il n'y en a pas une de déjà posé
+      if (reader.image === null) {
+        let index = 0;
+        let cartePosee = null;
+        console.log("Cartes en main", cartesEnMains)
+        console.log("Cartes en jeu", carteEnJeu)
+        //Empêche la redondance de données d'être la première carte posée sur le terrain
+        // afin qu'elle puisse copier une carte déjà présente
+        outerLoop:
+            for (let i = 0; i < test.length; i++) {
+              for (let j = 0; j < cartesEnMains.length; j++) {
+                let carteEnMainCounter = cartesEnMains[j].counter;
+                //console.log("les counter", carteEnMainCounter)
+                if (carteEnMainCounter.includes(test[i].name)) {
+                  cartePosee = cartesEnMains[j];
+                  reader.image = cartePosee.image;
+                  reader.name = cartePosee.name;
+                  cartesEnMains.splice(j, 1);
+                  carteEnJeu.push(cartePosee);
+                  test = [];
+                  break outerLoop;
+                }
+              }
+            }
+        if (cartePosee === null) {
+          do {
+            index = this.getNombreAleatoire(0, cartesEnMains.length - 1);
+            cartePosee = cartesEnMains[index];
+          } while (cartePosee.name === "Redondance de données" && carteEnJeu.length === 0);
+
+          //La carte redondance de données devient une copie de la carte sur la case de gauche.
+          if (cartePosee.name === "Redondance de données") {
+            alert("Redondance de données");
+            cartePosee = carteEnJeu[0];
+          }
+          reader.image = cartePosee.image;
+          reader.name = cartePosee.name;
+          cartesEnMains.splice(index, 1);
+
+          carteEnJeu.push(cartePosee);
+        }
       }
     }
   }
