@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "C:\\Users\\ursan\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service serve",
-    "build:plateauAttaque": "C:\\Users\\ursan\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/plateauAttaque",
-    "build:plateauDefense": "C:\\Users\\ursan\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/plateauDefense",
-    "build:informationCarte": "C:\\Users\\ursan\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/informationCarte",
-    "lint": "C:\\Users\\ursan\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service lint"
+    "serve": "C:\\Users\\fridluc\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service serve",
+    "build:plateauAttaque": "C:\\Users\\fridluc\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/plateauAttaque",
+    "build:plateauDefense": "C:\\Users\\fridluc\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/plateauDefense",
+    "build:informationCarte": "C:\\Users\\fridluc\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/informationCarte",
+    "lint": "C:\\Users\\fridluc\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service lint"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
@@ -15,6 +15,7 @@
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "gsap": "^3.12.5",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
     "vue": "^3.2.13"
