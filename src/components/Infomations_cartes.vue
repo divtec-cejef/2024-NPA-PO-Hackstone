@@ -90,7 +90,7 @@ export default {
 
 h1 {
   font-size: 72px;
-  color: black;
+  color: white;
   text-align: center;
 }
 
@@ -127,7 +127,8 @@ img {
 
 p {
   margin: 10px;
-  font-size: 38px;
+  font-size: 30px;
+  color: white;
 }
 
 </style>
