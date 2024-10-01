@@ -44,14 +44,30 @@ export default {
 
         const reader = this.localReaders.findIndex(r => r.id === Number(readerID));
 
-        if (reader === 2 || reader === 3 || reader === 5){
-          this.localReaders[reader] = { ...this.localReaders[reader], image: card.image}
-          this.localReaders[reader] = { ...this.localReaders[reader], name: card.name}
-          fonctionnaliteesAttaque.methods.arriveeAnonymous(card, this.localReaders);
-          cartesAttaque.push(card);
-          let newReaders = [...this.localReaders]; // Copie des readers
-          this.$emit('update-readers', newReaders);
-          console.log("Cartes en attaque", cartesAttaque);
+        if (reader === 2 || reader === 3 || reader === 5) {
+          console.log("image ", reader);
+          if (this.localReaders[reader].image === null) {
+            this.localReaders[reader] = {...this.localReaders[reader], image: card.image}
+            this.localReaders[reader] = {...this.localReaders[reader], name: card.name}
+
+            fonctionnaliteesAttaque.methods.arriveeAnonymous(card, this.localReaders);
+            if (cartesAttaque.length === 0) {
+              cartesAttaque.push(card)
+            } else {
+              let exist = false;
+              for (let i = 0; i < cartesAttaque.length; i++) {
+                if (cartesAttaque[i].uid.includes(card.uid)) {
+                  exist = true;
+                  break;
+                }
+              }
+              if (!exist)
+                cartesAttaque.push(card);
+            }
+            let newReaders = [...this.localReaders]; // Copie des readers
+            this.$emit('update-readers', newReaders);
+            console.log("Cartes en attaque", cartesAttaque);
+          }
         }
 
       } else {

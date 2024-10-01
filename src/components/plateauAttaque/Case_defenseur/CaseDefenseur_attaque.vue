@@ -15,7 +15,6 @@ import Case_4_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur
 import io from "socket.io-client";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {cartesAttaque} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-
 let carteEnMain = [];
 let deckDefense = fonctionnaliteesAttaque.methods.genererDeckDefense();
 export default {
@@ -41,18 +40,19 @@ export default {
       readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
       if (readerID === "1") {
-
         fonctionnaliteesAttaque.methods.DebutTour(deckDefense, carteEnMain);
         fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[0]);
         setTimeout(() => {
           fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[1]); // Appel de la deuxième fonction après 3 secondes
-        }, 2000);
+        }, 1000);
         setTimeout(() => {
           fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[4]); // Appel de la deuxième fonction après 3 secondes
-        }, 4000);
+        }, 2000);
         for (let i = 0; i < cartesAttaque.length; i++){
           cartesAttaque[i].poseeDepuis = 2;
         }
+
+        fonctionnaliteesAttaque.methods.resetDejaAttaquer();
         let newReaders = [...this.readers]; // Copie des readers
         this.$emit('update-readers', newReaders);
       }

@@ -1,14 +1,14 @@
-
 <script>
-import { ref } from "vue"; // Importation de `ref` pour créer des variables réactives
-
+import {ref} from "vue"; // Importation de `ref` pour créer des variables réactives
 export let pv = ref(5);
+
 // Importation du fichier JSON des CARTES
+let cardsData = require('../../../cards.json');
 let carteEnJeu = [];
 let pvAnonymous = 2;
 let pvSuperAntivirus = 2;
-let cardsData = require('../../../cards.json');
 let dejaPosee = false;
+export let dejaAttaquer = [];
 export let cartesAttaque = [];
 const DECK = {
   cardsData
@@ -115,13 +115,28 @@ export default {
      * @param readers lecteur sur lesquelles les cartes sont posées
      */
     attaquer(card, readers) {
+
       let counterCarteEnJeu = [];
       let carteDefendu = false;
       let carteTrouvee = cartesAttaque.some(cartes => cartes.name === card.name);
       let cartePresenteDepuis = cartesAttaque.find(carteATrouver => carteATrouver.name === card.name);
-      console.log("Carte trouvee", carteTrouvee);
-      console.log("Carte attaque", cartePresenteDepuis);
-      if (carteTrouvee && cartePresenteDepuis.poseeDepuis === 2) {
+      let carteDejaAttaquer = dejaAttaquer.some(carteAttaqPauante => carteAttaquante.name === card.name);
+
+      console.log("carte", carteDejaAttaquer);
+      console.log("cartes en attaque ", cartesAttaque);
+
+      let indexx = cartesAttaque.find(carte => carte.name === card.name)
+      let index = cartesAttaque.indexOf(indexx);
+
+      const occurrences = cartesAttaque.filter(c => c.name === card.name).length;
+      console.log("Carte trouvée", carteTrouvee);
+      cartesAttaque.splice(index, 1);
+      if (carteTrouvee && cartePresenteDepuis.poseeDepuis === 2 && !carteDejaAttaquer) {
+        if (cartesAttaque.length > 0){
+          if (occurrences === 1)
+            dejaAttaquer.push(card);
+        }
+        console.log("Deja attaquer", dejaAttaquer);
         //Fonction permettant d'arrêter les deux boucles à un moment donné
         outerLoop:
             //Boucle passant sur chaque case de l'ordinateur
@@ -151,7 +166,7 @@ export default {
                   if ((carte2.name === "Anonymous" && pvAnonymous === 1) || carte2.name !== "Anonymous") {
                     carte2.image = null;
                     carte2.name = null;
-                    cartesAttaque.splice(cartesAttaque.indexOf(carteTrouvee), 1);
+
                   } else
                     pvAnonymous = 1;
 
@@ -160,17 +175,19 @@ export default {
                 }
               }
             }
-        if (pv.value === 0) {
-          alert("Bravo")
+        if (!carteDefendu) {
+          console.log("carte pas defendue")
+          this.perdrePvAttaquant();
+          cartesAttaque.push(card);
         }
       } else if (!carteTrouvee) {
         alert("Carte pas présente")
-      } else {
+      }else if (carteDejaAttaquer) {
+        cartesAttaque.push(card);
+        alert("cette carte a deja attaquer")
+      } else if (cartePresenteDepuis.poseeDepuis !== 2 ){
+        cartesAttaque.push(card);
         alert("Vous devez attendre un tour avant de pouvoir attaquer avec cette carte !")
-      }
-      if (!carteDefendu) {
-        console.log("carte pas defendue")
-        this.perdrePvAttaquant();
       }
     },
 
@@ -251,6 +268,15 @@ export default {
         pv.value--;  // Décrémentation de la valeur réactive de pv
         console.log("pv", pv.value);
       }
+    },
+    resetDejaAttaquer(){
+      dejaAttaquer = [];
+    },
+    listeADoublons(){
+      let set = [...new Set(this.cartesAttaque)];
+      console.log("Taille liste ", cartesAttaque)
+      console.log("Taille set ", set)
+      return set.size !== cartesAttaque.length;
     }
   }
 };
