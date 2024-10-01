@@ -17,7 +17,6 @@
   border-style: solid;
   border-color: white;
   border-image: initial;
-
   font-size: 24px;
   justify-content: center;
   display: flex;

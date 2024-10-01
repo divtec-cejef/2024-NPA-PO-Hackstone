@@ -39,5 +39,6 @@ export default {
   align-items: center;
   justify-content: center;
   background-size: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 </style>

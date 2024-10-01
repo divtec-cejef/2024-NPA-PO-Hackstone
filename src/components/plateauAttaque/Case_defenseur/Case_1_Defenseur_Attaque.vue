@@ -17,7 +17,7 @@
   border-color: white;
   border-image: initial;
   background-size: 100%;
-
+  background-color: rgba(255, 255, 255, 0.5);
   font-size: 24px;
   justify-content: center;
   display: flex;

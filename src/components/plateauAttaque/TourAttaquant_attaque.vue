@@ -10,21 +10,21 @@
     <!-- Bouton pour retirer un compteur à la fois -->
     <button @click="updateVisibility" class="test-defeat-btn">Retirer un compteur</button>
 
-    <!-- Filtre gris et message de défaite s'affiche si tous les compteurs sont épuisés -->
+    <!-- Filtre noir et blanc et message de défaite s'affiche si tous les tours sont épuisés -->
     <div v-if="hasLost">
-      <!-- Filtre gris -->
+      <!-- Filtre noir et blanc sur l'arrière-plan -->
       <div class="overlay"></div>
 
-      <!-- Message de défaite -->
-      <div class="defeat-message">
-        <h1>Vous avez perdu !</h1>
+      <!-- Message de défaite à la manière de GTA V, qui reste visible -->
+      <div class="wasted-message">
+        <h1>VOUS AVEZ PERDU !</h1>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import io from 'socket.io-client';
+//import io from 'socket.io-client';
 
 export default {
   data() {
@@ -40,19 +40,6 @@ export default {
       visibility: [true, true, true, true, true], // Tous les compteurs sont visibles au début
       hasLost: false // Variable qui indique si le joueur a perdu
     };
-  },
-
-  mounted() {
-    this.socket = io('http://localhost:3000');
-
-    this.socket.on('rfidData', (data) => {
-      const { readerID } = data;
-
-      // Vérifier si le readerID est '1'
-      if (readerID === '1') {
-        this.updateVisibility();
-      }
-    });
   },
 
   methods: {
@@ -89,30 +76,47 @@ export default {
   left: 0;
 }
 
-/* Style pour le filtre gris */
+/* Style pour le filtre noir et blanc avec effet flou */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Filtre sombre/gris */
-  backdrop-filter: grayscale(100%); /* Applique le filtre en niveaux de gris */
+  background-color: rgba(0, 0, 0, 0.5); /* Filtre sombre */
+  backdrop-filter: grayscale(100%) blur(5px); /* Applique un effet noir et blanc et flou */
   z-index: 999; /* S'assure que le filtre soit en dessous du message */
 }
 
-/* Style pour le message de défaite */
-.defeat-message {
+/* Style pour le message de défaite "VOUS AVEZ PERDU" qui reste visible */
+.wasted-message {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
+  transform: translate(-50%, -50%) scale(1); /* Centrer et effet de zoom initial */
+  color: red; /* Couleur rouge classique de GTA */
+  text-transform: uppercase; /* Tout en majuscules */
+  font-size: 40px; /* Taille du texte */
+  font-family: Impact,serif;
   text-align: center;
-  font-size: 2.5em;
+
+
+
+  opacity: 1;
+  animation: wasted-animation 1s ease-out forwards; /* Animation de zoom, sans fade-out */
   z-index: 1000; /* S'assure que le message soit au-dessus du filtre */
+}
+
+/* Animation pour le message (sans disparition) */
+@keyframes wasted-animation {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
 }
 
 /* Style pour le bouton */

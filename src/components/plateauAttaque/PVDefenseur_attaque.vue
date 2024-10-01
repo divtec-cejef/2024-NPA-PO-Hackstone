@@ -94,7 +94,7 @@ function perdrePVAttaquant() {
   z-index: 1000; /* S'assure que le message soit au-dessus du filtre */
   font-size: 2.5em;
   font-weight: bold;
-  animation: pop-in 0.5s ease-in-out; /* Animation du message */
+  animation: pop-in 0.8s ease-in-out; /* Animation du message */
 }
 
 /* Animation d'apparition du message de victoire */
@@ -104,7 +104,7 @@ function perdrePVAttaquant() {
   }
 
   50% {
-    transform: translate(-50%, -50%) scale(2);
+    transform: translate(-50%, -50%) scale(1.5);
   }
 
   100% {

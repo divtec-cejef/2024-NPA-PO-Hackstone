@@ -20,7 +20,7 @@
   border-style: solid;
   border-color: red;
   border-image: initial;
-
+  background-color: rgba(255, 0, 0, 0.5);
   font-size: 24px;
   justify-content: center;
   display: flex;
