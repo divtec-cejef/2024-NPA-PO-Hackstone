@@ -22,7 +22,7 @@ body {
 }
 
 #app3 {
-  //background: url("../img/coeur.webp")  center center / cover no-repeat fixed;
+  background: url("../img/fond_accueil.png")  center center / cover no-repeat fixed;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

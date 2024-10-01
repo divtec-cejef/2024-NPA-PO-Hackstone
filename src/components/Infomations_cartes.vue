@@ -96,12 +96,9 @@ h1 {
 
 .affichage_carte {
   height: 100%;
-  border: 4px solid white;
   display: flex;
   align-items: center;
-  justify-content: center;
   margin-right: 80px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, .24);
   border-radius: 10px;
 }
 
