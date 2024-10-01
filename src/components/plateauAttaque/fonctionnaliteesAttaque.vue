@@ -1,15 +1,19 @@
 <script>
-import {ref} from "vue"; // Importation de `ref` pour créer des variables réactives
+import {ref} from "vue";
+// Importation de `ref` pour créer des variables réactives
 export let pv = ref(5);
-
+export let stockage = ref(false);
 // Importation du fichier JSON des CARTES
 let cardsData = require('../../../cards.json');
 let carteEnJeu = [];
 let pvAnonymous = 2;
 let pvSuperAntivirus = 2;
+let nbrAttaqueAnonymous = 0;
 let dejaPosee = false;
+
 export let dejaAttaquer = [];
 export let cartesAttaque = [];
+
 const DECK = {
   cardsData
 };
@@ -68,11 +72,11 @@ export default {
      * @param cartesEnMains cartes présentent dans la main de l'ordinateur
      */
     DebutTour(cartesDeck, cartesEnMains) {
-      for (let i = 0; i < cartesDeck.length; i++) {
-        if (cartesDeck[i].name === ("Stockage")) {
-          cartesDeck.splice(i, 1);
-        }
-      }
+      // for (let i = 0; i < cartesDeck.length; i++) {
+      //   // if (cartesDeck[i].name === ("Stockage")) {
+      //   //   cartesDeck.splice(i, 1);
+      //   // }
+      // }
       this.piocher(cartesDeck, cartesEnMains);
     },
 
@@ -118,22 +122,32 @@ export default {
 
       let counterCarteEnJeu = [];
       let carteDefendu = false;
+
+      //Recherche si la carte est bel et bien présente sur le jeu
       let carteTrouvee = cartesAttaque.some(cartes => cartes.name === card.name);
-      let cartePresenteDepuis = cartesAttaque.find(carteATrouver => carteATrouver.name === card.name);
-      let carteDejaAttaquer = dejaAttaquer.some(carteAttaqPauante => carteAttaquante.name === card.name);
+      //Retrouve la carte afin de savoir depuis quand elle est présente sur le jeu
+      let cartePresenteDepuis = this.trouverObjet(card, cartesAttaque);
+      //Retrouve si la carte a déjà attaqué ou non.
+      let carteDejaAttaquer = dejaAttaquer.some(carteAttaquante => carteAttaquante.name === card.name);
 
       console.log("carte", carteDejaAttaquer);
       console.log("cartes en attaque ", cartesAttaque);
 
-      let indexx = cartesAttaque.find(carte => carte.name === card.name)
+      let indexx = this.trouverObjet(card, cartesAttaque);
       let index = cartesAttaque.indexOf(indexx);
 
       const occurrences = cartesAttaque.filter(c => c.name === card.name).length;
       console.log("Carte trouvée", carteTrouvee);
       cartesAttaque.splice(index, 1);
+      //Test si la carte est présente, si elle ne vient pas d'être posée et si elle n'a pas déjà attaqué
       if (carteTrouvee && cartePresenteDepuis.poseeDepuis === 2 && !carteDejaAttaquer) {
-        if (cartesAttaque.length > 0){
-          if (occurrences === 1)
+        //Test si la carte qui attaque est présente plus d'une fois
+        if (occurrences === 1) {
+          if (card.name === "Anonymous"){
+            nbrAttaqueAnonymous++;
+            if(nbrAttaqueAnonymous >= 2)
+              dejaAttaquer.push(card);
+          }else
             dejaAttaquer.push(card);
         }
         console.log("Deja attaquer", dejaAttaquer);
@@ -151,8 +165,8 @@ export default {
                   carteDefendu = true;
 
                   //Retrouve les cases sur lesquelles les cartes sont présentes
-                  let carte = readers.find(cartes => cartes.name === carteEnJeu[j].name);
-                  let carte2 = readers.find(zone => zone.name === card.name);
+                  let carte = this.trouverObjet(carteEnJeu[j], readers);
+                  let carte2 = this.trouverObjet(card, readers);
 
                   //Retire le nom et l'image de la carte détruite de leur case
                   //et détruit l'Anonymous et le super-antivirus uniquement s'ils ont déjà été attaqués une fois
@@ -189,6 +203,10 @@ export default {
         cartesAttaque.push(card);
         alert("Vous devez attendre un tour avant de pouvoir attaquer avec cette carte !")
       }
+      if (card.name === "Anonymous" && pvAnonymous > 0 && nbrAttaqueAnonymous < 2){
+        card.poseeDepuis = 2;
+        cartesAttaque.push(card);
+      }
     },
 
     /**
@@ -197,6 +215,7 @@ export default {
      * @param reader liste des cases
      */
     arriveeAnonymous(card, reader) {
+      pvAnonymous = 2;
       //Vérifie si la carte est bel et bien l'anonymous et qu'elle n'a pas déjà été posée
       if (card.name === "Anonymous" && !dejaPosee) {
         dejaPosee = true;
@@ -213,7 +232,7 @@ export default {
       }
     },
     defendMalin(cartesEnMains, reader) {
-
+      nbrAttaqueAnonymous = 0;
       let test = [];
       for (let a = 0; a < cartesAttaque.length; a++)
         test.push(cartesAttaque[a]);
@@ -221,19 +240,37 @@ export default {
 
       //Pose une carte seulement s'il n'y en a pas une de déjà posé
       if (reader.image === null) {
-        let index = 0;
         let cartePosee = null;
         console.log("Cartes en main", cartesEnMains)
         console.log("Cartes en jeu", carteEnJeu)
         //Empêche la redondance de données d'être la première carte posée sur le terrain
         // afin qu'elle puisse copier une carte déjà présente
+
         outerLoop:
             for (let i = 0; i < test.length; i++) {
               for (let j = 0; j < cartesEnMains.length; j++) {
-                let carteEnMainCounter = cartesEnMains[j].counter;
-                //console.log("les counter", carteEnMainCounter)
-                if (carteEnMainCounter.includes(test[i].name)) {
-                  cartePosee = cartesEnMains[j];
+                //cartePosee = cartesEnMains[j];
+                if (cartesEnMains[j].name === "Stockage") {
+                  console.log("Cadenas");
+                  stockage = true;
+                  cartesEnMains.splice(j, 1);
+                  // Case_4_Defenseur_Attaque.methods.triggerLockAnimation();
+                  // cartePosee = cartesEnMains[j];
+                } else {
+                  let carteEnMainCounter = cartesEnMains[j].counter;
+                  if (carteEnMainCounter.includes(test[i].name)) {
+                    cartePosee = cartesEnMains[j];
+                    if (cartePosee.name === "Redondance de données") {
+                      if (carteEnJeu.length === 0) {
+                        cartePosee = cartesEnMains[j + 1];
+                      } else {
+                        cartePosee = carteEnJeu[0];
+                      }
+                    }
+                  }
+                }
+                if (cartePosee !== null) {
+                  console.log("Defend malin")
                   reader.image = cartePosee.image;
                   reader.name = cartePosee.name;
                   cartesEnMains.splice(j, 1);
@@ -243,41 +280,29 @@ export default {
                 }
               }
             }
+
         if (cartePosee === null) {
-          do {
-            index = this.getNombreAleatoire(0, cartesEnMains.length - 1);
-            cartePosee = cartesEnMains[index];
-          } while (cartePosee.name === "Redondance de données" && carteEnJeu.length === 0);
-
-          //La carte redondance de données devient une copie de la carte sur la case de gauche.
-          if (cartePosee.name === "Redondance de données") {
-            alert("Redondance de données");
-            cartePosee = carteEnJeu[0];
-          }
-          reader.image = cartePosee.image;
-          reader.name = cartePosee.name;
-          cartesEnMains.splice(index, 1);
-
-          carteEnJeu.push(cartePosee);
+          this.poserCarte(cartesEnMains, reader);
         }
       }
     },
-    // Gère la perte de PV de l'attaquant
-    perdrePvAttaquant() {
-      if (pv.value > 0) {
-        pv.value--;  // Décrémentation de la valeur réactive de pv
-        console.log("pv", pv.value);
+        // Gère la perte de PV de l'attaquant
+        perdrePvAttaquant() {
+          if (pv.value > 0) {
+            pv.value--;  // Décrémentation de la valeur réactive de pv
+            console.log("pv", pv.value);
+          }
+        },
+        resetDejaAttaquer(){
+          dejaAttaquer = [];
+        },
+        trouverObjet(card, liste){
+          return liste.find(objet => objet.name === card.name);
+        },
+
+        trouverCarte(){
+          return true;
+        }
       }
-    },
-    resetDejaAttaquer(){
-      dejaAttaquer = [];
-    },
-    listeADoublons(){
-      let set = [...new Set(this.cartesAttaque)];
-      console.log("Taille liste ", cartesAttaque)
-      console.log("Taille set ", set)
-      return set.size !== cartesAttaque.length;
-    }
-  }
-};
+    };
 </script>

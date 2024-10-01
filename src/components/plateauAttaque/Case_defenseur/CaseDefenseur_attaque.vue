@@ -15,6 +15,7 @@ import Case_4_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur
 import io from "socket.io-client";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {cartesAttaque} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
+
 let carteEnMain = [];
 let deckDefense = fonctionnaliteesAttaque.methods.genererDeckDefense();
 export default {

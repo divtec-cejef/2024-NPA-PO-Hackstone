@@ -10,6 +10,7 @@
 
 <script>
 import io from "socket.io-client";
+import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 
 export default {
   props: {
@@ -42,7 +43,7 @@ export default {
     this.socket = io('http://localhost:3001');
     this.socket.on('rfidData', (data) => {
       let { readerID, card } = data;
-      if (card.type === 'défense' && card.name === 'Stockage' && readerID === '7)') {
+      if ((card.type === 'défense' && card.name === 'Stockage' && readerID === '7)') || fonctionnaliteesAttaque.methods.trouverCarte()) {
         this.isStockageCard = true;
         this.triggerLockAnimation();
         this.isAccessible = true;
