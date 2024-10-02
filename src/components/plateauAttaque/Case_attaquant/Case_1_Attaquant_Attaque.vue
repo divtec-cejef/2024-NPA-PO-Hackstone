@@ -1,17 +1,16 @@
 <template>
   <div class="bottomReader1_attaque">
     <!-- L'image de la carte (affichée tout le temps) -->
-    <img :src="getImagePath(image)" alt="Attaque Card" class="attaque-card-1" ref="attackingCard1">
-
-    <!-- Le bouton par-dessus l'image -->
-    <button @click="attaquerCarte('stockage')" class="test-attaque-btn">Attaque une carte</button>
+    <img :src="getImagePath(image)" alt="Attaque Card" class="attaque-card" ref="attackingCard">
+    <button @click="attaquerCarte('attackingCard', milieu)" class="test-attaque-btn">Attaque une carte</button>
   </div>
 </template>
 
 <script>
-import { gsap } from "gsap";
+import mixinsAnimation from "@/mixins/mixinsAnimation";
 
 export default {
+  mixins: [mixinsAnimation],
   props: {
     id: {
       type: Number,
@@ -20,6 +19,14 @@ export default {
     image: {
       type: String,
       required: false
+    }
+  },
+  data() {
+    return {
+      gauche: -230,
+      milieu: 230,
+      droite: 680,
+      stockage: 1140
     }
   },
   methods: {
@@ -31,52 +38,7 @@ export default {
           console.error("Image non trouvée :", image);
         }
       }
-      // Retourne une image par défaut si aucune image n'est fournie
-      return require('@/img/img_carte/img_attaque/anonymous.png'); // Assure-toi d'avoir une image par défaut dans tes assets
-    },
-    attaquerCarte(cote) {
-      const attackingCard1 = this.$refs.attackingCard1;
-      let deplacementX = 0;
-
-      // Vérifie si l'image existe avant de tenter l'animation
-      if (!attackingCard1) {
-        console.error("La carte attaquante n'est pas disponible.");
-        return;
-      }
-
-      if (cote === "milieu") {
-        deplacementX = 370;
-      } else if (cote === "droite") {
-        deplacementX = 1140;
-      } else if (cote === "gauche") {
-        deplacementX = -370;
-      } else if (cote === "stockage") {
-        deplacementX = 1910;
-      }
-
-      // Animation de déplacement avec GSAP
-      const tl = gsap.timeline();
-      // Étape 1: Zoom léger
-      tl.to(attackingCard1, {
-        duration: 0.3,
-        scale: 1.2, // Zoom à 120%
-        ease: "power1.inOut"
-      })
-          // Étape 2: Déplacer vers le haut et revenir à la taille normale
-          .to(attackingCard1, {
-            duration: 0.5,
-            y: -700, // Déplacement vers le haut
-            x: deplacementX,
-            scale: 1, // Retour à la taille initiale
-            ease: "power1.inOut"
-          })
-          // Étape 3: Retourner à la position initiale
-          .to(attackingCard1, {
-            duration: 0.5,
-            y: 0,
-            x: 0,
-            ease: "power1.inOut"
-          });
+      return require('@/img/img_carte/img_attaque/anonymous.png');
     }
   }
 };
@@ -95,11 +57,6 @@ export default {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-.attaque-card-1 {
-  height: auto;
-  transition: transform 0.3s ease; /* Transition fluide pour les animations */
-}
-
 .test-attaque-btn {
   position: absolute; /* Le bouton est placé au-dessus de l'image */
   top: 10px;
@@ -110,6 +67,10 @@ export default {
   padding: 10px;
   cursor: pointer;
   z-index: 1; /* S'assurer que le bouton est au-dessus de l'image */
+}
+
+.attaque-card {
+  height: 100%;
 }
 
 .test-attaque-btn:hover {
