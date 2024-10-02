@@ -1,8 +1,8 @@
 <template>
   <div class="bottomReader1_attaque">
     <!-- L'image de la carte (affichée tout le temps) -->
-    <img :src="getImagePath(image)" alt="Attaque Card" class="attaque-card" ref="attackingCard">
-    <button @click="attaquerCarte('attackingCard', milieu)" class="test-attaque-btn">Attaque une carte</button>
+    <img :src="getImagePath(image)" alt="Attaque Card" class="attaque-card1">
+    <button @click="attaquerCarte(1, gauche)" class="test-attaque-btn">Attaque une carte</button>
   </div>
 </template>
 
@@ -69,7 +69,7 @@ export default {
   z-index: 1; /* S'assurer que le bouton est au-dessus de l'image */
 }
 
-.attaque-card {
+.attaque-card1 {
   height: 100%;
 }
 

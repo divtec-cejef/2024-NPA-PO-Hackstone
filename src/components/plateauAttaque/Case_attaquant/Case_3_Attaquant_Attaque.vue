@@ -1,7 +1,7 @@
 <template>
   <div class="bottomReader3_attaque">
     <img :src="getImagePath(image)" alt="Attaque Card" class="attaque-card3" ref="attackingCard3">
-    <button @click="attaquerCarte('attackingCard3', milieu)" class="test-attaque-btn3">Attaque une carte</button>
+    <button @click="attaquerCarte(3, milieu)" class="test-attaque-btn3">Attaque une carte</button>
   </div>
 </template>
 
