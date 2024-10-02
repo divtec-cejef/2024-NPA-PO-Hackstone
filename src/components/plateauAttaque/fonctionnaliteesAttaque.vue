@@ -219,7 +219,8 @@ export default {
         reader[1].image = null;
         reader[4].name = null;
         reader[4].image = null;
-
+        reader[6].name = null;
+        reader[6].image = null;
         //Vide la liste des cartes en jeu, car plus aucune n'est présente
         carteEnJeu = [];
       }

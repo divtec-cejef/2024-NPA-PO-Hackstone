@@ -1,6 +1,6 @@
 <template>
   <div :class="['topReader4_defense', { 'exploded': hasUnlocked }]">
-    <img v-if="isCardVisible && !isStockageCard" :src="getImagePath(image)" class="defense-card">
+    <img v-if="isCardVisible && !isStockageCard" :src="getImagePath(image)" class="defense-card" alt="">
     <div v-if="!hasUnlocked" class="lock" :class="{ opening: isOpening, opened: isOpened, inaccessible: !isAccessible }">
       <div class="serrure"></div>
       <div class="base"></div>
