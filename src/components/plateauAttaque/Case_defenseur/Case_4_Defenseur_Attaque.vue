@@ -1,6 +1,6 @@
 <template>
   <div :class="['topReader4_defense', { 'exploded': hasUnlocked }]">
-    <img v-if="isCardVisible && !isStockageCard" :src="getImagePath(image)" alt="Defense Card" class="defense-card">
+    <img v-if="isCardVisible && !isStockageCard" :src="getImagePath(image)" class="defense-card">
     <div v-if="!hasUnlocked" class="lock" :class="{ opening: isOpening, opened: isOpened, inaccessible: !isAccessible }">
       <div class="serrure"></div>
       <div class="base"></div>
@@ -46,13 +46,9 @@ export default {
   },
 
   mounted() {
-    watch(stockage, (newVal) => {
-      if (newVal === true) {
-        this.isStockageCard = true;
-        this.triggerLockAnimation();
-        this.isAccessible = true;
-      }
-    });
+
+
+
     this.socket = io('http://localhost:3000');
     this.socket.on('rfidData', (data) => {
       let { readerID } = data;
@@ -66,7 +62,18 @@ export default {
         this.isCardVisible = this.isAccessible === true;
       }
     });
-  },
+    watch(stockage, (newVal) => {
+      if (newVal === true) {
+        this.isStockageCard = true;
+        this.isAccessible = true;
+        this.triggerLockAnimation();
+        this.isAccessible = true;
+      }
+    });
+
+    },
+
+
   methods: {
     getImagePath(image) {
       try {
@@ -76,23 +83,6 @@ export default {
         return '';
       }
     },
-
-   // poseStockage(){
-    //  stockage = true;
-      // this.isStockageCard = true;
-      // this.triggerLockAnimation();
-      // this.isAccessible = true;
-
-
-    // watch: {
-    //   // Surveillance du stockage pour déclencher l'animation
-    //   stockage(newVal) {
-    //     if (newVal) {
-    //       this.isStockageCard = true;
-    //       this.triggerLockAnimation(); // On déclenche l'animation si stockage passe à true
-    //     }
-    //   }
-    // },
 
     triggerLockAnimation() {
       this.isAccessible = false;
@@ -125,6 +115,10 @@ export default {
   justify-content: center;
   display: flex;
   align-items: center;
+}
+
+.topReader4_defense.exploded {
+  border-color: white !important;
 }
 
 .lock {

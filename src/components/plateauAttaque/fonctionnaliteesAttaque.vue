@@ -53,6 +53,7 @@ export default {
      * @param cartesEnMain cartes présentent dans la main de l'ordinateur
      */
     piocher(cartesDeck, cartesEnMain) {
+
       if (cartesEnMain.length >= 5) {
         let index = this.getNombreAleatoire(0, cartesDeck.length - 1);
         cartesEnMain.push(cartesDeck[index]);
@@ -63,7 +64,6 @@ export default {
         cartesEnMain.push(cartesDeck[index]);
         cartesDeck.splice(index, 1);
       }
-      cartesEnMain.splice(cartesEnMain.length, 1);
     },
 
     /**
@@ -72,11 +72,6 @@ export default {
      * @param cartesEnMains cartes présentent dans la main de l'ordinateur
      */
     DebutTour(cartesDeck, cartesEnMains) {
-      // for (let i = 0; i < cartesDeck.length; i++) {
-      //   // if (cartesDeck[i].name === ("Stockage")) {
-      //   //   cartesDeck.splice(i, 1);
-      //   // }
-      // }
       this.piocher(cartesDeck, cartesEnMains);
     },
 
@@ -100,10 +95,10 @@ export default {
 
         //La carte redondance de données devient une copie de la carte sur la case de gauche.
         if (cartePosee.name === "Redondance de données") {
-          alert("Redondance de données");
+          console.log("Redondance de données");
           cartePosee = carteEnJeu[0];
         }
-
+        //Change le nom et l'image des cases à l'écran par ceux de la carte scannée
         reader.image = cartePosee.image;
         reader.name = cartePosee.name;
         cartesEnMains.splice(index, 1);
@@ -119,26 +114,24 @@ export default {
      * @param readers lecteur sur lesquelles les cartes sont posées
      */
     attaquer(card, readers) {
-
       let counterCarteEnJeu = [];
       let carteDefendu = false;
 
       //Recherche si la carte est bel et bien présente sur le jeu
       let carteTrouvee = cartesAttaque.some(cartes => cartes.name === card.name);
+
       //Retrouve la carte afin de savoir depuis quand elle est présente sur le jeu
       let cartePresenteDepuis = this.trouverObjet(card, cartesAttaque);
+
       //Retrouve si la carte a déjà attaqué ou non.
       let carteDejaAttaquer = dejaAttaquer.some(carteAttaquante => carteAttaquante.name === card.name);
 
-      console.log("carte", carteDejaAttaquer);
-      console.log("cartes en attaque ", cartesAttaque);
+      let indexCarteScannee = cartesAttaque.indexOf(this.trouverObjet(card, cartesAttaque));
 
-      let indexx = this.trouverObjet(card, cartesAttaque);
-      let index = cartesAttaque.indexOf(indexx);
-
+      //Retrouve le nombre de fois qu'une carte est présente sur le plateau
       const occurrences = cartesAttaque.filter(c => c.name === card.name).length;
       console.log("Carte trouvée", carteTrouvee);
-      cartesAttaque.splice(index, 1);
+      cartesAttaque.splice(indexCarteScannee, 1);
       //Test si la carte est présente, si elle ne vient pas d'être posée et si elle n'a pas déjà attaqué
       if (carteTrouvee && cartePresenteDepuis.poseeDepuis === 2 && !carteDejaAttaquer) {
         //Test si la carte qui attaque est présente plus d'une fois
@@ -238,6 +231,14 @@ export default {
         test.push(cartesAttaque[a]);
       console.log("Test ", test)
 
+      let stockagePresent = cartesEnMains.some(a => a.name === "Stockage")
+      if(stockagePresent) {
+        console.log("Cadenas");
+        stockage.value = true;
+        let indexStockage = cartesEnMains.find(index => index.name === "Stockage" );
+        console.log("index stockage", indexStockage);
+        cartesEnMains.splice(cartesEnMains.indexOf(indexStockage), 1)
+      }
       //Pose une carte seulement s'il n'y en a pas une de déjà posé
       if (reader.image === null) {
         let cartePosee = null;
@@ -250,25 +251,25 @@ export default {
             for (let i = 0; i < test.length; i++) {
               for (let j = 0; j < cartesEnMains.length; j++) {
                 //cartePosee = cartesEnMains[j];
-                if (cartesEnMains[j].name === "Stockage") {
-                  console.log("Cadenas");
-                  stockage = true;
-                  cartesEnMains.splice(j, 1);
-                  // Case_4_Defenseur_Attaque.methods.triggerLockAnimation();
-                  // cartePosee = cartesEnMains[j];
-                } else {
-                  let carteEnMainCounter = cartesEnMains[j].counter;
-                  if (carteEnMainCounter.includes(test[i].name)) {
-                    cartePosee = cartesEnMains[j];
-                    if (cartePosee.name === "Redondance de données") {
-                      if (carteEnJeu.length === 0) {
-                        cartePosee = cartesEnMains[j + 1];
-                      } else {
-                        cartePosee = carteEnJeu[0];
-                      }
+                // if (cartesEnMains[j].name === "Stockage") {
+                //   console.log("Cadenas");
+                //   stockage = true;
+                //   cartesEnMains.splice(j, 1);
+                //   // Case_4_Defenseur_Attaque.methods.triggerLockAnimation();
+                //   // cartePosee = cartesEnMains[j];
+                // } else {
+                let carteEnMainCounter = cartesEnMains[j].counter;
+                if (carteEnMainCounter.includes(test[i].name)) {
+                  cartePosee = cartesEnMains[j];
+                  if (cartePosee.name === "Redondance de données") {
+                    if (carteEnJeu.length === 0) {
+                      cartePosee = cartesEnMains[j + 1];
+                    } else {
+                      cartePosee = carteEnJeu[0];
                     }
                   }
                 }
+
                 if (cartePosee !== null) {
                   console.log("Defend malin")
                   reader.image = cartePosee.image;
@@ -286,23 +287,23 @@ export default {
         }
       }
     },
-        // Gère la perte de PV de l'attaquant
-        perdrePvAttaquant() {
-          if (pv.value > 0) {
-            pv.value--;  // Décrémentation de la valeur réactive de pv
-            console.log("pv", pv.value);
-          }
-        },
-        resetDejaAttaquer(){
-          dejaAttaquer = [];
-        },
-        trouverObjet(card, liste){
-          return liste.find(objet => objet.name === card.name);
-        },
-
-        trouverCarte(){
-          return true;
-        }
+    // Gère la perte de PV de l'attaquant
+    perdrePvAttaquant() {
+      if (pv.value > 0) {
+        pv.value--;  // Décrémentation de la valeur réactive de pv
+        console.log("pv", pv.value);
       }
-    };
+    },
+    resetDejaAttaquer(){
+      dejaAttaquer = [];
+    },
+    trouverObjet(card, liste){
+      return liste.find(objet => objet.name === card.name);
+    },
+
+    trouverCarte(){
+      return true;
+    }
+  }
+};
 </script>
