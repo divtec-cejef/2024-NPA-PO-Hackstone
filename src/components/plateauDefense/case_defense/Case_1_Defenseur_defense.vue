@@ -1,6 +1,6 @@
 <template>
   <div class="bottomReader1_defense">
-    <img v-if="image" :src="getImagePath(image)" alt="Defense Card" class="defense-card">
+    <img v-if="image" :src="getImagePath(image)" alt="Defense Card" class="attaque-card">
     <p v-else></p>
   </div>
 </template>

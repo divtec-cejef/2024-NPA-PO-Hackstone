@@ -3,7 +3,7 @@
     <h1>Information sur la carte : {{ cardName }}</h1>
     <div class="container-2">
       <div class="affichage_carte">
-        <img v-if="image" :src="getImagePath(image)" alt="Defense Card" class="defense-card">
+        <img v-if="image" :src="getImagePath(image)" alt="Card" class="card">
         <p v-else></p>
       </div>
       <div class="container-3">
