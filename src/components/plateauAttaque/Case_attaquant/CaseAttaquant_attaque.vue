@@ -11,27 +11,25 @@ import Case_1_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant
 import Case_2_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_2_Attaquant_Attaque.vue";
 import Case_3_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_3_Attaquant_Attaque.vue";
 import io from "socket.io-client";
-
+import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
+import {cartesAttaque} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 export default {
   components: {
     Case_1_Attaquant_Attaque,
     Case_2_Attaquant_Attaque,
     Case_3_Attaquant_Attaque
   },
+  props: {
+    readers: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
-      readers: [
-        { id: 1, name: 'Reader 1', image: null},
-        { id: 2, name: 'Reader 2', image: null},
-        { id: 3, name: 'Reader 3', image: null},
-        { id: 4, name: 'Reader 4', image: null},
-        { id: 5, name: 'Reader 5', image: null},
-        { id: 6, name: 'Reader 6', image: null},
-        { id: 7, name: 'Reader 7', image: null},
-      ],
       card: {},
-      readerID: null
-    };
+      localReaders: [...this.readers]
+    }
   },
 
   mounted() {
@@ -44,20 +42,34 @@ export default {
         // Nettoie readerID pour enlever les caractères non numériques
         readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
-        console.log("Cleaned readerID:", readerID); // Vérifie la valeur nettoyée
+        const reader = this.localReaders.findIndex(r => r.id === Number(readerID));
 
-        this.card = card;
-        this.card.image = card.image;
-        this.readerID = readerID;
+        if (reader === 2 || reader === 3 || reader === 5) {
+          console.log("image ", reader);
+          if (this.localReaders[reader].image === null) {
+            this.localReaders[reader] = {...this.localReaders[reader], image: card.image}
+            this.localReaders[reader] = {...this.localReaders[reader], name: card.name}
 
-        // Convertir readerID en nombre
-        const readerIndex = this.readers.findIndex(r => r.id === Number(readerID));
-        console.log("Reader Index:", readerIndex); // Vérifie l'index trouvé
-
-        if (readerIndex !== -1) {
-          this.readers[readerIndex] = { ...this.readers[readerIndex], image: card.image };
+            fonctionnaliteesAttaque.methods.arriveeAnonymous(card, this.localReaders);
+            if (cartesAttaque.length === 0) {
+              cartesAttaque.push(card)
+            } else {
+              let exist = false;
+              for (let i = 0; i < cartesAttaque.length; i++) {
+                if (cartesAttaque[i].uid.includes(card.uid)) {
+                  exist = true;
+                  break;
+                }
+              }
+              if (!exist)
+                cartesAttaque.push(card);
+            }
+            let newReaders = [...this.localReaders]; // Copie des readers
+            this.$emit('update-readers', newReaders);
+            console.log("Cartes en attaque", cartesAttaque);
+          }
         }
-        console.log("Updated reader:", this.readers[readerIndex]);
+
       } else {
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);
       }

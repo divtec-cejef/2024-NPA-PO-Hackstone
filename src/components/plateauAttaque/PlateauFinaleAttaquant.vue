@@ -4,7 +4,7 @@
     <PVDefenseur_attaque />
 
     <!-- Case de la défense -->
-    <CaseDefenseur_attaque :readers="readers" :socket="socket" />
+    <CaseDefenseur_attaque :readers="readers" :socket="socket"  @update-readers="updateReaders" />
 
     <img src="../../img/ligne.png" alt="Ligne" class="line" id="ligne_attaque">
 
@@ -12,7 +12,7 @@
     <TourAttaquant_attaque :socket="socket" />
 
     <!-- Case de l'attaque -->
-    <CaseAttaquant_attaque :readers="readers" :socket="socket" />
+    <CaseAttaquant_attaque :readers="readers" :socket="socket" @update-readers="updateReaders"/>
   </div>
 </template>
 
@@ -22,7 +22,7 @@ import CaseDefenseur_attaque from "@/components/plateauAttaque/Case_defenseur/Ca
 import TourAttaquant_attaque from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 import PVDefenseur_attaque from "@/components/plateauAttaque/PVDefenseur_attaque.vue";
 import io from "socket.io-client";
-
+import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 export default {
   components: {
     CaseAttaquant_attaque,
@@ -45,6 +45,7 @@ export default {
     };
   },
   mounted() {
+    console.log(this.readers)
     this.socket = io('http://localhost:3000');
     this.socket.on('rfidData', (data) => {
       const { readerID, card } = data;
@@ -53,42 +54,47 @@ export default {
         let mappedReaderID = null;
         switch (parseInt(readerID)) {
           case 1:
-            mappedReaderID = 1; // Capteur 1 -> Reader 1
+            mappedReaderID = 0; // Capteur 1 -> Reader 1
             break;
           case 2:
-            mappedReaderID = 2; // Capteur 2 -> Reader 2
+            mappedReaderID = 1; // Capteur 2 -> Reader 2
             break;
           case 3:
-            mappedReaderID = 5; // Capteur 3 -> Reader 5
+            mappedReaderID = 4; // Capteur 3 -> Reader 5
             break;
           case 4:
-            mappedReaderID = 6; // Capteur 4 -> Reader 6
+            mappedReaderID = 5; // Capteur 4 -> Reader 6
             break;
           case 5:
             mappedReaderID = 3; // Capteur 5 -> Reader 3
             break;
           case 6:
-            mappedReaderID = 7; // Capteur 6 -> Reader 7
+            mappedReaderID = 6; // Capteur 6 -> Reader 7
             break;
           case 7:
-            mappedReaderID = 4; // Capteur 7 -> Reader 4
+            mappedReaderID = 2; // Capteur 7 -> Reader 4
             break;
         }
 
-        console.log('Mapped Reader ID:', mappedReaderID);
+        //console.log(mappedReaderID);
 
         const reader = this.readers.find(r => r.id === mappedReaderID);
 
         if (!reader) {
           console.log(`No reader found with mapped ID ${mappedReaderID}.`);
         } else if (reader.id === 3) {
-          alert("Haha je t'attaque !");
+          fonctionnaliteesAttaque.methods.attaquer(card, this.readers);
           //console.log("Haha je t'attaque");
         }
       } else {
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);
       }
     });
+  },
+  methods: {
+    updateReaders(newReaders){
+      this.readers = newReaders;
+    }
   }
 }
 </script>

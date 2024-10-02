@@ -8,7 +8,19 @@
       "image": "img/img_carte/img_attaque/anonymous.png",
       "image_info": "img/img_carte/img_infoCarte/anonymous.png",
       "type": "attaque",
-      "level": "haut niveau"
+      "level": "haut niveau",
+      "poseeDepuis": 1,
+      "counter": [
+        "Antivirus",
+        "Chiffrement de données",
+        "Firewall",
+        "Mises à jour",
+        "A2F",
+        "Backup",
+        "VPN",
+        "White hat",
+        "Super-antivirus"
+      ]
     },
     {
       "uid": [
@@ -22,7 +34,13 @@
       "image": "img/img_carte/img_attaque/brutforce.png",
       "image_info": "img/img_carte/img_infoCarte/brutforce.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "poseeDepuis": 1,
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "A2F"
+      ]
     },
     {
       "uid": [
@@ -35,7 +53,13 @@
       "image": "img/img_carte/img_attaque/cheval_troie.png",
       "image_info": "img/img_carte/img_infoCarte/cheval_troie.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "poseeDepuis": 1,
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "Antivirus"
+      ]
     },
     {
       "uid": [
@@ -49,7 +73,13 @@
       "image": "img/img_carte/img_attaque/DDOS.png",
       "image_info": "img/img_carte/img_infoCarte/ddos.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "poseeDepuis": 1,
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "Firewall"
+      ]
     },
     {
       "uid": [
@@ -63,7 +93,13 @@
       "image": "img/img_carte/img_attaque/elevation_privilege.png",
       "image_info": "img/img_carte/img_infoCarte/elevation_privilege.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "poseeDepuis": 1,
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "Chiffrement de données"
+      ]
     },
     {
       "uid": [
@@ -77,7 +113,13 @@
       "image": "img/img_carte/img_attaque/hacker.png",
       "image_info": "img/img_carte/img_infoCarte/hacker.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "poseeDepuis": 1,
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "VPN"
+      ]
     },
     {
       "uid": [
@@ -91,7 +133,13 @@
       "image": "img/img_carte/img_attaque/logiciel_malveillant.png",
       "image_info": "img/img_carte/img_infoCarte/logiciel_malveillant.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "poseeDepuis": 1,
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "Mise à jour"
+      ]
     },
     {
       "uid": [
@@ -105,7 +153,13 @@
       "image": "img/img_carte/img_attaque/panne_reseau.png",
       "image_info": "img/img_carte/img_infoCarte/panne_reseau.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "poseeDepuis": 1,
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "Backup"
+      ]
     },
     {
       "uid": [
@@ -118,7 +172,13 @@
       "image": "img/img_carte/img_attaque/virus.png",
       "image_info": "img/img_carte/img_infoCarte/virus.png",
       "type": "attaque",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "poseeDepuis": 1,
+      "counter": [
+        "Super-antivirus",
+        "White hat",
+        "Antivirus"
+      ]
     },
 
     {
@@ -132,7 +192,11 @@
       "image": "img/img_carte/img_defense/A2F.png",
       "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Brutforce",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -146,7 +210,12 @@
       "image": "img/img_carte/img_defense/antivirus.png",
       "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Virus",
+        "Cheval de troie",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -159,7 +228,11 @@
       "image": "img/img_carte/img_defense/backup.png",
       "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Panne réseau",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -172,7 +245,11 @@
       "image": "img/img_carte/img_defense/chiffrement_donnee.png",
       "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Élévation de privilège",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -185,7 +262,11 @@
       "image": "img/img_carte/img_defense/firewall.png",
       "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "DDOS",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -198,7 +279,11 @@
       "image": "img/img_carte/img_defense/mise_a_jour.png",
       "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Logiciel malveillant",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -211,7 +296,10 @@
       "image": "img/img_carte/img_defense/redondance_donnee.png",
       "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Anonymous"
+      ]
     },
     {
       "uid":[ "04 FC 39 FA 60 5B 84"],
@@ -221,7 +309,10 @@
       "image": "img/img_carte/img_defense/stockage.png",
       "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
-      "level": "haut niveau"
+      "level": "haut niveau",
+      "counter": [
+        "Anonymous"
+      ]
     },
     {
       "uid": ["04 35 34 FA 60 5B 85"],
@@ -231,7 +322,18 @@
       "image": "img/img_carte/img_defense/super_antivirus.png",
       "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
-      "level": "haut niveau"
+      "level": "haut niveau",
+      "counter": [
+        "Anonymous",
+        "Brutforce",
+        "Cheval de troie",
+        "DDOS",
+        "Élévation de privilège",
+        "Hacker",
+        "Logiciel malveillant",
+        "Panne réseau",
+        "Virus"
+      ]
     },
     {
       "uid": [
@@ -244,7 +346,11 @@
       "image": "img/img_carte/img_defense/VPN.png",
       "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Hacker",
+        "Anonymous"
+      ]
     },
     {
       "uid": [
@@ -257,7 +363,18 @@
       "image": "img/img_carte/img_defense/white_hat.png",
       "image_info": "img/img_carte/img_infoCarte/",
       "type": "défense",
-      "level": "bas niveau"
+      "level": "bas niveau",
+      "counter": [
+        "Anonymous",
+        "Brutforce",
+        "Cheval de troie",
+        "DDOS",
+        "Élévation de privilège",
+        "Hacker",
+        "Logiciel malveillant",
+        "Panne réseau",
+        "Virus"
+      ]
     }
   ]
 }

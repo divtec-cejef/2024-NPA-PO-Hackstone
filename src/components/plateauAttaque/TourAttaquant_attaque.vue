@@ -24,7 +24,7 @@
 </template>
 
 <script>
-//import io from 'socket.io-client';
+import io from 'socket.io-client';
 
 export default {
   data() {
@@ -42,6 +42,18 @@ export default {
     };
   },
 
+  mounted() {
+    this.socket = io('http://localhost:3000');
+
+    this.socket.on('rfidData', (data) => {
+      const { readerID } = data;
+
+      // Vérifier si le readerID est 1
+      if (readerID === '1)') {
+        this.updateVisibility();
+      }
+    });
+  },
   methods: {
     updateVisibility() {
       // Boucle pour masquer les compteurs un par un
@@ -65,7 +77,7 @@ export default {
 .compteurs-attaque {
   position: absolute;
   bottom: 50px;
-  left: 50px;
+  left: 50px; /* Positionner les images en haut à droite */
 }
 
 .compteur-attaque {
