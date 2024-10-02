@@ -10,13 +10,13 @@
 
 <style scoped>
 .topReader1_attaque {
-  width: 270px;
-  height: 380px;
+  width: 300px;
+  height: 420px;
+  background-size: 100%;
   border-width: 4px;
   border-style: solid;
   border-color: white;
   border-image: initial;
-
   font-size: 24px;
   justify-content: center;
   display: flex;

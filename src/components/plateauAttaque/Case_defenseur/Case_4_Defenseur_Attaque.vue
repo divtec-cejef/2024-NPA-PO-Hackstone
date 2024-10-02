@@ -104,13 +104,14 @@ export default {
 
 <style scoped>
 .topReader4_defense {
-  width: 270px;
-  height: 380px;
+  width: 300px;
+  height: 420px;
+  background-size: 100%;
   border-width: 4px;
   border-style: solid;
   border-color: red;
   border-image: initial;
-
+  background-color: rgba(255, 0, 0, 0.5);
   font-size: 24px;
   justify-content: center;
   display: flex;

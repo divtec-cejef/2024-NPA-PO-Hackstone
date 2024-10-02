@@ -3,7 +3,7 @@
     <h1>Information sur la carte : {{ cardName }}</h1>
     <div class="container-2">
       <div class="affichage_carte">
-        <img v-if="image" :src="getImagePath(image)" alt="Defense Card" class="defense-card">
+        <img v-if="image" :src="getImagePath(image)" alt="Card" class="card">
         <p v-else></p>
       </div>
       <div class="container-3">
@@ -43,7 +43,7 @@ export default {
     this.socket.on('rfidData', (data) => {
       console.log('Données RFID reçues:', data);
       let { readerID, card } = data;
-      console.log(card)
+      console.log(card.image_info)
       // Nettoie readerID pour enlever les caractères non numériques
       readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
@@ -51,7 +51,7 @@ export default {
         this.cardName = card.name
         this.cardType = card.type
         this.cardLevel = card.level
-        this.image = card.image   //_info
+        this.image = card.image_info
         this.descriptionJeu = card.description_jeu
         this.descriptionVie = card.description_vie
       }
