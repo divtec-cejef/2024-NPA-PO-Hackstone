@@ -1,6 +1,7 @@
 <template>
   <div :class="['topReader4_defense', { 'exploded': hasUnlocked }]">
     <img v-if="isCardVisible && !isStockageCard" :src="getImagePath(image)" class="defense-card" alt="">
+    <p v-else> {{id}} </p>
     <div v-if="!hasUnlocked" class="lock" :class="{ opening: isOpening, opened: isOpened, inaccessible: !isAccessible }">
       <div class="serrure"></div>
       <div class="base"></div>
@@ -118,8 +119,13 @@ export default {
   align-items: center;
 }
 
+.defense-card{
+  height: 100%;
+}
+
 .topReader4_defense.exploded {
   border-color: white !important;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .lock {

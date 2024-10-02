@@ -8,7 +8,6 @@
     </div>
 
     <!-- Bouton pour retirer un compteur à la fois -->
-    <button @click="updateVisibility" class="test-defeat-btn">Retirer un compteur</button>
 
     <!-- Filtre noir et blanc et message de défaite s'affiche si tous les tours sont épuisés -->
     <div v-if="hasLost">

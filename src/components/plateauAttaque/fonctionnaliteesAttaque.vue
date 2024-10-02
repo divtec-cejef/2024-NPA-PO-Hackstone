@@ -130,7 +130,6 @@ export default {
 
       //Retrouve le nombre de fois qu'une carte est présente sur le plateau
       const occurrences = cartesAttaque.filter(c => c.name === card.name).length;
-      console.log("Carte trouvée", carteTrouvee);
       cartesAttaque.splice(indexCarteScannee, 1);
       //Test si la carte est présente, si elle ne vient pas d'être posée et si elle n'a pas déjà attaqué
       if (carteTrouvee && cartePresenteDepuis.poseeDepuis === 2 && !carteDejaAttaquer) {
@@ -143,7 +142,7 @@ export default {
           }else
             dejaAttaquer.push(card);
         }
-        console.log("Deja attaquer", dejaAttaquer);
+
         //Fonction permettant d'arrêter les deux boucles à un moment donné
         outerLoop:
             //Boucle passant sur chaque case de l'ordinateur
@@ -225,40 +224,28 @@ export default {
         carteEnJeu = [];
       }
     },
-    defendMalin(cartesEnMains, reader) {
+    defendMalin(cartesEnMains, reader, emplacementListe) {
       nbrAttaqueAnonymous = 0;
       let test = [];
       for (let a = 0; a < cartesAttaque.length; a++)
         test.push(cartesAttaque[a]);
-      console.log("Test ", test)
 
       let stockagePresent = cartesEnMains.some(a => a.name === "Stockage")
       if(stockagePresent) {
         console.log("Cadenas");
         stockage.value = true;
         let indexStockage = cartesEnMains.find(index => index.name === "Stockage" );
-        console.log("index stockage", indexStockage);
         cartesEnMains.splice(cartesEnMains.indexOf(indexStockage), 1)
       }
       //Pose une carte seulement s'il n'y en a pas une de déjà posé
       if (reader.image === null) {
         let cartePosee = null;
-        console.log("Cartes en main", cartesEnMains)
-        console.log("Cartes en jeu", carteEnJeu)
         //Empêche la redondance de données d'être la première carte posée sur le terrain
         // afin qu'elle puisse copier une carte déjà présente
 
         outerLoop:
             for (let i = 0; i < test.length; i++) {
               for (let j = 0; j < cartesEnMains.length; j++) {
-                //cartePosee = cartesEnMains[j];
-                // if (cartesEnMains[j].name === "Stockage") {
-                //   console.log("Cadenas");
-                //   stockage = true;
-                //   cartesEnMains.splice(j, 1);
-                //   // Case_4_Defenseur_Attaque.methods.triggerLockAnimation();
-                //   // cartePosee = cartesEnMains[j];
-                // } else {
                 let carteEnMainCounter = cartesEnMains[j].counter;
                 if (carteEnMainCounter.includes(test[i].name)) {
                   cartePosee = cartesEnMains[j];
@@ -272,11 +259,10 @@ export default {
                 }
 
                 if (cartePosee !== null) {
-                  console.log("Defend malin")
                   reader.image = cartePosee.image;
                   reader.name = cartePosee.name;
                   cartesEnMains.splice(j, 1);
-                  carteEnJeu.push(cartePosee);
+                  carteEnJeu.splice(emplacementListe, 0, cartePosee);
                   test = [];
                   break outerLoop;
                 }
@@ -301,9 +287,16 @@ export default {
     trouverObjet(card, liste){
       return liste.find(objet => objet.name === card.name);
     },
-
-    trouverCarte(){
-      return true;
+    trouverCarteDefense(readers, card) {
+      let a;
+      console.log("carte", card)
+      console.log(readers);
+     // for (let i = 0; readers.length; i++) {
+        a = readers.find(defenseur => card.counter.includes(defenseur.name));
+      //   if (a !== undefined)
+      //     break;
+      // }
+      return a;
     }
   }
 };

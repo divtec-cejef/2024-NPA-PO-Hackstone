@@ -41,16 +41,16 @@ export default {
 
       if (readerID === "1") {
         fonctionnaliteesAttaque.methods.DebutTour(deckDefense, carteEnMain);
-        fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[0]);
+        fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[0], 0);
         setTimeout(() => {
-          fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[1]); // Appel de la deuxième fonction après 3 secondes
+          fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[1], 1); // Appel de la deuxième fonction après 3 secondes
         }, 1000);
         setTimeout(() => {
-          fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[4]); // Appel de la deuxième fonction après 3 secondes
+          fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[4], 2); // Appel de la deuxième fonction après 3 secondes
         }, 2000);
         setTimeout(() => {
         if (stockage.value === true){
-            fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[6]); // Appel de la deuxième fonction après 3 secondes
+            fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[6], 3); // Appel de la deuxième fonction après 3 secondes
         }
         }, 3000);
         for (let i = 0; i < cartesAttaque.length; i++){

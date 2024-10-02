@@ -1,8 +1,8 @@
 <template>
   <div class="bottomReaders_attaque">
-    <Case_1_Attaquant_Attaque :id="readers[2].id" :image="readers[2].image"/>
-    <Case_2_Attaquant_Attaque :id="readers[3].id" :image="readers[3].image"/>
-    <Case_3_Attaquant_Attaque :id="readers[5].id" :image="readers[5].image"/>
+    <Case_1_Attaquant_Attaque :id="readers[2].id" :image="readers[2].image" :readers="readers" />
+    <Case_2_Attaquant_Attaque :id="readers[3].id" :image="readers[3].image" :readers="readers" />
+    <Case_3_Attaquant_Attaque :id="readers[5].id" :image="readers[5].image" :readers="readers" />
   </div>
 </template>
 
@@ -13,6 +13,7 @@ import Case_3_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant
 import io from "socket.io-client";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {cartesAttaque} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
+export let UID = [];
 export default {
   components: {
     Case_1_Attaquant_Attaque,
@@ -33,12 +34,14 @@ export default {
   },
 
   mounted() {
+
     this.socket = io('http://localhost:3000');
 
     this.socket.on('rfidData', (data) => {
-      let { readerID, card } = data;
+      let { readerID, card, uid } = data;
       if (card.type === 'attaque') {
-
+         UID.push(uid);
+         console.log("UID", UID)
         // Nettoie readerID pour enlever les caractères non numériques
         readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 

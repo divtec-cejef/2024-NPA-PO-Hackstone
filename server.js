@@ -148,7 +148,7 @@ app2.post('/send_rfid_data', (req, res) => {
     if (uid) {
         const card = cardsData.cards.find(card => card.uid.includes(uid));
         if (card) {
-            io2.emit('rfidData', { readerID, card });
+            io2.emit('rfidData', { readerID, card, uid });
             console.log('Emitted card data:', { readerID, card });
         } else {
             io2.emit('rfidData', { readerID, card: { name: 'Carte inconnue', image: '', description_vie: '', description_jeu: '' } });
