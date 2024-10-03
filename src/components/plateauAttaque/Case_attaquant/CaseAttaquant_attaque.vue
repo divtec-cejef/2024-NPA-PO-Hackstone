@@ -13,7 +13,9 @@ import Case_3_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant
 import io from "socket.io-client";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {cartesAttaque} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-export let UID = [];
+export let UID1;
+export let UID2;
+export let UID3;
 export default {
   components: {
     Case_1_Attaquant_Attaque,
@@ -39,13 +41,19 @@ export default {
 
     this.socket.on('rfidData', (data) => {
       let { readerID, card, uid } = data;
+      console.log("LE UID", uid)
       if (card.type === 'attaque') {
-         UID.push(uid);
-         console.log("UID", UID)
         // Nettoie readerID pour enlever les caractères non numériques
         readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
         const reader = this.localReaders.findIndex(r => r.id === Number(readerID));
+
+        if (reader === 2)
+          UID1 = uid;
+        else if (reader === 3)
+          UID2 = uid;
+        else if (reader === 5)
+          UID3 = uid;
 
         if (reader === 2 || reader === 3 || reader === 5) {
           console.log("image ", reader);

@@ -291,12 +291,105 @@ export default {
       let a;
       console.log("carte", card)
       console.log(readers);
-     // for (let i = 0; readers.length; i++) {
-        a = readers.find(defenseur => card.counter.includes(defenseur.name));
+      // for (let i = 0; readers.length; i++) {
+      a = readers.find(defenseur => card.counter.includes(defenseur.name));
       //   if (a !== undefined)
       //     break;
       // }
       return a;
+    },
+    /**
+     *Permet à l'utilisateur d'attaquer les cartes de l'ordinateur,
+     * les attaques se font automatiquement sur la bonne carte
+     * @param card carte qui va attaquer
+     * @param reader lecteur sur lesquelles les cartes sont posées
+     * @param readers readers
+     */
+    attaquerNouveau(card, reader, readers) {
+      let counterCarteEnJeu = [];
+      let carteDefendu = false;
+
+      //Recherche si la carte est bel et bien présente sur le jeu
+      let carteTrouvee = cartesAttaque.some(cartes => cartes.name === card.name);
+
+      //Retrouve la carte afin de savoir depuis quand elle est présente sur le jeu
+      let cartePresenteDepuis = this.trouverObjet(card, cartesAttaque);
+
+      //Retrouve si la carte a déjà attaqué ou non.
+      let carteDejaAttaquer = dejaAttaquer.some(carteAttaquante => carteAttaquante.name === card.name);
+
+      let indexCarteScannee = cartesAttaque.indexOf(this.trouverObjet(card, cartesAttaque));
+
+      //Retrouve le nombre de fois qu'une carte est présente sur le plateau
+      const occurrences = cartesAttaque.filter(c => c.name === card.name).length;
+      cartesAttaque.splice(indexCarteScannee, 1);
+      //Test si la carte est présente, si elle ne vient pas d'être posée et si elle n'a pas déjà attaqué
+      if (carteTrouvee && cartePresenteDepuis.poseeDepuis === 2 && !carteDejaAttaquer) {
+        //Test si la carte qui attaque est présente plus d'une fois
+        if (occurrences === 1) {
+          if (card.name === "Anonymous"){
+            nbrAttaqueAnonymous++;
+            if(nbrAttaqueAnonymous >= 2)
+              dejaAttaquer.push(card);
+          }else
+            dejaAttaquer.push(card);
+        }
+
+        //Fonction permettant d'arrêter les deux boucles à un moment donné
+        outerLoop:
+            //Boucle passant sur chaque case de l'ordinateur
+            for (let j = 0; j < carteEnJeu.length; j++) {
+              //Liste des cartes qui contrent les cartes présentent sur le jeu
+              counterCarteEnJeu = carteEnJeu[j].counter;
+
+              //Boucle passant tous les contre des cartes
+              for (let i = 0; i < counterCarteEnJeu.length; i++) {
+                //Test si la carte qui attaque à un contre présent sur le terrain
+                if (counterCarteEnJeu.includes(card.name)) {
+                  carteDefendu = true;
+
+                  //Retrouve les cases sur lesquelles les cartes sont présentes
+                  let carte3 = this.trouverObjet(carteEnJeu[j], readers)
+                  console.log("Carte 3", carte3)
+                  //Retire le nom et l'image de la carte détruite de leur case
+                  //et détruit l'Anonymous et le super-antivirus uniquement s'ils ont déjà été attaqués une fois
+                  if ((carte3.name === "Super-antivirus" && pvSuperAntivirus === 1) || carte3.name !== "Super-antivirus") {
+                    carte3.image = null;
+                    carte3.name = null;
+                    carteEnJeu.splice(j, 1);
+                  } else
+                    pvSuperAntivirus = 1;
+
+                  if ((reader.name === "Anonymous" && pvAnonymous === 1) || reader.name !== "Anonymous") {
+                    reader.image = null;
+                    reader.name = null;
+
+                  } else
+                    pvAnonymous = 1;
+
+                  //Termine la fonction une fois qu'une carte a été détruite
+                  break outerLoop;
+                }
+              }
+            }
+        if (!carteDefendu) {
+          console.log("carte pas defendue")
+          this.perdrePvAttaquant();
+          cartesAttaque.push(card);
+        }
+      } else if (!carteTrouvee) {
+        alert("Carte pas présente")
+      }else if (carteDejaAttaquer) {
+        cartesAttaque.push(card);
+        alert("cette carte a deja attaquer")
+      } else if (cartePresenteDepuis.poseeDepuis !== 2 ){
+        cartesAttaque.push(card);
+        alert("Vous devez attendre un tour avant de pouvoir attaquer avec cette carte !")
+      }
+      if (card.name === "Anonymous" && pvAnonymous > 0 && nbrAttaqueAnonymous < 2){
+        card.poseeDepuis = 2;
+        cartesAttaque.push(card);
+      }
     }
   }
 };

@@ -22,7 +22,6 @@ import CaseDefenseur_attaque from "@/components/plateauAttaque/Case_defenseur/Ca
 import TourAttaquant_attaque from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 import PVDefenseur_attaque from "@/components/plateauAttaque/PVDefenseur_attaque.vue";
 import io from "socket.io-client";
-import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 export default {
   components: {
     CaseAttaquant_attaque,
@@ -81,9 +80,8 @@ export default {
         if (!reader) {
           console.log(`No reader found with mapped ID ${mappedReaderID}.`);
         } else if (reader.id === 3) {
-          console.log("BONJOUR");
           setTimeout(() => {
-          fonctionnaliteesAttaque.methods.attaquer(card, this.readers);
+          //fonctionnaliteesAttaque.methods.attaquer(card, this.readers);
           },2000);
           //console.log("Haha je t'attaque");
         }

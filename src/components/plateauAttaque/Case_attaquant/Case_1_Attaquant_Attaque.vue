@@ -10,7 +10,7 @@
 import io from "socket.io-client";
 import {gsap} from "gsap";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-import {UID}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
+import {UID1}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
 export default {
   props: {
     id: {
@@ -41,34 +41,35 @@ export default {
     this.socket = io('http://localhost:3000');
     this.socket.on('rfidData', (data) => {
       let {readerID, card, uid} = data;
-      console.log(data);
-      console.log("UID", uid);
-      console.log("this.uid", UID)
 
-      if (readerID === '5)' && this.readers[2].name === card.name && UID === uid ) {
-        console.log("Readers", this.readers);
+      if (readerID === '5)' && this.readers[2].name === card.name && UID1 === uid ) {
         let emplacement;
         let didierCruche = fonctionnaliteesAttaque.methods.trouverCarteDefense(this.readers, card);
-        console.log("Didier", didierCruche.id);
-        switch (didierCruche.id) {
-          case 1 :
-            emplacement = this.gauche;
-            break;
-          case 2 :
-            emplacement = this.milieu;
-            break;
-          case 5 :
-            emplacement = this.droite;
-            break;
-          case 7 :
-            emplacement = this.stockage;
-            break;
-          default:
-            emplacement = 0;
+
+        if (didierCruche === undefined){
+          emplacement = 0;
+        }else {
+          switch (didierCruche.id) {
+            case 1 :
+              emplacement = this.gauche;
+              break;
+            case 2 :
+              emplacement = this.milieu;
+              break;
+            case 5 :
+              emplacement = this.droite;
+              break;
+            case 7 :
+              emplacement = this.stockage;
+              break;
+            default:
+              emplacement = 0;
+          }
         }
-        console.log("SALUT");
-        console.log("Emplacement", emplacement)
         this.attaquerCarteCase1(1, emplacement);
+        setTimeout(() => {
+          fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[2], this.readers);
+        },2000);
       }
 
     });

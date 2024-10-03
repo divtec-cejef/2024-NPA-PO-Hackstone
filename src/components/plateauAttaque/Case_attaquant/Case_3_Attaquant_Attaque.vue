@@ -10,6 +10,7 @@
 
 import io from "socket.io-client";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
+import {UID3}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
 import {gsap} from "gsap";
 
 export default {
@@ -41,13 +42,12 @@ export default {
     this.socket = io('http://localhost:3000');
 
     this.socket.on('rfidData', (data) => {
-      let {readerID, card} = data;
+      let {readerID, card, uid} = data;
 
-      if (readerID === '5)' && this.readers[5].name === card.name) {
-        console.log("Readers", this.readers);
+      if (readerID === '5)' && this.readers[5].name === card.name && UID3 === uid) {
+
         let emplacement;
         let didierCruche = fonctionnaliteesAttaque.methods.trouverCarteDefense(this.readers, card);
-        //console.log("Didier", didierCruche.id);
         if (didierCruche === undefined){
           emplacement = 0;
         }else {
@@ -68,9 +68,10 @@ export default {
               emplacement = 0;
           }
         }
-        console.log("SALUT");
-        console.log("Emplacement", emplacement)
         this.attaquerCarteCase3(3, emplacement);
+        setTimeout(() => {
+          fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[5], this.readers);
+        },2000);
       }
 
     });
