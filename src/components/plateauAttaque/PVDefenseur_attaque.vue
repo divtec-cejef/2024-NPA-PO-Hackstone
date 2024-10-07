@@ -1,9 +1,52 @@
+<template>
+  <div class="container">
+    <!-- Affichage des cœurs pour l'attaquant -->
+    <div class="attaque_pvDefenses">
+      <div v-for="(isBroken, index) in boucliers" :key="index" class="bouclier-container">
+        <!-- Bouclier intact -->
+        <div v-if="!isBroken" class="bouclier">
+          <img src="../../img/PV_defenseur.png" alt="Heart" />
+        </div>
+
+        <!-- Bouclier cassé avec images séparées pour la gauche et la droite -->
+        <div v-else class="bouclier-casse">
+          <div class="bouclier-half left-half">
+            <img src="../../img/shield-left.png" alt="Bouclier Gauche" />
+          </div>
+          <div class="bouclier-half right-half">
+            <img src="../../img/shield-right.png" alt="Bouclier Droit" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bouton pour tester la perte de PV de l'attaquant -->
+    <button @click="perdrePVAttaquant" class="test-defeat-btn">Perdre un PV Attaquant</button>
+
+    <!-- Overlay et message de victoire affichés si l'attaquant a gagné -->
+    <div v-if="hasWon" class="victory-overlay">
+      <!-- Overlay qui assombrit l'arrière-plan -->
+      <div class="overlay"></div>
+
+      <!-- Message de victoire avec effet glitch, centré au milieu -->
+      <div class="glitch-text-container">
+        <p class="glitch">
+          <span aria-hidden="true">Infiltration réussie</span>
+          Infiltration réussie
+          <span aria-hidden="true">Infiltration réussie</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup>
-import { ref, watch} from 'vue'
+import { ref, watch } from 'vue'
 import confetti from 'canvas-confetti'
 
 // Variable représentant les PV de l'attaquant (ici 5 PV pour commencer)
 const pvAttaquant = ref(5)
+const boucliers = ref([false, false, false, false, false]) // Etat des boucliers (intact ou cassé)
 
 // Variable pour afficher ou masquer le message de victoire
 const hasWon = ref(false)
@@ -28,87 +71,217 @@ watch(pvAttaquant, (newVal) => {
 // Fonction pour simuler la perte de PV de l'attaquant (par exemple après une attaque)
 function perdrePVAttaquant() {
   if (pvAttaquant.value > 0) {
+    boucliers.value[pvAttaquant.value - 1] = true // Casser le bouclier correspondant
     pvAttaquant.value -= 1
   }
 }
 </script>
 
-<template>
-  <div>
-    <!-- Affichage des cœurs pour l'attaquant -->
-    <div class="attaque_pvDefenses">
-      <img v-for="n in pvAttaquant" :key="n" src="../../img/PV_defenseur.png" alt="Heart" class="attaque_pvDefense">
-    </div>
-
-    <!-- Bouton pour tester la perte de PV de l'attaquant -->
-    <button @click="perdrePVAttaquant">Perdre un PV Attaquant</button>
-
-    <!-- Filtre joyeux et message de victoire affichés si l'attaquant a gagné -->
-    <div v-if="hasWon">
-      <!-- Filtre coloré sur tout l'arrière-plan -->
-      <div class="overlay"></div>
-
-      <!-- Message de victoire affiché au centre avec des couleurs joyeuses -->
-      <div class="victory-message">
-        <h1>🏆 Vous avez gagné ! 🏆</h1>
-      </div>
-    </div>
-  </div>
-</template>
-
-<style scoped>
-.attaque_pvDefenses {
+<style>
+body {
+  background: black;
+  color: white;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
-  position: absolute;
-  top: 50px; /* Positionner les cœurs en haut */
-  right: 50px; /* Positionner les cœurs à droite */
+  align-items: center;
 }
 
-.attaque_pvDefense {
-  width: 100px; /* Taille des cœurs */
-  height: 120px;
+.container {
+  text-align: center;
 }
 
-/* Style du filtre joyeux */
+.bouclier-container {
+  position: relative;
+  width: 150px; /* Largeur globale du bouclier */
+  height: 200px; /* Hauteur globale du bouclier */
+  margin: 5px;
+}
+
+.bouclier img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajuster l'image au conteneur */
+}
+
+/* Styles pour le bouclier cassé avec images séparées */
+.bouclier-casse {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bouclier-half {
+  height: 100%;
+  position: relative;
+}
+
+.left-half {
+  width: 50%; /* Ajuster cette valeur en fonction de la largeur réelle de l'image gauche */
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.right-half {
+  width: 50%; /* Ajuster cette valeur en fonction de la largeur réelle de l'image droite */
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.right-half img {
+  width: 100%; /* Remplir complètement chaque conteneur */
+  height: 150px;
+  object-fit: contain;
+}
+
+.left-half img {
+  width: 100%; /* Remplir complètement chaque conteneur */
+  height: 140px;
+  object-fit: contain;
+}
+
+.left-half {
+  animation: break-left 0.1s ease-out forwards;
+}
+
+.right-half {
+  animation: break-right 0.1s ease-out forwards;
+}
+
+/* Animation de cassure de la moitié gauche */
+@keyframes break-left {
+  0% {
+    transform: translateX(15%) translateY(2%);
+  }
+  100% {
+    transform: translateX(10%) rotate(-5deg) translateY(2%);
+    filter: grayscale(100%);
+  }
+}
+
+/* Animation de cassure de la moitié droite */
+@keyframes break-right {
+  0% {
+    transform: translateX(-15%);
+  }
+  100% {
+    transform: translateX(-10%) rotate(5deg); /* Se sépare vers la droite */
+    filter: grayscale(100%);
+  }
+}
+
+/* Overlay pour assombrir l'arrière-plan */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.6); /* Filtre lumineux */
-  z-index: 999; /* S'assure que le filtre soit en dessous du message */
+  background-color: rgba(0, 0, 0, 0.8); /* Couleur sombre avec transparence */
+  z-index: 999;
 }
 
-/* Style du message de victoire */
-.victory-message {
+/* Conteneur pour centrer le texte */
+.glitch-text-container {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: green;
-  padding: 20px;
-  border-radius: 10px;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  z-index: 1000; /* S'assure que le message soit au-dessus du filtre */
-  font-size: 2.5em;
+}
+
+.glitch {
+  font-size: 5rem;
+  color: white;
   font-weight: bold;
-  animation: pop-in 0.8s ease-in-out; /* Animation du message */
+  text-transform: uppercase;
+  position: relative;
+  text-shadow: 0.05em 0 0 #ff0000, -0.03em -0.04em 0 #009eff,
+  0.025em 0.04em 0 #ff4d00;
+  animation: glitch 725ms infinite;
 }
 
-/* Animation d'apparition du message de victoire */
-@keyframes pop-in {
+.glitch span {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.glitch span:first-child {
+  animation: glitch 500ms infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+  transform: translate(-0.04em, -0.03em);
+  opacity: 0.75;
+}
+
+.glitch span:last-child {
+  animation: glitch 375ms infinite;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+  transform: translate(0.04em, 0.03em);
+  opacity: 0.75;
+}
+
+@keyframes glitch {
   0% {
-    transform: translate(-50%, -50%) scale(0.5);
+    text-shadow: 0.05em 0 0 #ff0000, -0.03em -0.04em 0 #009eff,
+    0.025em 0.04em 0 #ff4d00;
   }
-
+  15% {
+    text-shadow: 0.05em 0 0 #ff0000, -0.03em -0.04em 0 #009eff,
+    0.025em 0.04em 0 #ff4d00;
+  }
+  16% {
+    text-shadow: -0.05em -0.025em 0 #ff0000, 0.025em 0.035em 0 #009eff,
+    -0.05em -0.05em 0 #ff4d00;
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 #ff0000, 0.025em 0.035em 0 #009eff,
+    -0.05em -0.05em 0 #ff4d00;
+  }
   50% {
-    transform: translate(-50%, -50%) scale(1.5);
+    text-shadow: 0.05em 0.035em 0 #ff0000, 0.03em 0 0 #009eff,
+    0 -0.04em 0 #ff4d00;
   }
-
+  99% {
+    text-shadow: 0.05em 0.035em 0 #ff0000, 0.03em 0 0 #009eff,
+    0 -0.04em 0 #ff4d00;
+  }
   100% {
-    transform: translate(-50%, -50%) scale(1);
+    text-shadow: -0.05em 0 0 #ff0000, -0.025em -0.04em 0 #009eff,
+    -0.04em -0.025em 0 #ff4d00;
   }
 }
+
+/* Style pour le bouton */
+.test-defeat-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.attaque_pvDefenses {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 50px;
+  right: 50px;
+}
+
 </style>

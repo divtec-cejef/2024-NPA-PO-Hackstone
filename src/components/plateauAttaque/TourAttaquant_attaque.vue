@@ -15,9 +15,9 @@
       <!-- Filtre noir et blanc sur l'arrière-plan -->
       <div class="overlay"></div>
 
-      <!-- Message de défaite à la manière de GTA V, qui reste visible -->
-      <div class="wasted-message">
-        <h1>VOUS AVEZ PERDU !</h1>
+      <!-- Message de défaite -->
+      <div class="resist-message">
+        <h1>Le système a résisté à vos attaques</h1>
       </div>
     </div>
   </div>
@@ -88,27 +88,24 @@ export default {
   z-index: 999; /* S'assure que le filtre soit en dessous du message */
 }
 
-/* Style pour le message de défaite "VOUS AVEZ PERDU" qui reste visible */
-.wasted-message {
+/* Style pour le message de défaite "LE SYSTÈME A RÉSISTÉ À VOS ATTAQUES" */
+.resist-message {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1); /* Centrer et effet de zoom initial */
-  color: red; /* Couleur rouge classique de GTA */
-  text-transform: uppercase; /* Tout en majuscules */
+  color: red; /* Couleur verte pour signifier la résistance */
   font-size: 40px; /* Taille du texte */
-  font-family: Impact,serif;
+  font-family: Impact, serif;
   text-align: center;
 
-
-
   opacity: 1;
-  animation: wasted-animation 1s ease-out forwards; /* Animation de zoom, sans fade-out */
+  animation: resist-animation 1s ease-out forwards; /* Animation de zoom, sans fade-out */
   z-index: 1000; /* S'assure que le message soit au-dessus du filtre */
 }
 
 /* Animation pour le message (sans disparition) */
-@keyframes wasted-animation {
+@keyframes resist-animation {
   0% {
     transform: translate(-50%, -50%) scale(0.5);
     opacity: 0;
@@ -131,6 +128,5 @@ export default {
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  z-index: 1000;
 }
 </style>
