@@ -120,7 +120,6 @@ export default {
             y: 0,
             x: 0,
             ease: "power2.inOut",
-            delay: 2
           });
     }
   }

@@ -302,19 +302,29 @@ export default {
         cartesAttaque.push(card);
       }
     },
+
+    /**
+     * Vérifie si une carte remplie les conditions nécessaires pour attaquer
+     * @param card carte à vérifier
+     * @returns {boolean} si oui ou non la carte peut attaquer
+     */
     peutAttaquer(card) {
+
       let carteDejaAttaquer = dejaAttaquer.some(carteAttaquante => carteAttaquante.name === card.name);
       let carteTrouvee = cartesAttaque.some(cartes => cartes.name === card.name);
       let cartePresenteDepuis = this.trouverObjet(card, cartesAttaque);
+
       if (cartePresenteDepuis.poseeDepuis >= 2 && !carteDejaAttaquer && carteTrouvee) {
         return true
+
       } else if (carteDejaAttaquer) {
         alert("Cette carte a deja attaquer")
         cartesAttaque.push(card);
-      }
-      else if (card.poseeDepuis < 2) {
+
+      } else if (card.poseeDepuis < 2) {
         alert("Vous devez attendre un tour avant d'attaquer")
         cartesAttaque.push(card);
+
       } else if (!carteTrouvee)
         alert("Carte pas posée");
 

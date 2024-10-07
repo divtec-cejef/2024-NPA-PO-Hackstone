@@ -14,6 +14,7 @@ import Case_3_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur
 import Case_4_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_4_Defenseur_Attaque.vue";
 import io from "socket.io-client";
 import fonctionnaliteesAttaque, {cartesAttaque, stockage} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
+import {finDeTour} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 
 let carteEnMain = [];
 let deckDefense = fonctionnaliteesAttaque.methods.genererDeckDefense();
@@ -41,18 +42,23 @@ export default {
 
       if (readerID === "1") {
         fonctionnaliteesAttaque.methods.DebutTour(deckDefense, carteEnMain);
-        fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[0], 0);
+        const delais = [2000, 3000, 4000, 5000];
+        const readersIndex = [0, 1, 4, 6];
+
+        delais.forEach((delai, index) => {
+          setTimeout(() => {
+            if (index === 3 && !stockage.value) {
+              return; // Ne pas exécuter si la condition n'est pas remplie pour le dernier appel
+            }
+            fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[readersIndex[index]], index);
+          }, delai);
+        });
+
+// Changement de la valeur de `finDeTour` après 6 secondes
         setTimeout(() => {
-          fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[1], 1); // Appel de la deuxième fonction après 3 secondes
-        }, 1000);
-        setTimeout(() => {
-          fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[4], 2); // Appel de la deuxième fonction après 3 secondes
-        }, 2000);
-        setTimeout(() => {
-        if (stockage.value === true){
-            fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[6], 3); // Appel de la deuxième fonction après 3 secondes
-        }
-        }, 3000);
+          finDeTour.value = !finDeTour.value;
+        }, 6000);
+
         for (let i = 0; i < cartesAttaque.length; i++){
           cartesAttaque[i].poseeDepuis = 2;
         }
