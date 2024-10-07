@@ -24,6 +24,7 @@
 
 <script>
 import io from 'socket.io-client';
+export let perdu = false;
 
 export default {
   data() {
@@ -66,6 +67,7 @@ export default {
       // Vérifier si tous les compteurs sont masqués, le joueur a perdu
       if (this.visibility.every(v => !v)) {
         this.hasLost = true;
+        perdu = true
       }
     }
   }

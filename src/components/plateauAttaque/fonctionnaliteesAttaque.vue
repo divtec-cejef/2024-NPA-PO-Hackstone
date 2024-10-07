@@ -3,6 +3,9 @@ import {ref} from "vue";
 // Importation de `ref` pour créer des variables réactives
 export let pv = ref(5);
 export let stockage = ref(false);
+export let dejaAttaquer = [];
+export let cartesAttaque = [];
+
 // Importation du fichier JSON des CARTES
 let cardsData = require('../../../cards.json');
 let carteEnJeu = [];
@@ -11,15 +14,14 @@ let pvSuperAntivirus = 2;
 let nbrAttaqueAnonymous = 0;
 let dejaPosee = false;
 
-export let dejaAttaquer = [];
-export let cartesAttaque = [];
-
 const DECK = {
   cardsData
 };
 const CARTES = DECK.cardsData.cards;
 export default {
+
   methods: {
+
     /**
      * Génère le deck du défenseur à partir d'un fichier json
      * @returns cartesAttaque cartes présentent dans le deck
@@ -108,100 +110,6 @@ export default {
     },
 
     /**
-     *Permet à l'utilisateur d'attaquer les cartes de l'ordinateur,
-     * les attaques se font automatiquement sur la bonne carte
-     * @param card carte qui va attaquer
-     * @param readers lecteur sur lesquelles les cartes sont posées
-     */
-    attaquer(card, readers) {
-      let counterCarteEnJeu = [];
-      let carteDefendu = false;
-
-      //Recherche si la carte est bel et bien présente sur le jeu
-      let carteTrouvee = cartesAttaque.some(cartes => cartes.name === card.name);
-
-      //Retrouve la carte afin de savoir depuis quand elle est présente sur le jeu
-      let cartePresenteDepuis = this.trouverObjet(card, cartesAttaque);
-
-      //Retrouve si la carte a déjà attaqué ou non.
-      let carteDejaAttaquer = dejaAttaquer.some(carteAttaquante => carteAttaquante.name === card.name);
-
-      let indexCarteScannee = cartesAttaque.indexOf(this.trouverObjet(card, cartesAttaque));
-
-      //Retrouve le nombre de fois qu'une carte est présente sur le plateau
-      const occurrences = cartesAttaque.filter(c => c.name === card.name).length;
-      cartesAttaque.splice(indexCarteScannee, 1);
-      //Test si la carte est présente, si elle ne vient pas d'être posée et si elle n'a pas déjà attaqué
-      if (carteTrouvee && cartePresenteDepuis.poseeDepuis === 2 && !carteDejaAttaquer) {
-        //Test si la carte qui attaque est présente plus d'une fois
-        if (occurrences === 1) {
-          if (card.name === "Anonymous"){
-            nbrAttaqueAnonymous++;
-            if(nbrAttaqueAnonymous >= 2)
-              dejaAttaquer.push(card);
-          }else
-            dejaAttaquer.push(card);
-        }
-
-        //Fonction permettant d'arrêter les deux boucles à un moment donné
-        outerLoop:
-            //Boucle passant sur chaque case de l'ordinateur
-            for (let j = 0; j < carteEnJeu.length; j++) {
-              //Liste des cartes qui contrent les cartes présentent sur le jeu
-              counterCarteEnJeu = carteEnJeu[j].counter;
-
-              //Boucle passant tous les contre des cartes
-              for (let i = 0; i < counterCarteEnJeu.length; i++) {
-                //Test si la carte qui attaque à un contre présent sur le terrain
-                if (counterCarteEnJeu.includes(card.name)) {
-                  carteDefendu = true;
-
-                  //Retrouve les cases sur lesquelles les cartes sont présentes
-                  let carte = this.trouverObjet(carteEnJeu[j], readers);
-                  let carte2 = this.trouverObjet(card, readers);
-
-                  //Retire le nom et l'image de la carte détruite de leur case
-                  //et détruit l'Anonymous et le super-antivirus uniquement s'ils ont déjà été attaqués une fois
-                  if ((carte.name === "Super-antivirus" && pvSuperAntivirus === 1) || carte.name !== "Super-antivirus") {
-                    carte.image = null;
-                    carte.name = null;
-                    carteEnJeu.splice(j, 1);
-                  } else
-                    pvSuperAntivirus = 1;
-
-                  if ((carte2.name === "Anonymous" && pvAnonymous === 1) || carte2.name !== "Anonymous") {
-                    carte2.image = null;
-                    carte2.name = null;
-
-                  } else
-                    pvAnonymous = 1;
-
-                  //Termine la fonction une fois qu'une carte a été détruite
-                  break outerLoop;
-                }
-              }
-            }
-        if (!carteDefendu) {
-          console.log("carte pas defendue")
-          this.perdrePvAttaquant();
-          cartesAttaque.push(card);
-        }
-      } else if (!carteTrouvee) {
-        alert("Carte pas présente")
-      }else if (carteDejaAttaquer) {
-        cartesAttaque.push(card);
-        alert("cette carte a deja attaquer")
-      } else if (cartePresenteDepuis.poseeDepuis !== 2 ){
-        cartesAttaque.push(card);
-        alert("Vous devez attendre un tour avant de pouvoir attaquer avec cette carte !")
-      }
-      if (card.name === "Anonymous" && pvAnonymous > 0 && nbrAttaqueAnonymous < 2){
-        card.poseeDepuis = 2;
-        cartesAttaque.push(card);
-      }
-    },
-
-    /**
      * Retire toutes les cartes en défense lors de l'arrivée de l'anonymous
      * @param card carte scannée
      * @param reader liste des cases
@@ -224,32 +132,40 @@ export default {
         carteEnJeu = [];
       }
     },
+
+    /**
+     * L'ordinateur pose des cartes en défense en fonction de celle présente en attaque
+     * @param cartesEnMains cartes dans la main de l'ordinateur
+     * @param reader case sur laquelle la carte va être posée
+     * @param emplacementListe permet d'ordrer la liste des cartes en jeu en fonction de leur ordre sur le plateau
+     */
     defendMalin(cartesEnMains, reader, emplacementListe) {
       nbrAttaqueAnonymous = 0;
-      let test = [];
-      for (let a = 0; a < cartesAttaque.length; a++)
-        test.push(cartesAttaque[a]);
+      let stockagePresent = cartesEnMains.some(a => a.name === "Stockage");
 
-      let stockagePresent = cartesEnMains.some(a => a.name === "Stockage")
-      if(stockagePresent) {
+      if (stockagePresent) {
         console.log("Cadenas");
         stockage.value = true;
-        let indexStockage = cartesEnMains.find(index => index.name === "Stockage" );
+        let indexStockage = cartesEnMains.find(index => index.name === "Stockage");
         cartesEnMains.splice(cartesEnMains.indexOf(indexStockage), 1)
       }
       //Pose une carte seulement s'il n'y en a pas une de déjà posé
       if (reader.image === null) {
         let cartePosee = null;
-        //Empêche la redondance de données d'être la première carte posée sur le terrain
-        // afin qu'elle puisse copier une carte déjà présente
 
         outerLoop:
-            for (let i = 0; i < test.length; i++) {
+            for (let i = 0; i < cartesAttaque.length; i++) {
               for (let j = 0; j < cartesEnMains.length; j++) {
+
                 let carteEnMainCounter = cartesEnMains[j].counter;
-                if (carteEnMainCounter.includes(test[i].name)) {
+
+                if (carteEnMainCounter.includes(cartesAttaque[i].name)) {
                   cartePosee = cartesEnMains[j];
+
+                  //Empêche la redondance de données d'être la première carte posée sur le terrain
+                  // afin qu'elle puisse copier une carte déjà présente
                   if (cartePosee.name === "Redondance de données") {
+
                     if (carteEnJeu.length === 0) {
                       cartePosee = cartesEnMains[j + 1];
                     } else {
@@ -263,133 +179,146 @@ export default {
                   reader.name = cartePosee.name;
                   cartesEnMains.splice(j, 1);
                   carteEnJeu.splice(emplacementListe, 0, cartePosee);
-                  test = [];
                   break outerLoop;
                 }
               }
             }
-
         if (cartePosee === null) {
           this.poserCarte(cartesEnMains, reader);
         }
       }
     },
-    // Gère la perte de PV de l'attaquant
+    /**
+     * Gère la perte de PV de l'attaquant
+     */
     perdrePvAttaquant() {
       if (pv.value > 0) {
         pv.value--;  // Décrémentation de la valeur réactive de pv
         console.log("pv", pv.value);
       }
     },
-    resetDejaAttaquer(){
+
+    /**
+     * Permet de reset la valeur de la liste dejaAttaquer depuis un autre composant
+     */
+    resetDejaAttaquer() {
       dejaAttaquer = [];
     },
-    trouverObjet(card, liste){
-      return liste.find(objet => objet.name === card.name);
+
+    /**
+     * Permet de retrouver un objet par rapport à son nom dans une liste
+     * @param object objet a retrouvé dans la liste
+     * @param liste dans laquelle chercher l'objet
+     * @returns {*} l'objet, s'il est présent dans la liste
+     */
+    trouverObjet(object, liste) {
+      return liste.find(objet => objet.name === object.name);
     },
+
+    /**
+     * Permet de retrouver la case qui contient la carte en défense
+     * @param readers liste des cases
+     * @param card carte en attaque
+     * @returns {*} l'emplacement de la carte en défense
+     */
     trouverCarteDefense(readers, card) {
-      let a;
-      console.log("carte", card)
-      console.log(readers);
-      // for (let i = 0; readers.length; i++) {
-      a = readers.find(defenseur => card.counter.includes(defenseur.name));
-      //   if (a !== undefined)
-      //     break;
-      // }
-      return a;
+      return readers.find(defenseur => card.counter.includes(defenseur.name));
     },
+
     /**
      *Permet à l'utilisateur d'attaquer les cartes de l'ordinateur,
      * les attaques se font automatiquement sur la bonne carte
      * @param card carte qui va attaquer
-     * @param reader lecteur sur lesquelles les cartes sont posées
-     * @param readers readers
+     * @param reader lecteur sur lequel la carte est posée
+     * @param readers liste des lecteurs
      */
     attaquerNouveau(card, reader, readers) {
       let counterCarteEnJeu = [];
       let carteDefendu = false;
 
-      //Recherche si la carte est bel et bien présente sur le jeu
-      let carteTrouvee = cartesAttaque.some(cartes => cartes.name === card.name);
-
-      //Retrouve la carte afin de savoir depuis quand elle est présente sur le jeu
-      let cartePresenteDepuis = this.trouverObjet(card, cartesAttaque);
-
-      //Retrouve si la carte a déjà attaqué ou non.
-      let carteDejaAttaquer = dejaAttaquer.some(carteAttaquante => carteAttaquante.name === card.name);
-
       let indexCarteScannee = cartesAttaque.indexOf(this.trouverObjet(card, cartesAttaque));
 
       //Retrouve le nombre de fois qu'une carte est présente sur le plateau
       const occurrences = cartesAttaque.filter(c => c.name === card.name).length;
+
       cartesAttaque.splice(indexCarteScannee, 1);
-      //Test si la carte est présente, si elle ne vient pas d'être posée et si elle n'a pas déjà attaqué
-      if (carteTrouvee && cartePresenteDepuis.poseeDepuis === 2 && !carteDejaAttaquer) {
-        //Test si la carte qui attaque est présente plus d'une fois
-        if (occurrences === 1) {
-          if (card.name === "Anonymous"){
-            nbrAttaqueAnonymous++;
-            if(nbrAttaqueAnonymous >= 2)
-              dejaAttaquer.push(card);
-          }else
+
+      //Test si la carte qui attaque est présente plus d'une fois
+      if (occurrences === 1) {
+        if (card.name === "Anonymous") {
+          nbrAttaqueAnonymous++;
+          if (nbrAttaqueAnonymous >= 2)
             dejaAttaquer.push(card);
-        }
+        } else
+          dejaAttaquer.push(card);
+      }
 
-        //Fonction permettant d'arrêter les deux boucles à un moment donné
-        outerLoop:
-            //Boucle passant sur chaque case de l'ordinateur
-            for (let j = 0; j < carteEnJeu.length; j++) {
-              //Liste des cartes qui contrent les cartes présentent sur le jeu
-              counterCarteEnJeu = carteEnJeu[j].counter;
+      //Fonction permettant d'arrêter les deux boucles à un moment donné
+      outerLoop:
+          //Boucle passant sur chaque case de l'ordinateur
+          for (let j = 0; j < carteEnJeu.length; j++) {
+            //Liste des cartes qui contrent les cartes présentent sur le jeu
+            counterCarteEnJeu = carteEnJeu[j].counter;
 
-              //Boucle passant tous les contre des cartes
-              for (let i = 0; i < counterCarteEnJeu.length; i++) {
-                //Test si la carte qui attaque à un contre présent sur le terrain
-                if (counterCarteEnJeu.includes(card.name)) {
-                  carteDefendu = true;
+            //Boucle passant tous les contre des cartes
+            for (let i = 0; i < counterCarteEnJeu.length; i++) {
+              //Test si la carte qui attaque à un contre présent sur le terrain
+              if (counterCarteEnJeu.includes(card.name)) {
+                carteDefendu = true;
 
-                  //Retrouve les cases sur lesquelles les cartes sont présentes
-                  let carte3 = this.trouverObjet(carteEnJeu[j], readers)
-                  console.log("Carte 3", carte3)
-                  //Retire le nom et l'image de la carte détruite de leur case
-                  //et détruit l'Anonymous et le super-antivirus uniquement s'ils ont déjà été attaqués une fois
-                  if ((carte3.name === "Super-antivirus" && pvSuperAntivirus === 1) || carte3.name !== "Super-antivirus") {
-                    carte3.image = null;
-                    carte3.name = null;
-                    carteEnJeu.splice(j, 1);
-                  } else
-                    pvSuperAntivirus = 1;
+                //Retrouve les cases sur lesquelles les cartes sont présentes
+                let carteDefense = this.trouverObjet(carteEnJeu[j], readers);
 
-                  if ((reader.name === "Anonymous" && pvAnonymous === 1) || reader.name !== "Anonymous") {
-                    reader.image = null;
-                    reader.name = null;
+                //Retire le nom et l'image de la carte détruite de leur case
+                //et détruit l'Anonymous et le super-antivirus uniquement s'ils ont déjà été attaqués une fois
+                if ((carteDefense.name === "Super-antivirus" && pvSuperAntivirus === 1)
+                    || carteDefense.name !== "Super-antivirus") {
 
-                  } else
-                    pvAnonymous = 1;
+                  carteDefense.image = null;
+                  carteDefense.name = null;
+                  carteEnJeu.splice(j, 1);
 
-                  //Termine la fonction une fois qu'une carte a été détruite
-                  break outerLoop;
-                }
+                } else
+                  pvSuperAntivirus = 1;
+
+                if ((reader.name === "Anonymous" && pvAnonymous === 1) || reader.name !== "Anonymous") {
+                  reader.image = null;
+                  reader.name = null;
+
+                } else
+                  pvAnonymous = 1;
+                //Termine la fonction une fois qu'une carte a été détruite
+                break outerLoop;
               }
             }
-        if (!carteDefendu) {
-          console.log("carte pas defendue")
-          this.perdrePvAttaquant();
-          cartesAttaque.push(card);
-        }
-      } else if (!carteTrouvee) {
-        alert("Carte pas présente")
-      }else if (carteDejaAttaquer) {
+          }
+      if (!carteDefendu) {
+        console.log("carte pas defendue")
+        this.perdrePvAttaquant();
         cartesAttaque.push(card);
-        alert("cette carte a deja attaquer")
-      } else if (cartePresenteDepuis.poseeDepuis !== 2 ){
-        cartesAttaque.push(card);
-        alert("Vous devez attendre un tour avant de pouvoir attaquer avec cette carte !")
       }
-      if (card.name === "Anonymous" && pvAnonymous > 0 && nbrAttaqueAnonymous < 2){
+      if (card.name === "Anonymous" && pvAnonymous > 0 && nbrAttaqueAnonymous < 2) {
         card.poseeDepuis = 2;
         cartesAttaque.push(card);
       }
+    },
+    peutAttaquer(card) {
+      let carteDejaAttaquer = dejaAttaquer.some(carteAttaquante => carteAttaquante.name === card.name);
+      let carteTrouvee = cartesAttaque.some(cartes => cartes.name === card.name);
+      let cartePresenteDepuis = this.trouverObjet(card, cartesAttaque);
+      if (cartePresenteDepuis.poseeDepuis >= 2 && !carteDejaAttaquer && carteTrouvee) {
+        return true
+      } else if (carteDejaAttaquer) {
+        alert("Cette carte a deja attaquer")
+        cartesAttaque.push(card);
+      }
+      else if (card.poseeDepuis < 2) {
+        alert("Vous devez attendre un tour avant d'attaquer")
+        cartesAttaque.push(card);
+      } else if (!carteTrouvee)
+        alert("Carte pas posée");
+
+      return false;
     }
   }
 };

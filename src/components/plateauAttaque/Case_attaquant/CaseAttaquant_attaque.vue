@@ -13,9 +13,11 @@ import Case_3_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant
 import io from "socket.io-client";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {cartesAttaque} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
+import {perdu} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 export let UID1;
 export let UID2;
 export let UID3;
+export let uidPrecedent = [];
 export default {
   components: {
     Case_1_Attaquant_Attaque,
@@ -41,27 +43,21 @@ export default {
 
     this.socket.on('rfidData', (data) => {
       let { readerID, card, uid } = data;
-      console.log("LE UID", uid)
-      if (card.type === 'attaque') {
+      console.log("has lost ",perdu)
+      if (card.type === 'attaque' && !perdu) {
         // Nettoie readerID pour enlever les caractères non numériques
         readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
         const reader = this.localReaders.findIndex(r => r.id === Number(readerID));
 
-        if (reader === 2)
-          UID1 = uid;
-        else if (reader === 3)
-          UID2 = uid;
-        else if (reader === 5)
-          UID3 = uid;
+        if ((reader === 2 || reader === 3 || reader === 5)) {
 
-        if (reader === 2 || reader === 3 || reader === 5) {
-          console.log("image ", reader);
           if (this.localReaders[reader].image === null) {
             this.localReaders[reader] = {...this.localReaders[reader], image: card.image}
             this.localReaders[reader] = {...this.localReaders[reader], name: card.name}
 
             fonctionnaliteesAttaque.methods.arriveeAnonymous(card, this.localReaders);
+
             if (cartesAttaque.length === 0) {
               cartesAttaque.push(card)
             } else {
@@ -78,9 +74,21 @@ export default {
             let newReaders = [...this.localReaders]; // Copie des readers
             this.$emit('update-readers', newReaders);
             console.log("Cartes en attaque", cartesAttaque);
-          }
-        }
 
+            if (!uidPrecedent.includes(uid)) {
+              uidPrecedent.push(uid)
+              if (reader === 2)
+                UID1 = uid;
+              else if (reader === 3)
+                UID2 = uid;
+              else if (reader === 5)
+                UID3 = uid;
+            } else if (uidPrecedent.includes(uid)) {
+              alert("Vous ne pouvez pas mettre deux fois la meme carte")
+            }
+          } else if (this.localReaders[reader].image !== card.image)
+            alert("Il y a deja une carte la ")
+        }
       } else {
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);
       }

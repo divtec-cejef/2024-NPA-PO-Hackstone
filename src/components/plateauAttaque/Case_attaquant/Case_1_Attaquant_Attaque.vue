@@ -10,7 +10,9 @@
 import io from "socket.io-client";
 import {gsap} from "gsap";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-import {UID1}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
+import {UID1, uidPrecedent}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
+import {perdu} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+
 export default {
   props: {
     id: {
@@ -38,43 +40,43 @@ export default {
   },
 
   mounted() {
-    this.socket = io('http://localhost:3000');
-    this.socket.on('rfidData', (data) => {
-      let {readerID, card, uid} = data;
+      this.socket = io('http://localhost:3000');
+      this.socket.on('rfidData', (data) => {
+        let {readerID, card, uid} = data;
 
-      if (readerID === '5)' && this.readers[2].name === card.name && UID1 === uid ) {
-        let emplacement;
-        let didierCruche = fonctionnaliteesAttaque.methods.trouverCarteDefense(this.readers, card);
+        if (readerID === '5)' && this.readers[2].name === card.name && UID1 === uid && !perdu) {
+          let emplacement;
+          let didierCruche = fonctionnaliteesAttaque.methods.trouverCarteDefense(this.readers, card);
 
-        if (didierCruche === undefined){
-          emplacement = 0;
-        }else {
-          switch (didierCruche.id) {
-            case 1 :
-              emplacement = this.gauche;
-              break;
-            case 2 :
-              emplacement = this.milieu;
-              break;
-            case 5 :
-              emplacement = this.droite;
-              break;
-            case 7 :
-              emplacement = this.stockage;
-              break;
-            default:
-              emplacement = 0;
+          if (didierCruche === undefined) {
+            emplacement = 0;
+          } else {
+            switch (didierCruche.id) {
+              case 1 :
+                emplacement = this.gauche;
+                break;
+              case 2 :
+                emplacement = this.milieu;
+                break;
+              case 5 :
+                emplacement = this.droite;
+                break;
+              case 7 :
+                emplacement = this.stockage;
+                break;
+              default:
+                emplacement = 0;
+            }
+          }
+          uidPrecedent.splice(uidPrecedent.indexOf(uid), 1);
+          if (fonctionnaliteesAttaque.methods.peutAttaquer(card)) {
+            this.attaquerCarteCase1(1, emplacement);
+            setTimeout(() => {
+              fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[2], this.readers);
+            }, 2000);
           }
         }
-        this.attaquerCarteCase1(1, emplacement);
-        setTimeout(() => {
-          fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[2], this.readers);
-        },2000);
-      }
-
-    });
-
-
+      });
 
   },
   methods: {
