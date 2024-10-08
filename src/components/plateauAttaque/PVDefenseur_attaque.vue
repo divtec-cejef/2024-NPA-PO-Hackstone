@@ -20,9 +20,6 @@
       </div>
     </div>
 
-    <!-- Bouton pour tester la perte de PV de l'attaquant -->
-    <button @click="perdrePVAttaquant" class="test-defeat-btn">Perdre un PV Attaquant</button>
-
     <!-- Overlay et message de victoire affichés si l'attaquant a gagné -->
     <div v-if="hasWon" class="victory-overlay">
       <!-- Overlay qui assombrit l'arrière-plan -->
@@ -41,14 +38,11 @@
 </template>
 
 <script setup>
-import {ref, watch} from "vue";
-import confetti from "canvas-confetti";
 import { pv }  from '@/components/plateauAttaque/fonctionnaliteesAttaque.vue';  // Importez `pv` depuis votre fichier de logique du jeu
 import { ref, watch } from 'vue'
 import confetti from 'canvas-confetti'
 
 // Variable représentant les PV de l'attaquant (ici 5 PV pour commencer)
-const pvAttaquant = ref(5)
 const boucliers = ref([false, false, false, false, false]) // Etat des boucliers (intact ou cassé)
 
 // Variable pour afficher ou masquer le message de victoire
@@ -63,19 +57,22 @@ function launchConfetti() {
   });
 }
 
-// Observer les PV de l'attaquant, si 0, afficher un message indiquant la victoire et déclencher les confettis
+// Observer les PV de l'attaquant, si 0, affiche un message indiquant la victoire et déclenche les confettis
 watch(pv, (newVal) => {
   if (newVal <= 0) {
-    hasWon.value = true
-    launchConfetti()
-  }
+    perdrePVAttaquant();
+    setTimeout(() => {
+      hasWon.value = true
+      launchConfetti()
+    }, 1000);
+  }else
+    perdrePVAttaquant();
 })
 
 // Fonction pour simuler la perte de PV de l'attaquant (par exemple après une attaque)
 function perdrePVAttaquant() {
-  if (pvAttaquant.value > 0) {
-    boucliers.value[pvAttaquant.value - 1] = true // Casser le bouclier correspondant
-    pvAttaquant.value -= 1
+  if (pv.value >= 0) {
+    boucliers.value[(pv.value - 4) *-1] = true // Casser le bouclier correspondant
   }
 }
 </script>
@@ -263,22 +260,6 @@ body {
     -0.04em -0.025em 0 #ff4d00;
   }
 }
-
-/* Style pour le bouton */
-.test-defeat-btn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  background-color: red;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  z-index: 1000;
-}
-
 .attaque_pvDefenses {
   display: flex;
   justify-content: center;

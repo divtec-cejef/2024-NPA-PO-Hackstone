@@ -8,15 +8,16 @@
 </template>
 
 <script>
+import io from "socket.io-client";
 import Case_1_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_1_Defenseur_Attaque.vue";
 import Case_2_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_2_Defenseur_Attaque.vue";
 import Case_3_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_3_Defenseur_Attaque.vue";
 import Case_4_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_4_Defenseur_Attaque.vue";
-import io from "socket.io-client";
 import fonctionnaliteesAttaque, {cartesAttaque, stockage} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {finDeTour} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 
 let carteEnMain = [];
+//Génère le deck du défenseur
 let deckDefense = fonctionnaliteesAttaque.methods.genererDeckDefense();
 export default {
   components: {
@@ -41,30 +42,42 @@ export default {
       readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
       if (readerID === "1") {
+        //Pioche des cartes
         fonctionnaliteesAttaque.methods.DebutTour(deckDefense, carteEnMain);
-        const delais = [2000, 3000, 4000, 5000];
-        const readersIndex = [0, 1, 4, 6];
 
+        //Pose trois cartes sur le terrain du défenseur
+        const delais = [2000, 3000, 4000];
+        const readersIndex = [0, 1, 4];
         delais.forEach((delai, index) => {
           setTimeout(() => {
-            if (index === 3 && !stockage.value) {
-              return; // Ne pas exécuter si la condition n'est pas remplie pour le dernier appel
-            }
             fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[readersIndex[index]], index);
           }, delai);
+
+          //Pose une carte sur la quatrième case si elle est débloquée
+          setTimeout(() => {
+            if (stockage.value === true) {
+              fonctionnaliteesAttaque.methods.defendMalin(carteEnMain, this.readers[6], 3);
+            }
+          }, 5000);
         });
 
-// Changement de la valeur de `finDeTour` après 6 secondes
+        // Changement de la valeur de `finDeTour` après 6 secondes
         setTimeout(() => {
           finDeTour.value = !finDeTour.value;
         }, 6000);
 
+        //Change le champ poseeDepuis des cartes en attaque à 2
+        //afin qu'elles puissent attaquer lors du tour de l'attaquant
         for (let i = 0; i < cartesAttaque.length; i++){
           cartesAttaque[i].poseeDepuis = 2;
         }
 
+        //Vide la liste des cartes ayant déjà attaqué
+        //Afin qu'elles puissent le refaire au prochain tour
         fonctionnaliteesAttaque.methods.resetDejaAttaquer();
-        let newReaders = [...this.readers]; // Copie des readers
+
+        // Copie des readers
+        let newReaders = [...this.readers];
         this.$emit('update-readers', newReaders);
       }
     });

@@ -75,15 +75,11 @@ export default {
             break;
         }
 
+        //Retrouve le reader scanné
         const reader = this.readers.find(r => r.id === mappedReaderID);
 
         if (!reader) {
           console.log(`No reader found with mapped ID ${mappedReaderID}.`);
-        } else if (reader.id === 3) {
-          setTimeout(() => {
-          //fonctionnaliteesAttaque.methods.attaquer(card, this.readers);
-          },2000);
-          //console.log("Haha je t'attaque");
         }
       } else {
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);

@@ -66,6 +66,14 @@ export default {
         cartesEnMain.push(cartesDeck[index]);
         cartesDeck.splice(index, 1);
       }
+      let stockagePresent = cartesEnMain.some(a => a.name === "Stockage");
+
+      if (stockagePresent) {
+        console.log("Cadenas");
+        stockage.value = true;
+        let indexStockage = cartesEnMain.find(index => index.name === "Stockage");
+        cartesEnMain.splice(cartesEnMain.indexOf(indexStockage), 1)
+      }
     },
 
     /**
@@ -141,14 +149,7 @@ export default {
      */
     defendMalin(cartesEnMains, reader, emplacementListe) {
       nbrAttaqueAnonymous = 0;
-      let stockagePresent = cartesEnMains.some(a => a.name === "Stockage");
 
-      if (stockagePresent) {
-        console.log("Cadenas");
-        stockage.value = true;
-        let indexStockage = cartesEnMains.find(index => index.name === "Stockage");
-        cartesEnMains.splice(cartesEnMains.indexOf(indexStockage), 1)
-      }
       //Pose une carte seulement s'il n'y en a pas une de déjà posé
       if (reader.image === null) {
         let cartePosee = null;
@@ -173,14 +174,13 @@ export default {
                     }
                   }
                 }
-
-                if (cartePosee !== null) {
-                  reader.image = cartePosee.image;
-                  reader.name = cartePosee.name;
-                  cartesEnMains.splice(j, 1);
-                  carteEnJeu.splice(emplacementListe, 0, cartePosee);
-                  break outerLoop;
-                }
+                  if (cartePosee !== null) {
+                    reader.image = cartePosee.image;
+                    reader.name = cartePosee.name;
+                    cartesEnMains.splice(j, 1);
+                    carteEnJeu.splice(emplacementListe, 0, cartePosee);
+                    break outerLoop;
+                  }
               }
             }
         if (cartePosee === null) {
@@ -188,12 +188,13 @@ export default {
         }
       }
     },
+
     /**
      * Gère la perte de PV de l'attaquant
      */
     perdrePvAttaquant() {
       if (pv.value > 0) {
-        pv.value--;  // Décrémentation de la valeur réactive de pv
+        pv.value--;
         console.log("pv", pv.value);
       }
     },
@@ -235,12 +236,12 @@ export default {
     attaquerNouveau(card, reader, readers) {
       let counterCarteEnJeu = [];
       let carteDefendu = false;
-
       let indexCarteScannee = cartesAttaque.indexOf(this.trouverObjet(card, cartesAttaque));
 
       //Retrouve le nombre de fois qu'une carte est présente sur le plateau
       const occurrences = cartesAttaque.filter(c => c.name === card.name).length;
 
+      //Retire la carte attaquante des cartes en attaque
       cartesAttaque.splice(indexCarteScannee, 1);
 
       //Test si la carte qui attaque est présente plus d'une fois
@@ -274,6 +275,7 @@ export default {
                 if ((carteDefense.name === "Super-antivirus" && pvSuperAntivirus === 1)
                     || carteDefense.name !== "Super-antivirus") {
 
+                  //Retire la carte détruite du jeu
                   carteDefense.image = null;
                   carteDefense.name = null;
                   carteEnJeu.splice(j, 1);
@@ -293,11 +295,12 @@ export default {
             }
           }
       if (!carteDefendu) {
-        console.log("carte pas defendue")
+        //Retire des points de vie au défenseur et rajoute la carte dans la liste si elle n'est pas défendue
         this.perdrePvAttaquant();
         cartesAttaque.push(card);
       }
       if (card.name === "Anonymous" && pvAnonymous > 0 && nbrAttaqueAnonymous < 2) {
+        //S'il reste des points de vie et des attaques disponibles à l'anonymous, le rajoute dans la liste
         card.poseeDepuis = 2;
         cartesAttaque.push(card);
       }

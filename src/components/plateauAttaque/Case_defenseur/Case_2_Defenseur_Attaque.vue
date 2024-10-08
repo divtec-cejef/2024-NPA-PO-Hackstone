@@ -1,7 +1,6 @@
 <template>
   <div class="topReader2_defense">
     <img v-if="image" :src="getImagePath(image)" alt="Defense Card" class="defense-card">
-    <p v-else> {{id}} </p>
   </div>
 </template>
 

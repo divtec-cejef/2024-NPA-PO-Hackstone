@@ -7,17 +7,18 @@
 </template>
 
 <script>
+import io from "socket.io-client";
 import Case_1_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
 import Case_2_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_2_Attaquant_Attaque.vue";
 import Case_3_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_3_Attaquant_Attaque.vue";
-import io from "socket.io-client";
-import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-import {cartesAttaque} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
+import fonctionnaliteesAttaque, {cartesAttaque} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {perdu} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+
 export let UID1;
 export let UID2;
 export let UID3;
 export let uidPrecedent = [];
+
 export default {
   components: {
     Case_1_Attaquant_Attaque,
@@ -38,29 +39,32 @@ export default {
   },
 
   mounted() {
-
     this.socket = io('http://localhost:3000');
 
     this.socket.on('rfidData', (data) => {
       let { readerID, card, uid } = data;
-      console.log("has lost ",perdu)
+      console.log("has lost ",perdu);
+
+      //Vérifie si la carte est de type attaque et si la partie n'est pas terminée
       if (card.type === 'attaque' && !perdu) {
         // Nettoie readerID pour enlever les caractères non numériques
         readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
+        //Retrouve le reader sur lequel la carte a été scannée
         const reader = this.localReaders.findIndex(r => r.id === Number(readerID));
 
         if ((reader === 2 || reader === 3 || reader === 5)) {
+          //Vérifie si la carte n'es pas déjà présente sur le plateau
+          if (!uidPrecedent.includes(uid)) {
+            //Ajoute la carte seulement s'il n'y en a pas sur cette case.
+            if (this.localReaders[reader].image === null) {
+              this.localReaders[reader] = {...this.localReaders[reader], image: card.image}
+              this.localReaders[reader] = {...this.localReaders[reader], name: card.name}
 
-          if (this.localReaders[reader].image === null) {
-            this.localReaders[reader] = {...this.localReaders[reader], image: card.image}
-            this.localReaders[reader] = {...this.localReaders[reader], name: card.name}
+              //Vérifie si la carte posée est l'anonymous afin de déclencher son effet si nécessaire
+              fonctionnaliteesAttaque.methods.arriveeAnonymous(card, this.localReaders);
 
-            fonctionnaliteesAttaque.methods.arriveeAnonymous(card, this.localReaders);
-
-            if (cartesAttaque.length === 0) {
-              cartesAttaque.push(card)
-            } else {
+              //Ajoute la carte dans la liste des cartes en attaque si elle n'est pas déjà présente
               let exist = false;
               for (let i = 0; i < cartesAttaque.length; i++) {
                 if (cartesAttaque[i].uid.includes(card.uid)) {
@@ -70,24 +74,25 @@ export default {
               }
               if (!exist)
                 cartesAttaque.push(card);
-            }
-            let newReaders = [...this.localReaders]; // Copie des readers
-            this.$emit('update-readers', newReaders);
-            console.log("Cartes en attaque", cartesAttaque);
 
-            if (!uidPrecedent.includes(uid)) {
-              uidPrecedent.push(uid)
+              //Copie des readers
+              let newReaders = [...this.localReaders];
+              this.$emit('update-readers', newReaders);
+              console.log("Cartes en attaque", cartesAttaque);
+
+              //Récupère l'uid de la carte scannée
+              uidPrecedent.push(uid);
               if (reader === 2)
                 UID1 = uid;
               else if (reader === 3)
                 UID2 = uid;
               else if (reader === 5)
                 UID3 = uid;
-            } else if (uidPrecedent.includes(uid)) {
-              alert("Vous ne pouvez pas mettre deux fois la meme carte")
-            }
-          } else if (this.localReaders[reader].image !== card.image)
-            alert("Il y a deja une carte la ")
+            } else if (this.localReaders[reader].image !== card.image)
+              alert("Il y a deja une carte la ")
+          } else if (uidPrecedent.includes(uid)) {
+            alert("Vous ne pouvez pas mettre deux fois la meme carte")
+          }
         }
       } else {
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);

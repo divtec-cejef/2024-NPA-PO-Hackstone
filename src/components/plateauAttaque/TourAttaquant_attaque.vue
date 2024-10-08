@@ -61,6 +61,8 @@ mounted() {
       this.showMessage();
     }
   });
+
+  //Obsèrve si le joueur termine son tour, si c'est le cas, affiche un message temporaire
   watch(finDeTour, (newVal) => {
     if (newVal === true) {
       this.showMessage();
@@ -84,6 +86,7 @@ methods: {
       perdu = true
     }
   },
+
   showMessage() {
     // Affiche le message
     this.tourAdverse = !this.tourAdverse;

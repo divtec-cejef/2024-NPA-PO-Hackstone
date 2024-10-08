@@ -1,7 +1,6 @@
 <template>
   <div :class="['topReader4_defense', { 'exploded': hasUnlocked }]">
-    <img v-if="isCardVisible && !isStockageCard" :src="getImagePath(image)" class="defense-card" alt="">
-    <p v-else> {{id}} </p>
+    <img v-if="isCardVisible && isStockageCard" :src="getImagePath(image)" class="defense-card" alt="">
     <div v-if="!hasUnlocked" class="lock" :class="{ opening: isOpening, opened: isOpened, inaccessible: !isAccessible }">
       <div class="serrure"></div>
       <div class="base"></div>
@@ -13,7 +12,6 @@
 import io from "socket.io-client";
 import {watch} from "vue";
 import {stockage} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-//export let stockage = false;
 export default {
   props: {
     id: {
@@ -30,7 +28,7 @@ export default {
     },
     readers: {
       type: Array,
-      required: true
+      required: false
 
     }
   },
@@ -54,7 +52,7 @@ export default {
     this.socket.on('rfidData', (data) => {
       let { readerID } = data;
       console.log("Presque", readerID)
-      if (stockage === true) {
+      if (stockage.value === true) {
         this.isStockageCard = true;
         this.triggerLockAnimation();
         this.isAccessible = true;
@@ -63,6 +61,7 @@ export default {
         this.isCardVisible = this.isAccessible === true;
       }
     });
+    //Surveille la valeur de stockage, si elle passe à true la quatrième case en défense va se débloquer
     watch(stockage, (newVal) => {
       if (newVal === true) {
         this.isStockageCard = true;
@@ -71,9 +70,7 @@ export default {
         this.isAccessible = true;
       }
     });
-
     },
-
 
   methods: {
     getImagePath(image) {
@@ -96,8 +93,8 @@ export default {
           this.isAccessible = true;
           this.isCardVisible = true;
           this.hasUnlocked = true;
-        }, 1000);
-      }, 2000);
+        }, 500);
+      }, 1000);
     }
   }
 }

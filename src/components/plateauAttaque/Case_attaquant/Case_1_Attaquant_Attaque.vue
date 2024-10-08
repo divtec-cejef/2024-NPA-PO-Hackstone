@@ -2,7 +2,6 @@
   <div class="bottomReader1_attaque">
     <!-- L'image de la carte (affichée tout le temps) -->
     <img  v-if="image" :src="getImagePath(image)" alt="Attaque Card" class="attaque-card1" >
-    <p v-else>{{ id }}</p>
   </div>
 </template>
 
@@ -35,7 +34,6 @@ export default {
       milieu: 230,
       droite: 680,
       stockage: 1140,
-
     }
   },
 
@@ -44,14 +42,17 @@ export default {
       this.socket.on('rfidData', (data) => {
         let {readerID, card, uid} = data;
 
+        //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
         if (readerID === '5)' && this.readers[2].name === card.name && UID1 === uid && !perdu) {
           let emplacement;
-          let didierCruche = fonctionnaliteesAttaque.methods.trouverCarteDefense(this.readers, card);
+          //Retrouve le reader qui contient la carte qui va défendre
+          let carteEnDefense = fonctionnaliteesAttaque.methods.trouverCarteDefense(this.readers, card);
 
-          if (didierCruche === undefined) {
+          //Retrouves les coordonnées auxquelles la carte doit se déplacer
+          if (carteEnDefense === undefined) {
             emplacement = 0;
           } else {
-            switch (didierCruche.id) {
+            switch (carteEnDefense.id) {
               case 1 :
                 emplacement = this.gauche;
                 break;
@@ -68,8 +69,12 @@ export default {
                 emplacement = 0;
             }
           }
+          //Retire la carte de la liste des cartes présentent
           uidPrecedent.splice(uidPrecedent.indexOf(uid), 1);
+
+          //Vérifie si la carte remplie les conditions pour attaquer
           if (fonctionnaliteesAttaque.methods.peutAttaquer(card)) {
+            //Animation d'attaque
             this.attaquerCarteCase1(1, emplacement);
             setTimeout(() => {
               fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[2], this.readers);
