@@ -37,7 +37,6 @@ export default {
       localReaders: [...this.readers]
     }
   },
-
   mounted() {
 
     this.socket = io('http://localhost:3000');

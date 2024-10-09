@@ -40,9 +40,8 @@ export default {
 
     this.socket.on('rfidData', (data) => {
       const {readerID} = data;
-      this.updateVisibility();
       // Vérifier si le readerID est 1
-      if (readerID === '1') {
+      if (readerID === '1)') {
         this.updateVisibility();
       }
     });

@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { pv }  from '@/components/plateauAttaque/fonctionnaliteesAttaque.vue';  // Importez `pv` depuis votre fichier de logique du jeu
+import { pv }  from '@/components/plateauAttaque/fonctionnaliteesAttaque.vue';
 import { ref, watch } from 'vue'
 import confetti from 'canvas-confetti'
 

@@ -1,7 +1,7 @@
 <template>
   <div class="bottomReader2_defense">
-    <img v-if="image" :src="getImagePath(image)" alt="Defense Card" class="attaque-card">
-    <p v-else></p>
+    <img v-if="image" :src="getImagePath(image)" alt="Defense Card" class="defense-card">
+    <p v-else>{{id}}</p>
   </div>
 </template>
 
@@ -39,5 +39,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.defense-card{
+  height: 100%;
 }
 </style>

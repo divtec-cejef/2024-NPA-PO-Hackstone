@@ -1,6 +1,6 @@
 <template>
   <div :class="['bottomReader4_defense', { 'exploded': hasUnlocked }]">
-    <img v-if="isCardVisible && !isStockageCard" :src="getImagePath(image)" alt="Defense Card" class="attaque-card">
+    <img v-if="isCardVisible && !isStockageCard" :src="getImagePath(image)" alt="Defense Card" class="defense-card">
     <div v-if="!hasUnlocked" class="lock" :class="{ opening: isOpening, opened: isOpened, inaccessible: !isAccessible }">
       <div class="serrure"></div>
       <div class="base"></div>
@@ -10,7 +10,6 @@
 
 <script>
 import io from "socket.io-client";
-import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 
 export default {
   props: {
@@ -43,7 +42,7 @@ export default {
     this.socket = io('http://localhost:3001');
     this.socket.on('rfidData', (data) => {
       let { readerID, card } = data;
-      if ((card.type === 'défense' && card.name === 'Stockage' && readerID === '7)') || fonctionnaliteesAttaque.methods.trouverCarte()) {
+      if ((card.type === 'défense' && card.name === 'Stockage' && readerID === '7)')) {
         this.isStockageCard = true;
         this.triggerLockAnimation();
         this.isAccessible = true;
@@ -93,6 +92,9 @@ export default {
   align-items: center;
   justify-content: center;
   position: relative;
+}
+.defense-card{
+  height: 100%;
 }
 
 .bottomReader4_defense.exploded {

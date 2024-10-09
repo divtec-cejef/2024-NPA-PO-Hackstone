@@ -1,9 +1,9 @@
 <template>
   <div class="bottomReaders_defense">
-    <Case_1_Defenseur_defense :id="readers[2].id" :image="readers[2].image"/>
-    <Case_2_Defenseur_defense :id="readers[3].id" :image="readers[3].image"/>
-    <Case_3_Defenseur_defense :id="readers[5].id" :image="readers[5].image"/>
-    <Case_4_Defenseur_defense :id="readers[6].id" :image="readers[6].image" :card="card"/>
+    <Case_1_Defenseur_defense :id="readersDefense[2].id" :image="readersDefense[2].image"/>
+    <Case_2_Defenseur_defense :id="readersDefense[3].id" :image="readersDefense[3].image"/>
+    <Case_3_Defenseur_defense :id="readersDefense[5].id" :image="readersDefense[5].image"/>
+    <Case_4_Defenseur_defense :id="readersDefense[6].id" :image="readersDefense[6].image" :card="card"/>
   </div>
 </template>
 
@@ -12,6 +12,7 @@ import Case_1_Defenseur_defense from "@/components/plateauDefense/case_defense/C
 import Case_2_Defenseur_defense from "@/components/plateauDefense/case_defense/Case_2_Defenseur_defense.vue";
 import Case_3_Defenseur_defense from "@/components/plateauDefense/case_defense/Case_3_Defenseur_defense.vue";
 import Case_4_Defenseur_defense from "@/components/plateauDefense/case_defense/Case_4_Defenseur_defense.vue";
+import {cartesEnDefense} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 import io from "socket.io-client";
 
 export default {
@@ -21,20 +22,18 @@ export default {
     Case_3_Defenseur_defense,
     Case_4_Defenseur_defense
   },
+  props: {
+    readersDefense: {
+      type: Array,
+      required: true
+    }
+  },
 
   data() {
     return {
-      readers: [
-        { id: 1, name: 'Reader 1', image: null},
-        { id: 2, name: 'Reader 2', image: null},
-        { id: 3, name: 'Reader 3', image: null},
-        { id: 4, name: 'Reader 4', image: null},
-        { id: 5, name: 'Reader 5', image: null},
-        { id: 6, name: 'Reader 6', image: null},
-        { id: 7, name: 'Reader 7', image: null},
-      ],
       card: {},
-      readerID: null
+      readerID: null,
+      localReadersDefense: [...this.readersDefense]
     };
   },
 
@@ -46,21 +45,35 @@ export default {
 
         // Nettoie readerID pour enlever les caractères non numériques
         readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
-
-        console.log("Cleaned readerID:", readerID); // Vérifie la valeur nettoyée
-
         this.card = card;
         this.card.image = card.image;
         this.readerID = readerID;
 
         // Convertir readerID en nombre
-        const readerIndex = this.readers.findIndex(r => r.id === Number(readerID));
-        console.log("Reader Index:", readerIndex); // Vérifie l'index trouvé
+        const readerIndex = this.localReadersDefense.findIndex(r => r.id === Number(readerID));
+        //console.log("Reader Index:", readerIndex); // Vérifie l'index trouvé
 
-        if (readerIndex !== -1) {
-          this.readers[readerIndex] = { ...this.readers[readerIndex], image: card.image };
+        if (readerIndex === 2 || readerIndex === 3 || readerIndex === 5 || readerIndex === 6) {
+          if (card.name === "Redondance de données"){
+            if(cartesEnDefense.length > 0)
+              card = cartesEnDefense[0];
+            else
+              alert("Vous n'avez pas de cartes a redondé")
+          }
+          this.localReadersDefense[readerIndex] = { ...this.localReadersDefense[readerIndex], image: card.image };
+          this.localReadersDefense[readerIndex] = { ...this.localReadersDefense[readerIndex], name: card.name };
+          if(readerIndex === 2)
+            cartesEnDefense.splice(0,0,card);
+          else if (readerIndex === 3)
+            cartesEnDefense.splice(1,0,card);
+          else if (readerIndex === 5)
+            cartesEnDefense.splice(2,0,card);
+          else if (readerIndex === 6)
+            cartesEnDefense.splice(3,0,card);
+          //Copie des readers
+          let newReaders = [...this.localReadersDefense];
+          this.$emit('update-readers-defense', newReaders);
         }
-        console.log("Updated reader:", this.readers[readerIndex]);
       } else {
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type défense sont autorisées.`);
       }

@@ -4,12 +4,12 @@
     <TourAttaquant_defense :socket="socket" />
 
     <!-- Case de l'attaque -->
-    <CaseAttaquant_defense :readers="readers" :socket="socket" />
+    <CaseAttaquant_defense :readersDefense="readersDefense" :socket="socket"  @update-readers-defense="updateReadersDefense" />
 
     <img src="../../img/ligne.png" alt="Ligne" class="line" id="ligne_attaque">
 
     <!-- Case de la défense -->
-    <CaseDefenseur_defense :readers="readers" :socket="socket" />
+    <CaseDefenseur_defense :readersDefense="readersDefense" :socket="socket"  @update-readers-defense="updateReadersDefense" />
 
     <!-- PV restant du défenseur -->
     <PVDefenseur_defense/>
@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      readers: [
+      readersDefense: [
         {id: 1, name: 'Reader 1', image: null},
         {id: 2, name: 'Reader 2', image: null},
         {id: 3, name: 'Reader 3', image: null},
@@ -58,40 +58,44 @@ export default {
         let mappedReaderID = null;
         switch (parseInt(readerID)) {
           case 1:
-            mappedReaderID = 1; // Capteur 1 -> Reader 1
+            mappedReaderID = 0; // Capteur 1 -> Reader 1
             break;
           case 2:
-            mappedReaderID = 2; // Capteur 2 -> Reader 2
+            mappedReaderID = 1; // Capteur 2 -> Reader 2
             break;
           case 3:
-            mappedReaderID = 4; // Capteur 3 -> Reader 4
+            mappedReaderID = 4; // Capteur 3 -> Reader 5
             break;
           case 4:
-            mappedReaderID = 5; // Capteur 4 -> Reader 5
+            mappedReaderID = 5; // Capteur 4 -> Reader 6
             break;
           case 5:
             mappedReaderID = 3; // Capteur 5 -> Reader 3
             break;
           case 6:
-            mappedReaderID = 6; // Capteur 6 -> Reader 6
+            mappedReaderID = 6; // Capteur 6 -> Reader 7
             break;
           case 7:
-            mappedReaderID = 7; // Capteur 7 -> Reader 7
+            mappedReaderID = 2; // Capteur 7 -> Reader 4
             break;
         }
 
-        const reader = this.readers.find(r => r.id === mappedReaderID);
+        const reader = this.readersDefense.find(r => r.id === mappedReaderID);
 
         if (!reader) {
           console.log(`No reader found with mapped ID ${mappedReaderID}.`);
         } else if (reader.id === 2) {
-          console.log("bonjour")
           this.showOverlay = true;
         }
       } else {
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type défense sont autorisées.`);
       }
     });
+  },
+  methods: {
+    updateReadersDefense(newReaders) {
+      this.readersDefense = newReaders;
+    }
   }
 }
 </script>
