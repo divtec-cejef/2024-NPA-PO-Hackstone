@@ -1,10 +1,15 @@
 <template>
-  <div>
+  <div class="container">
     <!-- Affichage des compteurs -->
     <div class="compteurs-attaque">
-      <img v-for="(image, index) in images_compteur" :key="index" :src="image" alt="Stacked Image"
-           :style="{ visibility: visibility[index] ? 'visible' : 'hidden' }"
+      <img v-for="(image, index) in visibleCompteurs" :key="index" :src="image" alt="Stacked Image"
            class="compteur-attaque">
+
+      <!-- Images cassées superposées lorsque le compteur est cassé -->
+      <div v-for="brokenIndex in brokenCompteurs" :key="'broken-' + brokenIndex" class="compteur-casse">
+        <img :src="brokenImagesLeft[brokenIndex]" alt="Compteur Gauche" class="compteur-half left-half" />
+        <img :src="brokenImagesRight[brokenIndex]" alt="Compteur Droit" class="compteur-half right-half" />
+      </div>
     </div>
 
     <!-- Bouton pour retirer un compteur à la fois -->
@@ -24,8 +29,6 @@
 </template>
 
 <script>
-//import io from 'socket.io-client';
-
 export default {
   data() {
     return {
@@ -37,9 +40,32 @@ export default {
         require('@/img/compteur/compteur_4.png'),
         require('@/img/compteur/compteur_5.png')
       ],
+      brokenImagesLeft: [
+        require('@/img/compteur/compteur_1_gauche.png'),
+        require('@/img/compteur/compteur_2_gauche.png'),
+        require('@/img/compteur/compteur_3_gauche.png'),
+        require('@/img/compteur/compteur_4_gauche.png'),
+        require('@/img/compteur/compteur_5_gauche.png')
+      ],
+      brokenImagesRight: [
+        require('@/img/compteur/compteur_1_droite.png'),
+        require('@/img/compteur/compteur_2_droite.png'),
+        require('@/img/compteur/compteur_3_droite.png'),
+        require('@/img/compteur/compteur_4_droite.png'),
+        require('@/img/compteur/compteur_5_droite.png')
+      ],
       visibility: [true, true, true, true, true], // Tous les compteurs sont visibles au début
       hasLost: false // Variable qui indique si le joueur a perdu
     };
+  },
+
+  computed: {
+    visibleCompteurs() {
+      return this.images_compteur.filter((_, index) => this.visibility[index]);
+    },
+    brokenCompteurs() {
+      return this.visibility.map((visible, index) => !visible ? index : null).filter(index => index !== null);
+    }
   },
 
   methods: {
@@ -62,6 +88,12 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  text-align: center;
+  overflow: hidden;
+  height: 100vh;
+}
+
 .compteurs-attaque {
   position: absolute;
   bottom: 50px;
@@ -74,6 +106,56 @@ export default {
   position: absolute;
   bottom: 0;
   left: 0;
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+/* Styles pour le compteur cassé superposé */
+.compteur-casse {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: -250px;
+  left: -3px;
+}
+
+.compteur-half {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.left-half {
+  left: 0;
+  animation: break-left 1s ease-in-out forwards;
+}
+
+.right-half {
+  right: 0;
+  animation: break-right 1s ease-in-out forwards;
+}
+
+/* Animation pour "casser" le compteur */
+@keyframes break-left {
+  0% {
+    transform: rotate(0deg) scale(1) translateX(-30%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-60%) rotate(-15deg) scale(1) translateY(30%);
+    opacity: 0;
+  }
+}
+
+@keyframes break-right {
+  0% {
+    transform: rotate(0deg) scale(1) translateX(30%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(60%) rotate(15deg) scale(1) translateY(30%);
+    opacity: 0;
+  }
 }
 
 /* Style pour le filtre noir et blanc avec effet flou */
