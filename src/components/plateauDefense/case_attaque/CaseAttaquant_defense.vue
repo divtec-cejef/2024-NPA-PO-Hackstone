@@ -15,6 +15,7 @@ import Case_3_Attaquant_defense, {finTour} from "@/components/plateauDefense/cas
 import io from "socket.io-client";
 import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 import {watch} from "vue";
+import {finDeTourDefense} from "@/components/plateauDefense/TourAttaquant_defense.vue";
 
 let carteEnMain = [];
 export let deckAttaque = fonctionnaliteDefense.methods.genererDeckAttaque();
@@ -68,6 +69,7 @@ export default {
               }, 1000);
               setTimeout(() => {
                 fonctionnaliteDefense.methods.poserCarte(carteEnMain, this.readersDefense[4], this.readersDefense);
+                finDeTourDefense.value = !finDeTourDefense.value;
               }, 1500);
               finTour.value = false;
             }

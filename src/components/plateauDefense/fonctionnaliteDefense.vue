@@ -128,6 +128,7 @@ export default {
       console.log("J?ATTAQUE")
       let carteDefendue = false;
       for (let j = 0; j < cartesEnDefense.length; j++) {
+
         if (cartesEnDefense[j] !== undefined) {
           if (cartesEnDefense[j].counter.includes(card.name)) {
             let carteAttaque = readers.find(carte => carte.name === card.name);

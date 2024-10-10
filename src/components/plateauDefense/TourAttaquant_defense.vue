@@ -6,7 +6,10 @@
            :style="{ visibility: visibility[index] ? 'visible' : 'hidden' }"
            class="compteur-defense">
     </div>
-
+    <div v-if="messageVisibleDefense && !victoire" class="message">
+      <img v-if="tourAdverseDefense" class="imageFinDeTour" src="../../img/FinDeTour%202.png" alt="Fin de tour"/>
+      <img v-else class="imageFinDeTour" src="../../img/AVousDeJouer%202.png" alt="Fin de tour"/>
+    </div>
     <!-- Message de victoire s'affiche au centre si victoire -->
     <div v-if="victoire">
       <div class="overlay"></div>
@@ -18,7 +21,8 @@
 <script>
 import io from 'socket.io-client';
 import confetti from 'canvas-confetti';
-
+import {ref, watch} from "vue";
+export let finDeTourDefense = ref(false)
 export default {
   data() {
     return {
@@ -32,6 +36,8 @@ export default {
       ],
       visibility: [true, true, true, true, true],
       victoire: false, // Variable qui déclenche la victoire
+      messageVisibleDefense : false,
+      tourAdverseDefense : false
     };
   },
 
@@ -43,7 +49,15 @@ export default {
       // Vérifier si le readerID est 1
       if (readerID === '1)') {
         this.updateVisibility();
+        this.showMessage();
       }
+
+      watch(finDeTourDefense, (newVal) => {
+        if (newVal === true) {
+          this.showMessage();
+        }else if (newVal === false)
+          this.showMessage();
+      });
     });
   },
 
@@ -82,6 +96,16 @@ export default {
         spread: 70,
         origin: {y: 0.6}
       });
+    },
+    showMessage() {
+      // Affiche le message
+      this.tourAdverseDefense = !this.tourAdverseDefense;
+      this.messageVisibleDefense = true;
+
+      // Cache le message après 2 secondes
+      setTimeout(() => {
+        this.messageVisibleDefense = false;
+      }, 2000); // 2000 millisecondes = 2 secondes
     }
   }
 };
@@ -155,4 +179,18 @@ export default {
 .last-counter-animation {
   animation: shrinkAndFadeOut 1s forwards; /* L'animation dure 1 seconde */
 }
+
+.message {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 43.5%;
+  left: 0;
+  text-align: center;
+  z-index: 1;
+}
+.imageFinDeTour {
+  height: 175px;
+}
+
 </style>

@@ -173,6 +173,7 @@ export default {
   justify-content: center;
   display: flex;
   align-items: center;
+  z-index: 1;
 }
 .attack-card2 {
   height: 100%;

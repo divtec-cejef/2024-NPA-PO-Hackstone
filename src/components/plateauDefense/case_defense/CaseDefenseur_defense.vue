@@ -14,7 +14,7 @@ import Case_3_Defenseur_defense from "@/components/plateauDefense/case_defense/C
 import Case_4_Defenseur_defense from "@/components/plateauDefense/case_defense/Case_4_Defenseur_defense.vue";
 import {cartesEnDefense} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 import io from "socket.io-client";
-
+let uidList = [];
 export default {
   components: {
     Case_1_Defenseur_defense,
@@ -40,9 +40,10 @@ export default {
   mounted() {
     this.socket = io('http://localhost:3001');
     this.socket.on('rfidData', (data) => {
-      let { readerID, card } = data;
+      let { readerID, card, uid } = data;
       if (card.type === 'défense' && card.name !== 'Stockage') {
 
+        console.log("UID", uid)
         // Nettoie readerID pour enlever les caractères non numériques
         readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
         this.card = card;
@@ -54,25 +55,30 @@ export default {
         //console.log("Reader Index:", readerIndex); // Vérifie l'index trouvé
 
         if (readerIndex === 2 || readerIndex === 3 || readerIndex === 5 || readerIndex === 6) {
-          if (card.name === "Redondance de données"){
-            if(cartesEnDefense.length > 0)
+          if ((uidList.includes(uid) && this.readersDefense[readerIndex].image !== null) ||
+              (!uidList.includes(uid) && this.readersDefense[readerIndex].image === null)) {
+            uidList.push(uid);
+          if (card.name === "Redondance de données") {
+            if (cartesEnDefense.length > 0)
               card = cartesEnDefense[0];
             else
               alert("Vous n'avez pas de cartes a redondé")
           }
-          this.localReadersDefense[readerIndex] = { ...this.localReadersDefense[readerIndex], image: card.image };
-          this.localReadersDefense[readerIndex] = { ...this.localReadersDefense[readerIndex], name: card.name };
-          if(readerIndex === 2)
-            cartesEnDefense.splice(0,0,card);
+          this.localReadersDefense[readerIndex] = {...this.localReadersDefense[readerIndex], image: card.image};
+          this.localReadersDefense[readerIndex] = {...this.localReadersDefense[readerIndex], name: card.name};
+          if (readerIndex === 2)
+            cartesEnDefense.splice(0, 0, card);
           else if (readerIndex === 3)
-            cartesEnDefense.splice(1,0,card);
+            cartesEnDefense.splice(1, 0, card);
           else if (readerIndex === 5)
-            cartesEnDefense.splice(2,0,card);
+            cartesEnDefense.splice(2, 0, card);
           else if (readerIndex === 6)
-            cartesEnDefense.splice(3,0,card);
+            cartesEnDefense.splice(3, 0, card);
           //Copie des readers
           let newReaders = [...this.localReadersDefense];
           this.$emit('update-readers-defense', newReaders);
+        }else
+          alert("Vous ne pouvez pas poser cette carte la ")
         }
       } else {
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type défense sont autorisées.`);

@@ -46,7 +46,7 @@ io1.on('connection', (socket) => {
         const card = cardsData.cards.find(card => card.uid === uid);
         if (card) {
             io1.emit('rfidData', { readerID, card });
-            console.log('Emitted card data:', { readerID, card });
+            console.log('Emitted card data:', { readerID, card, uid });
         } else {
             io1.emit('rfidData', { readerID, card: { name: 'Carte inconnue', image: '', description_vie: '', description_jeu: '' } });
             console.log('Emitted unknown card data for UID:', uid);
@@ -69,8 +69,8 @@ app1.post('/send_rfid_data', (req, res) => {
     if (uid) {
         const card = cardsData.cards.find(card => card.uid.includes(uid));
         if (card) {
-            io1.emit('rfidData', { readerID, card });
-            console.log('Emitted card data:', { readerID, card });
+            io1.emit('rfidData', { readerID, card, uid });
+            console.log('Emitted card data:', { readerID, card, uid });
         } else {
             io1.emit('rfidData', { readerID, card: { name: 'Carte inconnue', image: '', description_vie: '', description_jeu: '' } });
             console.log('Emitted unknown card data for UID:', uid);

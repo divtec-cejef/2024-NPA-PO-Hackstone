@@ -49,17 +49,19 @@ export default {
       //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
 
       if (readerID === '1)') {
-        carteAttaquante = deckAttaque.find(carte => carte.name === this.readers[0].name);
-        console.log("la carte la 1", carteAttaquante)
-        //Animation d'attaque
-        if (carteAttaquante.name === "Anonymous"){
-          this.setDelais(1500)
-          this.attaquerAnimation(false);
-          setTimeout(() => {
+        setTimeout(() => {
+          carteAttaquante = deckAttaque.find(carte => carte.name === this.readers[0].name);
+          console.log("la carte la 1", carteAttaquante)
+          //Animation d'attaque
+          if (carteAttaquante.name === "Anonymous") {
+            this.setDelais(1500)
+            this.attaquerAnimation(false);
+            setTimeout(() => {
+              this.attaquerAnimation(true);
+            }, 2500)
+          } else
             this.attaquerAnimation(true);
-          },2500)
-        }else
-          this.attaquerAnimation(true);
+        },2500);
       }
     });
 
@@ -162,6 +164,7 @@ export default {
   justify-content: center;
   display: flex;
   align-items: center;
+  z-index: 1;
 }
 .attack-card1 {
   height: 100%;
