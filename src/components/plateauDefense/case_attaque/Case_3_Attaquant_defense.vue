@@ -13,6 +13,8 @@ import {gsap} from "gsap";
 import {ref, watch} from "vue";
 import {aFiniAttaque2} from "@/components/plateauDefense/case_attaque/Case_2_Attaquant_defense.vue";
 import {delais} from "@/components/plateauDefense/case_attaque/Case_1_Attaquant_defense.vue";
+import {defaite} from "@/components/plateauDefense/TourAttaquant_defense.vue";
+
 let delaisAnonymous = 1;
 export let finTour = ref(false)
 let emplacement;
@@ -53,7 +55,7 @@ export default {
       if (readerID === '1)') {
         watch(aFiniAttaque2, (newVal) => {
           setTimeout(() => {
-            if (newVal === true) {
+            if (newVal === true && !defaite.value) {
               carteAttaquante = deckAttaque.find(carte => carte.name === this.readers[4].name);
               console.log("la carte la", carteAttaquante)
               //Animation d'attaque

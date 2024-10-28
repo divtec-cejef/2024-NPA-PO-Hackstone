@@ -62,7 +62,6 @@ export default {
         cartesDeck.splice(index, 1);
       }
       cartesEnMain.splice(cartesEnMain.length, 1);
-
     },
 
     /**

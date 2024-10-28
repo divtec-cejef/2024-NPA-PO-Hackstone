@@ -11,6 +11,7 @@ import io from "socket.io-client";
 import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 import {gsap} from "gsap";
 import Case1, {aFiniAttaque, delais} from "@/components/plateauDefense/case_attaque/Case_1_Attaquant_defense.vue";
+import {defaite} from "@/components/plateauDefense/TourAttaquant_defense.vue";
 import {ref, watch} from "vue";
 export let aFiniAttaque2 = ref(false);
 let emplacement;
@@ -52,7 +53,7 @@ export default {
         watch(aFiniAttaque, (newVal) => {
 
           setTimeout(() => {
-            if (newVal === true) {
+            if (newVal === true && !defaite.value) {
               carteAttaquante = deckAttaque.find(carte => carte.name === this.readers[1].name);
               console.log("la carte la 2", carteAttaquante)
 

@@ -45,6 +45,7 @@ export default {
       }, 2000);
       setTimeout(() => {
         fonctionnaliteDefense.methods.poserCarte(carteEnMain, this.readersDefense[4], this.readersDefense);
+        finDeTourDefense.value = !finDeTourDefense.value
       }, 2500);
     }
     this.socket = io('http://localhost:3001');
@@ -57,28 +58,27 @@ export default {
       if (readerID === "1") {
 
         watch(finTour, (newVal) => {
-          setTimeout(() => {
-            if (newVal === true) {
+          if (newVal === true) {
+            setTimeout(() => {
               //Pioche des cartes
               fonctionnaliteDefense.methods.piocher(deckAttaque, carteEnMain);
+              const delais = [500, 1000, 1500];
+              const readersIndex = [0, 1, 4];
+              delais.forEach((delai, index) => {
+                setTimeout(() => {
+                  fonctionnaliteDefense.methods.poserCarte(carteEnMain, this.readersDefense[readersIndex[index]], this.readersDefense)
+                }, delai)
+              });
               setTimeout(() => {
-                fonctionnaliteDefense.methods.poserCarte(carteEnMain, this.readersDefense[0], this.readersDefense);
-              }, 500);
-              setTimeout(() => {
-                fonctionnaliteDefense.methods.poserCarte(carteEnMain, this.readersDefense[1], this.readersDefense);
-              }, 1000);
-              setTimeout(() => {
-                fonctionnaliteDefense.methods.poserCarte(carteEnMain, this.readersDefense[4], this.readersDefense);
                 finDeTourDefense.value = !finDeTourDefense.value;
-              }, 1500);
-              finTour.value = false;
-            }
-          },2000)
+              },2000)
+            },2500)
+          }
+          finTour.value = false
         });
       }
     });
   },
-
 }
 </script>
 

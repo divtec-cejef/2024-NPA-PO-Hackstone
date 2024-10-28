@@ -1,17 +1,17 @@
 <script setup>
 import {ref, watch} from 'vue'
 import {pv} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
-
+import {defaite} from "@/components/plateauDefense/TourAttaquant_defense.vue";
 // Variables représentant les PV du joueur (ici 5 PV pour commencer)
 // État des boucliers (intact ou cassé)
 const boucliers = ref([false, false, false, false, false]); // false signifie que le bouclier est intact
-const hasLost = ref(false);
-
+let hasLost = ref(false);
 // Observer les PV, si 0, afficher un message indiquant la défaite
 watch(pv, (newVal) => {
   if (newVal <= 0) {
     perdrePV();
     hasLost.value = true;
+    defaite.value = true;
   }else
     perdrePV();
 });

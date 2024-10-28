@@ -88,6 +88,8 @@ methods: {
   },
 
   showMessage() {
+    console.log("Je le fait la")
+    console.log("tour adverse", this.tourAdverse);
     // Affiche le message
     this.tourAdverse = !this.tourAdverse;
     this.messageVisible = true;

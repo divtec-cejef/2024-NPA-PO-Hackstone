@@ -22,6 +22,7 @@
 import io from 'socket.io-client';
 import confetti from 'canvas-confetti';
 import {ref, watch} from "vue";
+export let defaite = ref(false);
 export let finDeTourDefense = ref(false)
 export default {
   data() {
@@ -37,7 +38,7 @@ export default {
       visibility: [true, true, true, true, true],
       victoire: false, // Variable qui déclenche la victoire
       messageVisibleDefense : false,
-      tourAdverseDefense : false
+      tourAdverseDefense : true
     };
   },
 
@@ -48,16 +49,19 @@ export default {
       const {readerID} = data;
       // Vérifier si le readerID est 1
       if (readerID === '1)') {
+        this.showMessageDefense();
+      }
+    });
+    watch(finDeTourDefense, (newVal) => {
+     console.log("AALKALKS", finDeTourDefense)
+      if (newVal === true && defaite.value === false) {
+        this.showMessageDefense();
         this.updateVisibility();
-        this.showMessage();
+      }else if (newVal === false && defaite.value === false) {
+        this.showMessageDefense();
+        this.updateVisibility();
       }
 
-      watch(finDeTourDefense, (newVal) => {
-        if (newVal === true) {
-          this.showMessage();
-        }else if (newVal === false)
-          this.showMessage();
-      });
     });
   },
 
@@ -97,7 +101,9 @@ export default {
         origin: {y: 0.6}
       });
     },
-    showMessage() {
+    showMessageDefense() {
+      console.log("JE le fais la")
+      console.log("Tour adverse", this.tourAdverseDefense);
       // Affiche le message
       this.tourAdverseDefense = !this.tourAdverseDefense;
       this.messageVisibleDefense = true;
@@ -175,11 +181,6 @@ export default {
     opacity: 0;
   }
 }
-
-.last-counter-animation {
-  animation: shrinkAndFadeOut 1s forwards; /* L'animation dure 1 seconde */
-}
-
 .message {
   width: 100%;
   height: 100%;
