@@ -8,13 +8,16 @@
 </template>
 
 <script>
+import io from "socket.io-client";
 import Case_1_Defenseur_defense from "@/components/plateauDefense/case_defense/Case_1_Defenseur_defense.vue";
 import Case_2_Defenseur_defense from "@/components/plateauDefense/case_defense/Case_2_Defenseur_defense.vue";
 import Case_3_Defenseur_defense from "@/components/plateauDefense/case_defense/Case_3_Defenseur_defense.vue";
 import Case_4_Defenseur_defense, {ouvert} from "@/components/plateauDefense/case_defense/Case_4_Defenseur_defense.vue";
 import {cartesEnDefense} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
-import io from "socket.io-client";
+import {messageErreur} from "@/components/plateauDefense/TourAttaquant_defense.vue";
+
 let uidList = [];
+
 export default {
   components: {
     Case_1_Defenseur_defense,
@@ -40,12 +43,15 @@ export default {
   mounted() {
     this.socket = io('http://localhost:3001');
     this.socket.on('rfidData', (data) => {
+      //Récupère l'ID du lecteur, la carte et l'UID de la carte
       let { readerID, card, uid } = data;
+
+      //Vérifie si la carte est de type défense
       if (card.type === 'défense' && card.name !== 'Stockage') {
 
-        console.log("UID", uid)
         // Nettoie readerID pour enlever les caractères non numériques
         readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
+
         this.card = card;
         this.card.image = card.image;
         this.readerID = readerID;
@@ -54,45 +60,79 @@ export default {
         const readerIndex = this.localReadersDefense.findIndex(r => r.id === Number(readerID));
         //console.log("Reader Index:", readerIndex); // Vérifie l'index trouvé
 
+        //Vérifie si la carte est scannée sur une case valide
         if (readerIndex === 2 || readerIndex === 3 || readerIndex === 5 ||
             (readerIndex === 6 && ouvert.value === true)) {
-          if ((uidList.includes(uid) && this.readersDefense[readerIndex].image !== null) ||
+
+          //Vérifie si la carte posée n'est pas déjà présente sur une autre case et
+          //si la carte n'as pas déjà été détruite
+          if ((uidList.includes(uid) && this.readersDefense[readerIndex].image === card.image) ||
               (!uidList.includes(uid) && this.readersDefense[readerIndex].image === null)) {
-            uidList.push(uid);
+
+            //Si la carte posée est une Redondance de données,
+            //elle devient la copie exacte de la carte la plus à gauche sur le plateau.
             if (card.name === "Redondance de données") {
               if (cartesEnDefense.length > 0) {
                 let index = 0;
                 while (cartesEnDefense[index] === null) {
+                  console.log("Index", index)
                   index++;
                 }
-                card = cartesEnDefense[index];
-            }
-            else
-              alert("Vous n'avez pas de cartes a redondé")
-          }
-          this.localReadersDefense[readerIndex] = {...this.localReadersDefense[readerIndex], image: card.image};
-          this.localReadersDefense[readerIndex] = {...this.localReadersDefense[readerIndex], name: card.name};
-          if (readerIndex === 2)
-            cartesEnDefense.splice(0, 1, card);
-          else if (readerIndex === 3)
-            cartesEnDefense.splice(1, 1, card);
-          else if (readerIndex === 5)
-            cartesEnDefense.splice(2, 1, card);
-          else if (readerIndex === 6)
-            cartesEnDefense.splice(3, 1, card);
-          //Copie des readers
+                if (index <= 3) {
+                  card = cartesEnDefense[index];
+                } else {
 
-          console.log("Cartes en defense", cartesEnDefense)
-          let newReaders = [...this.localReadersDefense];
-          this.$emit('update-readers-defense', newReaders);
-        }else
-          alert("Vous ne pouvez pas poser cette carte la ")
+                  //Si aucune carte n'est présente sur le plateau,
+                  // affiche un message d'erreur et ne lance pas les opérations suivantes.
+                  messageErreur.value = "Vous n'avez aucune carte à copier"
+                  return;
+                }
+              }
+            }
+            //Ajoute l'uid de la carte scannée dans une liste
+            uidList.push(uid);
+
+            //Affiche la carte à l'écran
+            this.localReadersDefense[readerIndex] = {...this.localReadersDefense[readerIndex], image: card.image};
+            this.localReadersDefense[readerIndex] = {...this.localReadersDefense[readerIndex], name: card.name};
+
+            //Ajoute la carte dans une liste selon sa position sur le plateau.
+            switch (readerIndex){
+              case 2:
+                cartesEnDefense.splice(0, 1, card);
+                break;
+              case 3:
+                cartesEnDefense.splice(1, 1, card);
+                break;
+              case 5:
+                cartesEnDefense.splice(2, 1, card);
+                break;
+              case 6:
+                cartesEnDefense.splice(3, 1, card);
+                break;
+            }
+
+            //Copie des readers
+            let newReaders = [...this.localReadersDefense];
+            this.$emit('update-readers-defense', newReaders);
+
+
+          } else if (uidList.includes(uid) && this.readersDefense[readerIndex].image === null){
+            //Affiche un message d'erreur si la carte a déjà été jouée auparavant
+            messageErreur.value = "Cette carte à déjà été posée"
+
+          }else if ((!uidList.includes(uid) && this.readersDefense[readerIndex].image !== null)
+              || this.readersDefense[readerIndex].image !== card.image) {
+            //Affiche un message d'erreur si l'on essaie de poser la carte par-dessus une autre
+            messageErreur.value = "Il y a déjà une carte ici"
+          }
+        }
+      } else if (card.type !== "défense"){
+        messageErreur.value = 'Carte non valide: défense. Seules les cartes de type défense sont autorisées.'
+        console.log(`Carte non valide: type ${card.type}. Seules les cartes de type défense sont autorisées.`);
       }
-    } else {
-      console.log(`Carte non valide: type ${card.type}. Seules les cartes de type défense sont autorisées.`);
-    }
-  });
-}
+    });
+  }
 };
 </script>
 

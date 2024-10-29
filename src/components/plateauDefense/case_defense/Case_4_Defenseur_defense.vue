@@ -1,6 +1,6 @@
 <template>
   <div :class="['bottomReader4_defense', { 'exploded': hasUnlocked }]">
-    <img v-if="isCardVisible && !isStockageCard" :src="getImagePath(image)" class="defense-card">
+    <img v-if="isCardVisible && !isStockageCard" :src="getImagePath(image)" alt="" class="defense-card">
     <div v-if="!hasUnlocked" class="lock" :class="{ opening: isOpening, opened: isOpened, inaccessible: !isAccessible }">
       <div class="serrure"></div>
       <div class="base"></div>
@@ -43,11 +43,13 @@ export default {
     this.socket = io('http://localhost:3001');
     this.socket.on('rfidData', (data) => {
       let { readerID, card } = data;
+      //Si la carte Stockage est scannée, déverrouille la zone de carte
       if ((card.type === 'défense' && card.name === 'Stockage' && readerID === '7)')) {
         this.isStockageCard = true;
         this.triggerLockAnimation();
         this.isAccessible = true;
         ouvert.value = true;
+
       } else {
         this.isStockageCard = false;
         this.isCardVisible = this.isAccessible === true;

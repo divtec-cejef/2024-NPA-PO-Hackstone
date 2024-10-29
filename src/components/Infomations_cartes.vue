@@ -43,7 +43,6 @@ export default {
     this.socket.on('rfidData', (data) => {
       console.log('Données RFID reçues:', data);
       let { readerID, card } = data;
-      console.log(card.image_info)
       // Nettoie readerID pour enlever les caractères non numériques
       readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 

@@ -9,17 +9,18 @@
 </template>
 
 <script>
+import io from "socket.io-client";
 import Case_1_Attaquant_defense from "@/components/plateauDefense/case_attaque/Case_1_Attaquant_defense.vue";
 import Case_2_Attaquant_defense from "@/components/plateauDefense/case_attaque/Case_2_Attaquant_defense.vue";
 import Case_3_Attaquant_defense, {finTour} from "@/components/plateauDefense/case_attaque/Case_3_Attaquant_defense.vue";
-import io from "socket.io-client";
 import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
-import {watch} from "vue";
 import {finDeTourDefense} from "@/components/plateauDefense/TourAttaquant_defense.vue";
+import {watch} from "vue";
 
-let carteEnMain = [];
 export let deckAttaque = fonctionnaliteDefense.methods.genererDeckAttaque();
+let carteEnMain = [];
 let premierTour = true;
+
 export default {
   components: {
     Case_1_Attaquant_defense,
@@ -33,6 +34,7 @@ export default {
     }
   },
   mounted() {
+    //Si c'est le premier tour de la partie, l'ordinateur pioche et pose directement des cartes
     if (premierTour) {
       setTimeout(() => {
         fonctionnaliteDefense.methods.piocher(deckAttaque, carteEnMain);
@@ -49,27 +51,31 @@ export default {
       }, 2500);
     }
     this.socket = io('http://localhost:3001');
-
     this.socket.on('rfidData', (data) => {
+
       let {readerID} = data;
       // Nettoie readerID pour enlever les caractères non numériques
       readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
       premierTour = false;
       if (readerID === "1") {
 
+        //Attend que le tour du joueur soit terminé avant de piocher et poser des cartes
         watch(finTour, (newVal) => {
           if (newVal === true) {
             setTimeout(() => {
+
               //Pioche des cartes
               fonctionnaliteDefense.methods.piocher(deckAttaque, carteEnMain);
               const delais = [750, 1250, 1750];
               const readersIndex = [0, 1, 4];
               delais.forEach((delai, index) => {
                 setTimeout(() => {
+                  //Pose une carte toutes les 0,5 seconde
                   fonctionnaliteDefense.methods.poserCarte(carteEnMain, this.readersDefense[readersIndex[index]], this.readersDefense)
                 }, delai)
               });
               setTimeout(() => {
+                //Termine son tour
                 finDeTourDefense.value = !finDeTourDefense.value;
               },2000)
             },2500)

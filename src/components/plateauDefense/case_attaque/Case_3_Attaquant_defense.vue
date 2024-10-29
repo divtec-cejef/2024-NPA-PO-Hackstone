@@ -14,8 +14,8 @@ import {ref, watch} from "vue";
 import {aFiniAttaque2} from "@/components/plateauDefense/case_attaque/Case_2_Attaquant_defense.vue";
 import {defaite} from "@/components/plateauDefense/TourAttaquant_defense.vue";
 
-let delaisAnonymous = 1;
 export let finTour = ref(false)
+let delaisAnonymous = 1;
 let emplacement;
 let carteAttaquante;
 let deckAttaque = fonctionnaliteDefense.methods.genererDeckAttaque();
@@ -45,19 +45,20 @@ export default {
     }
   },
   mounted() {
-
     this.socket = io('http://localhost:3001');
-
     this.socket.on('rfidData', (data) => {
+
       let {readerID} = data;
-      //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
       if (readerID === '1)') {
+        //Lance l'attaque suivante lorsque la première a terminé la sienne
         watch(aFiniAttaque2, (newVal) => {
           setTimeout(() => {
+            //Vérifie si la première attaque a bien été effectué et si la partie n'est pas terminée
             if (newVal === true && !defaite.value) {
+              //Retrouve la carte attaquante
               carteAttaquante = deckAttaque.find(carte => carte.name === this.readers[4].name);
-              console.log("la carte la", carteAttaquante)
-              //Animation d'attaque
+
+              //Lance deux attaques si la carte attaquante est l'Anonymous
               if (carteAttaquante.name === "Anonymous") {
                 delaisAnonymous = 1000;
                 this.attaquerAnimation();
@@ -89,10 +90,14 @@ export default {
       }
       return require('@/img/img_carte/img_attaque/anonymous.png');
     },
-    attaquerCarteCase2(deplacementX) {
+
+    /**
+     * Lance l'animation d'attaque
+     * @param deplacementX emplacement de la carte en défense
+     */
+    attaquerCarteAnimation(deplacementX) {
       const deplacementY = 420;
       const attackingCard = this.$refs.attackingCard3;
-      console.log("Attacking card :", attackingCard);
 
       if (!attackingCard) {
         console.error("La carte attaquante n'est pas disponible.");
@@ -120,13 +125,23 @@ export default {
             ease: "power2.inOut",
           });
     },
+
+    /**
+     * Regroupe l'animation ainsi que la fonction d'attaque avec les bons timings
+     */
     attaquerAnimation(){
+      //Retrouve l'emplacement de la carte en défense
       emplacement = this.findEmplacement();
-      this.attaquerCarteCase2(emplacement);
+      this.attaquerCarteAnimation(emplacement);
       setTimeout(() => {
         fonctionnaliteDefense.methods.attaquer(this.readers, carteAttaquante);
       }, 2000)
     },
+
+    /**
+     * Trouve l'emplacement de la carte en défense
+     * @returns {number} coordonnée X de la carte en défense
+     */
     findEmplacement() {
       //Retrouve le reader qui contient la carte qui va défendre
       let carteDefense = this.readers.find(carte => carteAttaquante.counter.includes(carte.name));
@@ -134,8 +149,6 @@ export default {
       if (carteDefense === undefined) {
         emplacement = 0;
       } else {
-        console.log("id de la carte", carteDefense.id);
-        console.log("carte", carteDefense)
         switch (carteDefense.id) {
           case 3 :
             emplacement = this.gauche;

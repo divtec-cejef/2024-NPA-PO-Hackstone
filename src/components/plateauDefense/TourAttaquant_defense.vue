@@ -10,6 +10,10 @@
       <img v-if="tourAdverseDefense" class="imageFinDeTour" src="../../img/FinDeTour%202.png" alt="Fin de tour"/>
       <img v-else class="imageFinDeTour" src="../../img/AVousDeJouer%202.png" alt="Fin de tour"/>
     </div>
+    <div v-if="errorVisible" class="test-Image">
+      <img src="../../img/FinDeTour 2 1.png" alt="" class="image"/>
+      <div class="overlay-image">{{ texte }}</div>
+    </div>
     <!-- Message de victoire s'affiche au centre si victoire -->
     <div v-if="victoire">
       <div class="overlay"></div>
@@ -24,6 +28,7 @@ import confetti from 'canvas-confetti';
 import {ref, watch} from "vue";
 export let defaite = ref(false);
 export let finDeTourDefense = ref(false)
+export let messageErreur = ref("");
 export default {
   data() {
     return {
@@ -38,30 +43,45 @@ export default {
       visibility: [true, true, true, true, true],
       victoire: false, // Variable qui déclenche la victoire
       messageVisibleDefense: false,
-      tourAdverseDefense: true
+      tourAdverseDefense: true,
+      texte: '',
+      errorVisible: false
+
     };
   },
 
   mounted() {
     this.socket = io('http://localhost:3001');
-
     this.socket.on('rfidData', (data) => {
+
       const {readerID} = data;
       // Vérifier si le readerID est 1
       if (readerID === '1)') {
         this.showMessageDefense();
       }
     });
+    //Vérifie si le tour précédent est terminé
     watch(finDeTourDefense, (newVal) => {
-      console.log("AALKALKS", finDeTourDefense.value)
+
       if (newVal === true && defaite.value === false) {
         this.showMessageDefense();
         this.updateVisibility();
+
       } else if (newVal === false && defaite.value === false) {
         this.showMessageDefense();
         this.updateVisibility();
       }
 
+      //Dès que la variable messageErreur est modifié, affiche un message temporaire contenant son texte.
+      watch(messageErreur, (newVal, oldValue) => {
+        if (oldValue !== newVal && newVal !== ""){
+          this.showUserError(messageErreur.value);
+        }
+
+        setTimeout(() => {
+          messageErreur.value ="";
+        }, 2500)
+      })
     });
   },
 
@@ -72,7 +92,9 @@ export default {
         this.launchConfetti(); // Lancer les confettis
       }
     },
-
+    /**
+     * Brise un bouclier du défenseur à chaque fois qu'il perd un point de vie
+     */
     updateVisibility() {
       for (let i = this.visibility.length - 1; i >= 0; i--) {
         if (this.visibility[i]) {
@@ -101,9 +123,11 @@ export default {
         origin: {y: 0.6}
       });
     },
+
+    /**
+     * Affiche un message temporaire lors de la fin du tour du défenseur et lors du début de son tour
+     */
     showMessageDefense() {
-      console.log("JE le fais la")
-      console.log("Tour adverse", this.tourAdverseDefense);
       // Affiche le message
       setTimeout(() => {
         this.tourAdverseDefense = !this.tourAdverseDefense;
@@ -113,6 +137,18 @@ export default {
       setTimeout(() => {
         this.messageVisibleDefense = false;
       }, 2500);
+    },
+
+    /**
+     * Affiche un message temporaire
+     * @param message texte à afficher
+     */
+    showUserError(message){
+      this.texte = message;
+      this.errorVisible = true;
+      setTimeout(() => {
+        this.errorVisible = false;
+      },2500)
     }
   }
 }
@@ -192,6 +228,37 @@ export default {
   z-index: 1;
 }
 .imageFinDeTour {
+  height: 175px;
+}
+.overlay-image {
+  /* Taille, couleur et espacement du texte */
+  font-size: 50px;
+  font-weight: normal;
+  color: rgb(255, 255, 255);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-align: center;
+  text-shadow:
+    /* Ombre noire plus nette */
+      2px 4px 1px rgba(255, 0, 0, 1),
+        /* Ombre rouge plus vive */
+      4px 6px 1px rgba(0, 38, 255, 1);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 530px;
+}
+.test-Image {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 43.5%;
+  left: 0;
+  text-align: center;
+  z-index: 1;
+}
+.image {
   height: 175px;
 }
 
