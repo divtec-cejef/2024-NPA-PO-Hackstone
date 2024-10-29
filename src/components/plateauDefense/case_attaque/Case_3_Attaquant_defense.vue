@@ -1,7 +1,7 @@
 <template>
   <div class="topReader3_attaque">
     <img v-if="image" :src="getImagePath(image)" alt="Attack Card" class="attack-card3" ref="attackingCard3">
-    <p v-else >{{id}}</p>
+
   </div>
 </template>
 
@@ -12,7 +12,6 @@ import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDef
 import {gsap} from "gsap";
 import {ref, watch} from "vue";
 import {aFiniAttaque2} from "@/components/plateauDefense/case_attaque/Case_2_Attaquant_defense.vue";
-import {delais} from "@/components/plateauDefense/case_attaque/Case_1_Attaquant_defense.vue";
 import {defaite} from "@/components/plateauDefense/TourAttaquant_defense.vue";
 
 let delaisAnonymous = 1;
@@ -60,12 +59,12 @@ export default {
               console.log("la carte la", carteAttaquante)
               //Animation d'attaque
               if (carteAttaquante.name === "Anonymous") {
-                delaisAnonymous = 2500;
+                delaisAnonymous = 1000;
                 this.attaquerAnimation();
 
                 setTimeout(() => {
                   this.attaquerAnimation()
-                },2500)
+                },2000)
 
               }else
                 this.attaquerAnimation();
@@ -73,7 +72,7 @@ export default {
                 finTour.value = true;
               },delaisAnonymous)
             }
-          },delais);
+          },1000);
           aFiniAttaque2.value = false;
         });
       }
@@ -126,7 +125,7 @@ export default {
       this.attaquerCarteCase2(emplacement);
       setTimeout(() => {
         fonctionnaliteDefense.methods.attaquer(this.readers, carteAttaquante);
-      }, 2500)
+      }, 2000)
     },
     findEmplacement() {
       //Retrouve le reader qui contient la carte qui va défendre
@@ -135,6 +134,8 @@ export default {
       if (carteDefense === undefined) {
         emplacement = 0;
       } else {
+        console.log("id de la carte", carteDefense.id);
+        console.log("carte", carteDefense)
         switch (carteDefense.id) {
           case 3 :
             emplacement = this.gauche;
@@ -173,6 +174,8 @@ export default {
   display: flex;
   align-items: center;
   z-index: 1;
+  background-color: rgba(255, 255, 255, 0.5);
+
 }
 .attack-card3 {
   height: 100%;

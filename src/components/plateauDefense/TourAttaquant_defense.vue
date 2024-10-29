@@ -37,8 +37,8 @@ export default {
       ],
       visibility: [true, true, true, true, true],
       victoire: false, // Variable qui déclenche la victoire
-      messageVisibleDefense : false,
-      tourAdverseDefense : true
+      messageVisibleDefense: false,
+      tourAdverseDefense: true
     };
   },
 
@@ -53,11 +53,11 @@ export default {
       }
     });
     watch(finDeTourDefense, (newVal) => {
-     console.log("AALKALKS", finDeTourDefense)
+      console.log("AALKALKS", finDeTourDefense.value)
       if (newVal === true && defaite.value === false) {
         this.showMessageDefense();
         this.updateVisibility();
-      }else if (newVal === false && defaite.value === false) {
+      } else if (newVal === false && defaite.value === false) {
         this.showMessageDefense();
         this.updateVisibility();
       }
@@ -105,16 +105,17 @@ export default {
       console.log("JE le fais la")
       console.log("Tour adverse", this.tourAdverseDefense);
       // Affiche le message
-      this.tourAdverseDefense = !this.tourAdverseDefense;
-      this.messageVisibleDefense = true;
-
+      setTimeout(() => {
+        this.tourAdverseDefense = !this.tourAdverseDefense;
+        this.messageVisibleDefense = true;
+      }, 500)
       // Cache le message après 2 secondes
       setTimeout(() => {
         this.messageVisibleDefense = false;
-      }, 2000); // 2000 millisecondes = 2 secondes
+      }, 2500);
     }
   }
-};
+}
 </script>
 
 <style scoped>

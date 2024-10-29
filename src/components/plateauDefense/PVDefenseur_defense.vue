@@ -69,8 +69,8 @@ function perdrePV() {
 
 .bouclier-container {
   position: relative;
-  width: 100px; /* Largeur globale du bouclier */
-  height: 120px; /* Hauteur globale du bouclier */
+  width: 150px; /* Largeur globale du bouclier */
+  height: 200px; /* Hauteur globale du bouclier */
   margin: 5px;
 }
 

@@ -62,7 +62,7 @@ export default {
             setTimeout(() => {
               //Pioche des cartes
               fonctionnaliteDefense.methods.piocher(deckAttaque, carteEnMain);
-              const delais = [500, 1000, 1500];
+              const delais = [750, 1250, 1750];
               const readersIndex = [0, 1, 4];
               delais.forEach((delai, index) => {
                 setTimeout(() => {

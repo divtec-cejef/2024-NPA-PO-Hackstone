@@ -127,17 +127,52 @@ export default {
       //Vérifie si la carte est bel et bien l'anonymous et qu'elle n'a pas déjà été posée
       if (card.name === "Anonymous" && !dejaPosee) {
         dejaPosee = true;
+
         //Vide les cases
-        reader[0].name = null;
-        reader[0].image = null;
-        reader[1].name = null;
-        reader[1].image = null;
-        reader[4].name = null;
-        reader[4].image = null;
-        reader[6].name = null;
-        reader[6].image = null;
+        if(reader[0].name !== "Super-antivirus") {
+          let carteDef = carteEnJeu.find(carte => carte.name === reader[0].name);
+          console.log("carte def", carteDef)
+          let indexDef = carteEnJeu.indexOf(carteDef);
+          console.log("index carte", indexDef);
+          carteEnJeu.splice(indexDef, 1);
+          reader[0].name = null;
+          reader[0].image = null;
+        }else
+          pvSuperAntivirus = 1;
+
+        if(reader[1].name !== "Super-antivirus") {
+          let carteDef = carteEnJeu.find(carte => carte.name === reader[1].name);
+          console.log("carte def2", carteDef)
+          let indexDef = carteEnJeu.indexOf(carteDef);
+          console.log("index def2", indexDef)
+          carteEnJeu.splice(indexDef, 1);
+          reader[1].name = null;
+          reader[1].image = null;
+        }else
+          pvSuperAntivirus = 1;
+
+        if(reader[4].name !== "Super-antivirus") {
+          let carteDef = carteEnJeu.find(carte => carte.name === reader[4].name);
+          console.log("carte def3", carteDef)
+          let indexDef = carteEnJeu.indexOf(carteDef);
+          console.log("index def3", indexDef)
+          carteEnJeu.splice(indexDef, 1);
+          reader[4].name = null;
+          reader[4].image = null;
+        }else
+          pvSuperAntivirus = 1;
+
+        if(reader[6].name !== "Super-antivirus") {
+          let carteDef = carteEnJeu.find(carte => carte.name === reader[6].name);
+          console.log("carte def4", carteDef)
+          let indexDef = carteEnJeu.indexOf(carteDef);
+          console.log("index def4", indexDef)
+          carteEnJeu.splice(indexDef, 1);
+          reader[6].name = null;
+          reader[6].image = null;
+        }else
+          pvSuperAntivirus = 1;
         //Vide la liste des cartes en jeu, car plus aucune n'est présente
-        carteEnJeu = [];
       }
     },
 

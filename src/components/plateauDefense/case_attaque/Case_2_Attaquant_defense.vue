@@ -1,7 +1,7 @@
 <template>
   <div class="topReader2_attaque">
     <img v-if="image" :src="getImagePath(image)" alt="Attack Card" class="attack-card2" ref="attackingCard2">
-    <p v-else >{{id}}</p>
+
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 import io from "socket.io-client";
 import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 import {gsap} from "gsap";
-import Case1, {aFiniAttaque, delais} from "@/components/plateauDefense/case_attaque/Case_1_Attaquant_defense.vue";
+import {aFiniAttaque} from "@/components/plateauDefense/case_attaque/Case_1_Attaquant_defense.vue";
 import {defaite} from "@/components/plateauDefense/TourAttaquant_defense.vue";
 import {ref, watch} from "vue";
 export let aFiniAttaque2 = ref(false);
@@ -59,18 +59,16 @@ export default {
 
               //Animation d'attaque
               if (carteAttaquante.name === "Anonymous") {
-                Case1.methods.setDelais(1500)
                 this.attaquerAnimation(false);
                 setTimeout(() => {
                   this.attaquerAnimation(true)
-                }, 2500)
+                }, 3000)
 
               } else {
                 this.attaquerAnimation(true);
-                Case1.methods.setDelais(1000)
               }
             }
-          }, delais);
+          }, 1000);
           aFiniAttaque.value = false;
         });
 
@@ -125,18 +123,21 @@ export default {
       this.attaquerCarteCase2(emplacement);
       setTimeout(() => {
         fonctionnaliteDefense.methods.attaquer(this.readers, carteAttaquante);
-        if (deuxiemeAttaque === true) {
+        if (deuxiemeAttaque) {
           aFiniAttaque2.value = true;
         }
       }, 2500)
     },
     findEmplacement() {
+      console.log("Readers", this.readers);
       //Retrouve le reader qui contient la carte qui va défendre
       let carteDefense = this.readers.find(carte => carteAttaquante.counter.includes(carte.name));
       //Retrouves les coordonnées auxquelles la carte doit se déplacer
       if (carteDefense === undefined) {
         emplacement = 0;
       } else {
+        console.log("id de la carte", carteDefense.id);
+        console.log("carte", carteDefense)
         switch (carteDefense.id) {
           case 3 :
             emplacement = this.gauche;
@@ -175,6 +176,8 @@ export default {
   display: flex;
   align-items: center;
   z-index: 1;
+  background-color: rgba(255, 255, 255, 0.5);
+
 }
 .attack-card2 {
   height: 100%;

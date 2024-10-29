@@ -11,7 +11,7 @@
 import Case_1_Defenseur_defense from "@/components/plateauDefense/case_defense/Case_1_Defenseur_defense.vue";
 import Case_2_Defenseur_defense from "@/components/plateauDefense/case_defense/Case_2_Defenseur_defense.vue";
 import Case_3_Defenseur_defense from "@/components/plateauDefense/case_defense/Case_3_Defenseur_defense.vue";
-import Case_4_Defenseur_defense from "@/components/plateauDefense/case_defense/Case_4_Defenseur_defense.vue";
+import Case_4_Defenseur_defense, {ouvert} from "@/components/plateauDefense/case_defense/Case_4_Defenseur_defense.vue";
 import {cartesEnDefense} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 import io from "socket.io-client";
 let uidList = [];
@@ -54,37 +54,45 @@ export default {
         const readerIndex = this.localReadersDefense.findIndex(r => r.id === Number(readerID));
         //console.log("Reader Index:", readerIndex); // Vérifie l'index trouvé
 
-        if (readerIndex === 2 || readerIndex === 3 || readerIndex === 5 || readerIndex === 6) {
+        if (readerIndex === 2 || readerIndex === 3 || readerIndex === 5 ||
+            (readerIndex === 6 && ouvert.value === true)) {
           if ((uidList.includes(uid) && this.readersDefense[readerIndex].image !== null) ||
               (!uidList.includes(uid) && this.readersDefense[readerIndex].image === null)) {
             uidList.push(uid);
-          if (card.name === "Redondance de données") {
-            if (cartesEnDefense.length > 0)
-              card = cartesEnDefense[0];
+            if (card.name === "Redondance de données") {
+              if (cartesEnDefense.length > 0) {
+                let index = 0;
+                while (cartesEnDefense[index] === null) {
+                  index++;
+                }
+                card = cartesEnDefense[index];
+            }
             else
               alert("Vous n'avez pas de cartes a redondé")
           }
           this.localReadersDefense[readerIndex] = {...this.localReadersDefense[readerIndex], image: card.image};
           this.localReadersDefense[readerIndex] = {...this.localReadersDefense[readerIndex], name: card.name};
           if (readerIndex === 2)
-            cartesEnDefense.splice(0, 0, card);
+            cartesEnDefense.splice(0, 1, card);
           else if (readerIndex === 3)
-            cartesEnDefense.splice(1, 0, card);
+            cartesEnDefense.splice(1, 1, card);
           else if (readerIndex === 5)
-            cartesEnDefense.splice(2, 0, card);
+            cartesEnDefense.splice(2, 1, card);
           else if (readerIndex === 6)
-            cartesEnDefense.splice(3, 0, card);
+            cartesEnDefense.splice(3, 1, card);
           //Copie des readers
+
+          console.log("Cartes en defense", cartesEnDefense)
           let newReaders = [...this.localReadersDefense];
           this.$emit('update-readers-defense', newReaders);
         }else
           alert("Vous ne pouvez pas poser cette carte la ")
-        }
-      } else {
-        console.log(`Carte non valide: type ${card.type}. Seules les cartes de type défense sont autorisées.`);
       }
-    });
-  }
+    } else {
+      console.log(`Carte non valide: type ${card.type}. Seules les cartes de type défense sont autorisées.`);
+    }
+  });
+}
 };
 </script>
 

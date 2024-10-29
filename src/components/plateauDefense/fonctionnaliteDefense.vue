@@ -10,7 +10,7 @@ let carteEnJeu = [];
 
 export let pv = ref(5)
 const cardsData = require('../../../cards.json');
-export let cartesEnDefense = [];
+export let cartesEnDefense = [null, null, null, null];
 const DECK = {
   cardsData
 };
@@ -61,6 +61,9 @@ export default {
         cartesEnMain.push(cartesDeck[index]);
         cartesDeck.splice(index, 1);
       }
+      // let anon = cartesDeck.find(carte => carte.name === "Anonymous")
+      // if (anon !== undefined)
+      //   cartesEnMain.push(anon)
       cartesEnMain.splice(cartesEnMain.length, 1);
     },
 
@@ -105,30 +108,33 @@ export default {
      * @param reader liste des cases
      */
     arriveeAnonymous(card, reader) {
-      if (!dejaPosee)
-        pvAnonymous = 2;
+      pvAnonymous = 2;
+      console.log("defense", cartesEnDefense)
       //Vérifie si la carte est bel et bien l'anonymous et qu'elle n'a pas déjà été posée
       if (card.name === "Anonymous" && !dejaPosee) {
         dejaPosee = true;
-        //Vide les cases
-        reader[2].name = null;
-        reader[2].image = null;
-        reader[3].name = null;
-        reader[3].image = null;
-        reader[5].name = null;
-        reader[5].image = null;
-        reader[6].name = null;
-        reader[6].image = null;
-        //Vide la liste des cartes en jeu, car plus aucune n'est présente
-        cartesEnDefense = [];
+        let readerID = [2, 3, 5, 6];
+        for (let i = 0; i < readerID.length; i++){
+          if (cartesEnDefense[i] !== null && reader[readerID[i]].name !== "Super-antivirus") {
+            cartesEnDefense.splice(i, 1, null);
+            reader[readerID[i]].name = null;
+            reader[readerID[i]].image = null;
+          }else if (reader[readerID[i]].name === "Super-antivirus" && pvSuperAntivirus === 1) {
+            reader[readerID[i]].name = null;
+            reader[readerID[i]].image = null;
+            cartesEnDefense.splice(i, 1, null);
+          }else if (reader[readerID[i]].name === "Super-antivirus")
+            pvSuperAntivirus = 1;
+        }
       }
     },
+
     attaquer(readers, card){
       console.log("J?ATTAQUE")
       let carteDefendue = false;
       for (let j = 0; j < cartesEnDefense.length; j++) {
 
-        if (cartesEnDefense[j] !== undefined) {
+        if (cartesEnDefense[j] !== null) {
           if (cartesEnDefense[j].counter.includes(card.name)) {
             let carteAttaque = readers.find(carte => carte.name === card.name);
             let carteDefense = readers.find(carte => carte.name === cartesEnDefense[j].name);
@@ -146,7 +152,7 @@ export default {
                 || carteDefense.name !== "Super-antivirus") {
               carteDefense.image = null;
               carteDefense.name = null;
-              cartesEnDefense.splice(j, 1);
+              cartesEnDefense.splice(j, 1, null);
             } else
               pvSuperAntivirus = 1;
             break;

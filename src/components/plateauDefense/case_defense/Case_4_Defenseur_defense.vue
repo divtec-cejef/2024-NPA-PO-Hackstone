@@ -1,6 +1,6 @@
 <template>
   <div :class="['bottomReader4_defense', { 'exploded': hasUnlocked }]">
-    <img v-if="isCardVisible && !isStockageCard" :src="getImagePath(image)" alt="Defense Card" class="defense-card">
+    <img v-if="isCardVisible && !isStockageCard" :src="getImagePath(image)" class="defense-card">
     <div v-if="!hasUnlocked" class="lock" :class="{ opening: isOpening, opened: isOpened, inaccessible: !isAccessible }">
       <div class="serrure"></div>
       <div class="base"></div>
@@ -10,7 +10,8 @@
 
 <script>
 import io from "socket.io-client";
-
+import {ref} from "vue";
+export let ouvert = ref(false);
 export default {
   props: {
     id: {
@@ -34,7 +35,7 @@ export default {
       isAccessible: false,
       isStockageCard: false,
       isCardVisible: false,
-      hasUnlocked: false
+      hasUnlocked: false,
     };
   },
 
@@ -46,6 +47,7 @@ export default {
         this.isStockageCard = true;
         this.triggerLockAnimation();
         this.isAccessible = true;
+        ouvert.value = true;
       } else {
         this.isStockageCard = false;
         this.isCardVisible = this.isAccessible === true;
@@ -92,6 +94,8 @@ export default {
   align-items: center;
   justify-content: center;
   position: relative;
+  background-color: rgba(255, 0, 0, 0.5);
+
 }
 .defense-card{
   height: 100%;
@@ -99,6 +103,8 @@ export default {
 
 .bottomReader4_defense.exploded {
   border-color: white !important;
+  background-color: rgba(255, 255, 255, 0.5);
+
 }
 
 .lock {
@@ -118,6 +124,7 @@ export default {
   border: 10px solid azure;
   border-bottom: none;
   border-radius: 20px 20px 0 0;
+
 }
 
 .base {
