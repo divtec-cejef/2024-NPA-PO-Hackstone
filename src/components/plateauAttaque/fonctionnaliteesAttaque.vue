@@ -1,5 +1,6 @@
 <script>
 import {ref} from "vue";
+import {messageErreurAttaque} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 // Importation de `ref` pour créer des variables réactives
 export let pv = ref(5);
 export let stockage = ref(false);
@@ -127,52 +128,17 @@ export default {
       //Vérifie si la carte est bel et bien l'anonymous et qu'elle n'a pas déjà été posée
       if (card.name === "Anonymous" && !dejaPosee) {
         dejaPosee = true;
-
-        //Vide les cases
-        if(reader[0].name !== "Super-antivirus") {
-          let carteDef = carteEnJeu.find(carte => carte.name === reader[0].name);
-          console.log("carte def", carteDef)
-          let indexDef = carteEnJeu.indexOf(carteDef);
-          console.log("index carte", indexDef);
-          carteEnJeu.splice(indexDef, 1);
-          reader[0].name = null;
-          reader[0].image = null;
-        }else
-          pvSuperAntivirus = 1;
-
-        if(reader[1].name !== "Super-antivirus") {
-          let carteDef = carteEnJeu.find(carte => carte.name === reader[1].name);
-          console.log("carte def2", carteDef)
-          let indexDef = carteEnJeu.indexOf(carteDef);
-          console.log("index def2", indexDef)
-          carteEnJeu.splice(indexDef, 1);
-          reader[1].name = null;
-          reader[1].image = null;
-        }else
-          pvSuperAntivirus = 1;
-
-        if(reader[4].name !== "Super-antivirus") {
-          let carteDef = carteEnJeu.find(carte => carte.name === reader[4].name);
-          console.log("carte def3", carteDef)
-          let indexDef = carteEnJeu.indexOf(carteDef);
-          console.log("index def3", indexDef)
-          carteEnJeu.splice(indexDef, 1);
-          reader[4].name = null;
-          reader[4].image = null;
-        }else
-          pvSuperAntivirus = 1;
-
-        if(reader[6].name !== "Super-antivirus") {
-          let carteDef = carteEnJeu.find(carte => carte.name === reader[6].name);
-          console.log("carte def4", carteDef)
-          let indexDef = carteEnJeu.indexOf(carteDef);
-          console.log("index def4", indexDef)
-          carteEnJeu.splice(indexDef, 1);
-          reader[6].name = null;
-          reader[6].image = null;
-        }else
-          pvSuperAntivirus = 1;
-        //Vide la liste des cartes en jeu, car plus aucune n'est présente
+        let readerID = [0, 1, 4, 6]
+        for (let i = 0; i < readerID.length; i++){
+          if(reader[readerID[i]].name !== "Super-antivirus"
+              || (reader[readerID[i]].name === "Super-antivirus" && pvSuperAntivirus === 1)) {
+            carteEnJeu.splice(i, 1);
+            reader[readerID[i]].name = null;
+            reader[readerID[i]].image = null;
+          }else if (reader[readerID[i]].name === "Super-antivirus") {
+            pvSuperAntivirus = 1;
+          }
+        }
       }
     },
 
@@ -209,13 +175,13 @@ export default {
                     }
                   }
                 }
-                  if (cartePosee !== null) {
-                    reader.image = cartePosee.image;
-                    reader.name = cartePosee.name;
-                    cartesEnMains.splice(j, 1);
-                    carteEnJeu.splice(emplacementListe, 0, cartePosee);
-                    break outerLoop;
-                  }
+                if (cartePosee !== null) {
+                  reader.image = cartePosee.image;
+                  reader.name = cartePosee.name;
+                  cartesEnMains.splice(j, 1);
+                  carteEnJeu.splice(emplacementListe, 0, cartePosee);
+                  break outerLoop;
+                }
               }
             }
         if (cartePosee === null) {
@@ -321,7 +287,6 @@ export default {
                 if ((reader.name === "Anonymous" && pvAnonymous === 1) || reader.name !== "Anonymous") {
                   reader.image = null;
                   reader.name = null;
-
                 } else
                   pvAnonymous = 1;
                 //Termine la fonction une fois qu'une carte a été détruite
@@ -356,16 +321,15 @@ export default {
         return true
 
       } else if (carteDejaAttaquer) {
-        alert("Cette carte a deja attaquer")
+        messageErreurAttaque.value = "Cette carte a deja attaquer"
         cartesAttaque.push(card);
 
       } else if (card.poseeDepuis < 2) {
-        alert("Vous devez attendre un tour avant d'attaquer")
+        messageErreurAttaque.value = "Vous devez attendre un tour avant d'attaquer"
         cartesAttaque.push(card);
 
       } else if (!carteTrouvee)
-        alert("Carte pas posée");
-
+        messageErreurAttaque.value = "Carte pas posée"
       return false;
     }
   }

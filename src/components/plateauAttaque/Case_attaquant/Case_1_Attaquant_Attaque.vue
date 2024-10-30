@@ -9,7 +9,7 @@
 import io from "socket.io-client";
 import {gsap} from "gsap";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-import {UID1, uidPrecedent}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
+import {UID1}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
 import {perdu} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 
 export default {
@@ -69,9 +69,6 @@ export default {
                 emplacement = 0;
             }
           }
-          //Retire la carte de la liste des cartes présentent
-          uidPrecedent.splice(uidPrecedent.indexOf(uid), 1);
-
           //Vérifie si la carte remplie les conditions pour attaquer
           if (fonctionnaliteesAttaque.methods.peutAttaquer(card)) {
             //Animation d'attaque

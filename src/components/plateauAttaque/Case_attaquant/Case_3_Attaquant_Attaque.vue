@@ -7,9 +7,9 @@
 
 import io from "socket.io-client";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-import {UID3, uidPrecedent}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
+import {UID3, UID2, UID1}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
 import {gsap} from "gsap";
-import {perdu} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+import {perdu, messageErreurAttaque} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 
 export default {
   props: {
@@ -37,52 +37,50 @@ export default {
   },
 
   mounted() {
-      this.socket = io('http://localhost:3000');
-      this.socket.on('rfidData', (data) => {
-        let {readerID, card, uid} = data;
+    this.socket = io('http://localhost:3000');
+    this.socket.on('rfidData', (data) => {
+      let {readerID, card, uid} = data;
 
-        //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
-        if (readerID === '5)' && this.readers[5].name === card.name && UID3 === uid && !perdu) {
+      //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
+      if (readerID === '5)' && this.readers[5].name === card.name && UID3 === uid && !perdu) {
 
-          let emplacement;
-          //Retrouve le reader qui contient la carte qui va défendre
-          let carteEnDefense = fonctionnaliteesAttaque.methods.trouverCarteDefense(this.readers, card);
+        let emplacement;
+        //Retrouve le reader qui contient la carte qui va défendre
+        let carteEnDefense = fonctionnaliteesAttaque.methods.trouverCarteDefense(this.readers, card);
 
-          //Retrouves les coordonnées auxquelles la carte doit se déplacer
-          if (carteEnDefense === undefined) {
-            emplacement = 0;
-          } else {
-            switch (carteEnDefense.id) {
-              case 1 :
-                emplacement = this.gauche;
-                break;
-              case 2 :
-                emplacement = this.milieu;
-                break;
-              case 5 :
-                emplacement = this.droite;
-                break;
-              case 7 :
-                emplacement = this.stockage;
-                break;
-              default:
-                emplacement = 0;
-            }
-          }
-
-          //Retire la carte de la liste des cartes présentent
-          uidPrecedent.splice(uidPrecedent.indexOf(uid), 1);
-
-          //Vérifie si la carte remplie les conditions pour attaquer
-          if (fonctionnaliteesAttaque.methods.peutAttaquer(card)) {
-            //Animation d'attaque
-            this.attaquerCarteCase3(3, emplacement);
-            setTimeout(() => {
-              fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[5], this.readers);
-            }, 2000);
+        //Retrouves les coordonnées auxquelles la carte doit se déplacer
+        if (carteEnDefense === undefined) {
+          emplacement = 0;
+        } else {
+          switch (carteEnDefense.id) {
+            case 1 :
+              emplacement = this.gauche;
+              break;
+            case 2 :
+              emplacement = this.milieu;
+              break;
+            case 5 :
+              emplacement = this.droite;
+              break;
+            case 7 :
+              emplacement = this.stockage;
+              break;
+            default:
+              emplacement = 0;
           }
         }
-      });
+
+        //Vérifie si la carte remplie les conditions pour attaquer
+        if (fonctionnaliteesAttaque.methods.peutAttaquer(card)) {
+          //Animation d'attaque
+          this.attaquerCarteCase3(3, emplacement);
+          setTimeout(() => {
+            fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[5], this.readers);
+          }, 2000);
+        }
+      } else if (UID1 !== uid && UID2 !== uid && UID3 !== uid && readerID === '5)')
+        messageErreurAttaque.value = "Carte pas posée "
+    });
   },
 
   methods: {

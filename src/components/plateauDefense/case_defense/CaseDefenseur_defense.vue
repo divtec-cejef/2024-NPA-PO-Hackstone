@@ -58,7 +58,6 @@ export default {
 
         // Convertir readerID en nombre
         const readerIndex = this.localReadersDefense.findIndex(r => r.id === Number(readerID));
-        //console.log("Reader Index:", readerIndex); // Vérifie l'index trouvé
 
         //Vérifie si la carte est scannée sur une case valide
         if (readerIndex === 2 || readerIndex === 3 || readerIndex === 5 ||
@@ -126,7 +125,8 @@ export default {
             //Affiche un message d'erreur si l'on essaie de poser la carte par-dessus une autre
             messageErreur.value = "Il y a déjà une carte ici"
           }
-        }
+        }else if (readerIndex === 6 && !ouvert.value)
+          messageErreur.value = "Case verrouillée"
       } else if (card.type !== "défense"){
         messageErreur.value = 'Carte non valide: défense. Seules les cartes de type défense sont autorisées.'
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type défense sont autorisées.`);

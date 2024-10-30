@@ -12,7 +12,7 @@ import Case_1_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant
 import Case_2_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_2_Attaquant_Attaque.vue";
 import Case_3_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_3_Attaquant_Attaque.vue";
 import fonctionnaliteesAttaque, {cartesAttaque} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-import {perdu} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+import {perdu, messageErreurAttaque} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 
 export let UID1;
 export let UID2;
@@ -43,15 +43,14 @@ export default {
 
     this.socket.on('rfidData', (data) => {
       let { readerID, card, uid } = data;
-      console.log("has lost ",perdu);
+      // Nettoie readerID pour enlever les caractères non numériques
+      readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
+      //Retrouve le reader sur lequel la carte a été scannée
+      const reader = this.localReaders.findIndex(r => r.id === Number(readerID));
       //Vérifie si la carte est de type attaque et si la partie n'est pas terminée
       if (card.type === 'attaque' && !perdu) {
-        // Nettoie readerID pour enlever les caractères non numériques
-        readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
-        //Retrouve le reader sur lequel la carte a été scannée
-        const reader = this.localReaders.findIndex(r => r.id === Number(readerID));
 
         if ((reader === 2 || reader === 3 || reader === 5)) {
           //Vérifie si la carte n'es pas déjà présente sur le plateau
@@ -78,7 +77,6 @@ export default {
               //Copie des readers
               let newReaders = [...this.localReaders];
               this.$emit('update-readers', newReaders);
-              console.log("Cartes en attaque", cartesAttaque);
 
               //Récupère l'uid de la carte scannée
               uidPrecedent.push(uid);
@@ -89,12 +87,13 @@ export default {
               else if (reader === 5)
                 UID3 = uid;
             } else if (this.localReaders[reader].image !== card.image)
-              alert("Il y a deja une carte la ")
-          } else if (uidPrecedent.includes(uid)) {
-            alert("Vous ne pouvez pas mettre deux fois la meme carte")
+              messageErreurAttaque.value = "Une carte est déjà présente sur cette zone"
+          } else if (uidPrecedent.includes(uid) && this.localReaders[reader].image !== card.image) {
+            messageErreurAttaque.value = "Cette carte à déjà été utilisée"
           }
         }
-      } else {
+      } else if (reader !== 0 && reader !== 1) {
+        messageErreurAttaque.value = "Type de carte invalide"
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);
       }
     });

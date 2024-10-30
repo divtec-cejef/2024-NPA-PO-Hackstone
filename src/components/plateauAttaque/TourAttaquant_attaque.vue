@@ -10,7 +10,11 @@
       <img v-if="tourAdverse" class="imageFinDeTour" src="../../img/FinDeTour%202.png" alt="Fin de tour"/>
       <img v-else class="imageFinDeTour" src="../../img/AVousDeJouer%202.png" alt="Fin de tour"/>
     </div>
-    <!-- Bouton pour retirer un compteur à la fois -->
+
+    <div v-if="errorVisible" class="test-Image">
+      <img src="../../img/FinDeTour 2 1.png" alt="" class="image"/>
+      <div class="overlay-image">{{ texte }}</div>
+    </div>
 
     <!-- Filtre noir et blanc et message de défaite s'affiche si tous les tours sont épuisés -->
     <div v-if="hasLost">
@@ -30,6 +34,7 @@ import io from 'socket.io-client';
 import {ref, watch} from "vue";
 export let perdu = false;
 export let finDeTour = ref(false);
+export let messageErreurAttaque = ref("");
 export default {
   data() {
     return {
@@ -44,7 +49,9 @@ export default {
       visibility: [true, true, true, true, true], // Tous les compteurs sont visibles au début
       hasLost: false, // Variable qui indique si le joueur a perdu
       messageVisible : false,
-      tourAdverse : false
+      tourAdverse : false,
+      texte: '',
+      errorVisible: false
     };
   },
 
@@ -69,6 +76,16 @@ mounted() {
     }else if (newVal === false)
       this.showMessage();
   });
+
+  watch(messageErreurAttaque, (newVal, oldValue) => {
+    if (oldValue !== newVal && newVal !== ""){
+      this.showUserError(messageErreurAttaque.value);
+    }
+
+    setTimeout(() => {
+      messageErreurAttaque.value ="";
+    }, 2500)
+  })
   },
 methods: {
   updateVisibility() {
@@ -98,6 +115,18 @@ methods: {
     setTimeout(() => {
       this.messageVisible = false;
     }, 2000); // 2000 millisecondes = 2 secondes
+  },
+
+  /**
+   * Affiche un message temporaire
+   * @param message texte à afficher
+   */
+  showUserError(message){
+    this.texte = message;
+    this.errorVisible = true;
+    setTimeout(() => {
+      this.errorVisible = false;
+    },2500)
   }
 }
 };
@@ -166,6 +195,38 @@ methods: {
   text-align: center;
 }
 .imageFinDeTour {
+  height: 175px;
+}
+
+.overlay-image {
+  /* Taille, couleur et espacement du texte */
+  font-size: 50px;
+  font-weight: normal;
+  color: rgb(255, 255, 255);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-align: center;
+  text-shadow:
+    /* Ombre noire plus nette */
+      2px 4px 1px rgba(255, 0, 0, 1),
+        /* Ombre rouge plus vive */
+      4px 6px 1px rgba(0, 38, 255, 1);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 530px;
+}
+.test-Image {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 43.5%;
+  left: 0;
+  text-align: center;
+  z-index: 1;
+}
+.image {
   height: 175px;
 }
 

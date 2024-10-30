@@ -7,7 +7,7 @@
 <script>
 
 import io from "socket.io-client";
-import {UID2, uidPrecedent}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
+import  {UID2}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
 import {gsap} from "gsap";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {perdu} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
@@ -70,9 +70,6 @@ export default {
                 emplacement = 0;
             }
           }
-          //Retire la carte de la liste des cartes présentent
-          uidPrecedent.splice(uidPrecedent.indexOf(uid), 1);
-
           //Vérifie si la carte remplie les conditions pour attaquer
           if (fonctionnaliteesAttaque.methods.peutAttaquer(card)) {
             //Animation d'attaque

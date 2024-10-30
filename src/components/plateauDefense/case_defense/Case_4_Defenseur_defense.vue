@@ -11,6 +11,7 @@
 <script>
 import io from "socket.io-client";
 import {ref} from "vue";
+
 export let ouvert = ref(false);
 export default {
   props: {
