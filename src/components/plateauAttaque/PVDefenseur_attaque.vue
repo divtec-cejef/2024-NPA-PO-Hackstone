@@ -42,7 +42,6 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import confetti from 'canvas-confetti'
 
 // Variable représentant les PV de l'attaquant (ici 5 PV pour commencer)
 const pvAttaquant = ref(5)
@@ -51,20 +50,10 @@ const boucliers = ref([false, false, false, false, false]) // Etat des boucliers
 // Variable pour afficher ou masquer le message de victoire
 const hasWon = ref(false)
 
-// Fonction pour déclencher les confettis
-function launchConfetti() {
-  confetti({
-    particleCount: 1000,
-    spread: 150,
-    origin: { y: 0.6 }
-  });
-}
-
 // Observer les PV de l'attaquant, si 0, afficher un message indiquant la victoire et déclencher les confettis
 watch(pvAttaquant, (newVal) => {
   if (newVal <= 0) {
     hasWon.value = true
-    launchConfetti()
   }
 })
 
@@ -183,6 +172,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8); /* Couleur sombre avec transparence */
+  backdrop-filter: blur(5px);
   z-index: 999;
 }
 

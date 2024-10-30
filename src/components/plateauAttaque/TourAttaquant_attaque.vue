@@ -138,22 +138,22 @@ export default {
 /* Animation pour "casser" le compteur */
 @keyframes break-left {
   0% {
-    transform: rotate(0deg) scale(1) translateX(-30%);
+    transform: rotate(0deg) scale(1) translateX(10%) translateY(-18%);
     opacity: 1;
   }
   100% {
-    transform: translateX(-60%) rotate(-15deg) scale(1) translateY(30%);
+    transform: translateX(-0%) scale(1);
     opacity: 0;
   }
 }
 
 @keyframes break-right {
   0% {
-    transform: rotate(0deg) scale(1) translateX(30%);
+    transform: rotate(0deg) scale(1) translateX(-10%) translateY(-18%);
     opacity: 1;
   }
   100% {
-    transform: translateX(60%) rotate(15deg) scale(1) translateY(30%);
+    transform: translateX(0%) scale(1);
     opacity: 0;
   }
 }
