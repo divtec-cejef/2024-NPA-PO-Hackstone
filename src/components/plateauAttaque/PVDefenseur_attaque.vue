@@ -32,12 +32,15 @@
           Infiltration réussie
           <span aria-hidden="true">Infiltration réussie</span>
         </p>
+        <button class="close-Page" onclick="window.close()"><b>MENU</b></button>
       </div>
+
     </div>
   </div>
 </template>
 
 <script setup>
+
 import { pv }  from '@/components/plateauAttaque/fonctionnaliteesAttaque.vue';
 import { ref, watch } from 'vue'
 import confetti from 'canvas-confetti'
@@ -75,6 +78,7 @@ function perdrePVAttaquant() {
     boucliers.value[(pv.value - 4) *-1] = true // Casser le bouclier correspondant
   }
 }
+
 </script>
 
 <style>
@@ -197,6 +201,7 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
+  flex-direction: column;
 }
 
 .glitch {
@@ -267,5 +272,20 @@ body {
   top: 50px;
   right: 50px;
 }
-
+.close-Page {
+  border: 3px solid red;
+  background-color: red;
+  box-shadow: 0 0 50px red;
+  transition: transform 0.1s linear;
+  width: 270px;
+  height: 70px;
+  font-size: 40px;
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+  align-items: center;
+  border-radius: 100px;
+}
+button:hover {
+  transform: scale(1.1); /* Agrandit le bouton de 10% */
+}
 </style>

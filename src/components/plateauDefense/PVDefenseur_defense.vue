@@ -55,6 +55,7 @@ function perdrePV() {
       <!-- Message de défaite affiché au centre -->
       <div class="defeat-message">
         <h1>Vous avez perdu !</h1>
+        <button class="close-Page" onclick="window.close()"><b>MENU</b></button>
       </div>
     </div>
   </div>
@@ -139,8 +140,27 @@ function perdrePV() {
   padding: 20px;
   border-radius: 10px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   z-index: 1000; /* S'assure que le message soit au-dessus du filtre */
   font-size: 2em;
 }
-
+.close-Page {
+  border: 3px solid red;
+  background-color: red;
+  box-shadow: 0 0 50px red;
+  transition: transform 0.1s linear;
+  width: 270px;
+  height: 70px;
+  font-size: 40px;
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+  align-items: center;
+  border-radius: 100px;
+  justify-content: center;
+}
+button:hover {
+  transform: scale(1.1); /* Agrandit le bouton de 10% */
+}
 </style>

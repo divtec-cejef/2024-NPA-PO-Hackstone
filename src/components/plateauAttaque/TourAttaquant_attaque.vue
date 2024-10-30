@@ -24,6 +24,7 @@
       <!-- Message de défaite -->
       <div class="resist-message">
         <h1>Le système a résisté à vos attaques</h1>
+        <button class="close-Page" onclick="window.close()"><b>MENU</b></button>
       </div>
     </div>
   </div>
@@ -56,79 +57,79 @@ export default {
   },
 
 
-mounted() {
-  this.socket = io('http://localhost:3000');
+  mounted() {
+    this.socket = io('http://localhost:3000');
 
-  this.socket.on('rfidData', (data) => {
-    const { readerID } = data;
+    this.socket.on('rfidData', (data) => {
+      const { readerID } = data;
 
-    // Vérifier si le readerID est 1
-    if (readerID === '1)') {
-      this.updateVisibility();
-      this.showMessage();
-    }
-  });
-
-  //Obsèrve si le joueur termine son tour, si c'est le cas, affiche un message temporaire
-  watch(finDeTour, (newVal) => {
-    if (newVal === true) {
-      this.showMessage();
-    }else if (newVal === false)
-      this.showMessage();
-  });
-
-  watch(messageErreurAttaque, (newVal, oldValue) => {
-    if (oldValue !== newVal && newVal !== ""){
-      this.showUserError(messageErreurAttaque.value);
-    }
-
-    setTimeout(() => {
-      messageErreurAttaque.value ="";
-    }, 2500)
-  })
-  },
-methods: {
-  updateVisibility() {
-    // Boucle pour masquer les compteurs un par un
-    for (let i = this.visibility.length - 1; i >= 0; i--) {
-      if (this.visibility[i]) {
-        this.visibility[i] = false;
-        break;
+      // Vérifier si le readerID est 1
+      if (readerID === '1)') {
+        this.updateVisibility();
+        this.showMessage();
       }
-    }
+    });
 
-    // Vérifier si tous les compteurs sont masqués, le joueur a perdu
-    if (this.visibility.every(v => !v)) {
-      this.hasLost = true;
-      perdu = true
-    }
+    //Obsèrve si le joueur termine son tour, si c'est le cas, affiche un message temporaire
+    watch(finDeTour, (newVal) => {
+      if (newVal === true) {
+        this.showMessage();
+      }else if (newVal === false)
+        this.showMessage();
+    });
+
+    watch(messageErreurAttaque, (newVal, oldValue) => {
+      if (oldValue !== newVal && newVal !== ""){
+        this.showUserError(messageErreurAttaque.value);
+      }
+
+      setTimeout(() => {
+        messageErreurAttaque.value ="";
+      }, 2500)
+    })
   },
+  methods: {
+    updateVisibility() {
+      // Boucle pour masquer les compteurs un par un
+      for (let i = this.visibility.length - 1; i >= 0; i--) {
+        if (this.visibility[i]) {
+          this.visibility[i] = false;
+          break;
+        }
+      }
 
-  showMessage() {
-    console.log("Je le fait la")
-    console.log("tour adverse", this.tourAdverse);
-    // Affiche le message
-    this.tourAdverse = !this.tourAdverse;
-    this.messageVisible = true;
+      // Vérifier si tous les compteurs sont masqués, le joueur a perdu
+      if (this.visibility.every(v => !v)) {
+        this.hasLost = true;
+        perdu = true
+      }
+    },
 
-    // Cache le message après 2 secondes
-    setTimeout(() => {
-      this.messageVisible = false;
-    }, 2000); // 2000 millisecondes = 2 secondes
-  },
+    showMessage() {
+      console.log("Je le fait la")
+      console.log("tour adverse", this.tourAdverse);
+      // Affiche le message
+      this.tourAdverse = !this.tourAdverse;
+      this.messageVisible = true;
 
-  /**
-   * Affiche un message temporaire
-   * @param message texte à afficher
-   */
-  showUserError(message){
-    this.texte = message;
-    this.errorVisible = true;
-    setTimeout(() => {
-      this.errorVisible = false;
-    },2500)
+      // Cache le message après 2 secondes
+      setTimeout(() => {
+        this.messageVisible = false;
+      }, 2000); // 2000 millisecondes = 2 secondes
+    },
+
+    /**
+     * Affiche un message temporaire
+     * @param message texte à afficher
+     */
+    showUserError(message){
+      this.texte = message;
+      this.errorVisible = true;
+      setTimeout(() => {
+        this.errorVisible = false;
+      },2500)
+    }
   }
-}
 };
 </script>
 
@@ -169,7 +170,9 @@ methods: {
   font-size: 40px; /* Taille du texte */
   font-family: Impact, serif;
   text-align: center;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   opacity: 1;
   animation: resist-animation 1s ease-out forwards; /* Animation de zoom, sans fade-out */
   z-index: 1000; /* S'assure que le message soit au-dessus du filtre */
@@ -229,5 +232,21 @@ methods: {
 .image {
   height: 175px;
 }
-
+.close-Page {
+  border: 3px solid red;
+  background-color: red;
+  box-shadow: 0 0 50px red;
+  transition: transform 0.1s linear;
+  width: 270px;
+  height: 70px;
+  font-size: 40px;
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+  align-items: center;
+  border-radius: 100px;
+  justify-content: center;
+}
+button:hover {
+  transform: scale(1.1); /* Agrandit le bouton de 10% */
+}
 </style>

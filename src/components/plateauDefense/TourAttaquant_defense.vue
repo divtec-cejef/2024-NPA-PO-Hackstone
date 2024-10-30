@@ -17,7 +17,10 @@
     <!-- Message de victoire s'affiche au centre si victoire -->
     <div v-if="victoire">
       <div class="overlay"></div>
-      <div class="victoire-message">🎉 Victoire ! 🎉</div>
+      <div class="victoire-message">🎉 Victoire ! 🎉
+        <button class="close-Page" onclick="window.close()"><b>MENU</b></button>
+      </div>
+
     </div>
   </div>
 </template>
@@ -194,6 +197,9 @@ export default {
   font-weight: bold;
   z-index: 1000;
   animation: pop-in 1s ease-out; /* Animation du message */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Animation d'apparition du message de victoire */
@@ -261,5 +267,21 @@ export default {
 .image {
   height: 175px;
 }
-
+.close-Page {
+  border: 3px solid red;
+  background-color: red;
+  box-shadow: 0 0 50px red;
+  transition: transform 0.1s linear;
+  width: 270px;
+  height: 70px;
+  font-size: 40px;
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+  align-items: center;
+  border-radius: 100px;
+  justify-content: center;
+}
+button:hover {
+  transform: scale(1.1); /* Agrandit le bouton de 10% */
+}
 </style>
