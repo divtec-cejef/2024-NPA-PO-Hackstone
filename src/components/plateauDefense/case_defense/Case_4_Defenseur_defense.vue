@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import 'animate.css'
 import io from "socket.io-client";
 import {ref} from "vue";
 
@@ -101,7 +102,10 @@ export default {
 
 }
 .defense-card{
-  height: 100%;
+  height: 420px;
+  animation: slideInUp; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1s; /* don't forget to set a duration! */
+  position: fixed;
 }
 
 .bottomReader4_defense.exploded {

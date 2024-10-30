@@ -1,12 +1,16 @@
 <template>
   <div class="topReader3_attaque">
-    <img v-if="image" :src="getImagePath(image)" alt="Attack Card" class="attack-card3" ref="attackingCard3">
+    <img v-if="image" :src="getImagePath(image)" alt="Attack Card"
+         :class="{'attack-card3': !hasEntered}"
+         class="attack-card"
+         ref="attackingCard3">
 
   </div>
 </template>
 
 
 <script>
+import 'animate.css'
 import io from "socket.io-client";
 import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 import {gsap} from "gsap";
@@ -41,7 +45,8 @@ export default {
       gauche: -1140,
       milieu: -680,
       droite: -230,
-      stockage: 230
+      stockage: 230,
+      hasEntered: false
     }
   },
   mounted() {
@@ -53,6 +58,7 @@ export default {
         //Lance l'attaque suivante lorsque la première a terminé la sienne
         watch(aFiniAttaque2, (newVal) => {
           setTimeout(() => {
+            this.hasEntered = true;
             //Vérifie si la première attaque a bien été effectué et si la partie n'est pas terminée
             if (newVal === true && !defaite.value) {
               //Retrouve la carte attaquante
@@ -61,17 +67,18 @@ export default {
               //Lance deux attaques si la carte attaquante est l'Anonymous
               if (carteAttaquante.name === "Anonymous") {
                 delaisAnonymous = 1000;
-                this.attaquerAnimation();
+                this.attaquerAnimation(false);
 
                 setTimeout(() => {
-                  this.attaquerAnimation()
+                  this.attaquerAnimation(true)
                 },2000)
 
               }else
-                this.attaquerAnimation();
+                this.attaquerAnimation(true);
               setTimeout(() => {
                 finTour.value = true;
               },delaisAnonymous)
+
             }
           },1000);
           aFiniAttaque2.value = false;
@@ -129,13 +136,20 @@ export default {
     /**
      * Regroupe l'animation ainsi que la fonction d'attaque avec les bons timings
      */
-    attaquerAnimation(){
+    attaquerAnimation(derniereAttaque){
       //Retrouve l'emplacement de la carte en défense
       emplacement = this.findEmplacement();
       this.attaquerCarteAnimation(emplacement);
       setTimeout(() => {
         fonctionnaliteDefense.methods.attaquer(this.readers, carteAttaquante);
       }, 2000)
+      setTimeout(() => {
+        if (derniereAttaque) {
+          if (this.readers[4].image === null)
+            this.hasEntered = false;
+        }
+      },2001)
+
     },
 
     /**
@@ -191,6 +205,11 @@ export default {
 
 }
 .attack-card3 {
-  height: 100%;
+  animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1s; /* don't forget to set a duration! */
+}
+.attack-card {
+  height: 420px;
+  position: fixed;
 }
 </style>

@@ -10,6 +10,7 @@
     "lint": "C:\\Users\\courluc\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service lint"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
     "body-parser": "^1.20.2",
     "canvas-confetti": "^1.9.3",
     "core-js": "^3.8.3",

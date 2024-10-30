@@ -56,7 +56,6 @@ export default {
     };
   },
 
-
   mounted() {
     this.socket = io('http://localhost:3000');
 
@@ -88,6 +87,7 @@ export default {
       }, 2500)
     })
   },
+
   methods: {
     updateVisibility() {
       // Boucle pour masquer les compteurs un par un

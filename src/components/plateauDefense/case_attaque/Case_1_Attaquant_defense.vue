@@ -1,6 +1,9 @@
 <template>
   <div class="topReader1_attaque">
-    <img v-if="image" :src="getImagePath(image)" alt="Attack Card" class="attack-card1" ref="attackingCard1">
+    <img v-if="image" :src="getImagePath(image)" alt="Attack Card"
+         :class="{'attack-card1': !hasEntered}"
+         class="attack-card"
+         ref="attackingCard1">
   </div>
 </template>
 
@@ -9,6 +12,7 @@ import io from "socket.io-client";
 import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 import {gsap} from "gsap";
 import {ref} from "vue";
+import 'animate.css'
 
 let deckAttaque = fonctionnaliteDefense.methods.genererDeckAttaque();
 let emplacement;
@@ -37,15 +41,18 @@ export default {
       milieu: 230,
       droite: 680,
       stockage: 1140,
+      hasEntered : false
     }
   },
   mounted() {
+
     this.socket = io('http://localhost:3001');
     this.socket.on('rfidData', (data) => {
       let {readerID} = data;
       if (readerID === '1)') {
 
         setTimeout(() => {
+          this.hasEntered = true;
           //Retrouve la carte qui attaque
           carteAttaquante = deckAttaque.find(carte => carte.name === this.readers[0].name);
 
@@ -133,6 +140,10 @@ export default {
         if (deuxiemeAttaque)
           aFiniAttaque.value = true;
       }, 2500)
+      setTimeout(() => {
+        if (this.readers[0].image === null)
+          this.hasEntered = false;
+      },2501)
     },
 
     /**
@@ -188,6 +199,11 @@ export default {
 
 }
 .attack-card1 {
-  height: 100%;
+  animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1s; /* don't forget to set a duration! */
+}
+.attack-card {
+  height: 420px;
+  position: fixed;
 }
 </style>

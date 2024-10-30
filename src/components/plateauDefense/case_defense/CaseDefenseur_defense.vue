@@ -46,18 +46,18 @@ export default {
       //Récupère l'ID du lecteur, la carte et l'UID de la carte
       let { readerID, card, uid } = data;
 
+      // Nettoie readerID pour enlever les caractères non numériques
+      readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
+
+      // Convertir readerID en nombre
+      const readerIndex = this.localReadersDefense.findIndex(r => r.id === Number(readerID));
+
       //Vérifie si la carte est de type défense
       if (card.type === 'défense' && card.name !== 'Stockage') {
-
-        // Nettoie readerID pour enlever les caractères non numériques
-        readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
         this.card = card;
         this.card.image = card.image;
         this.readerID = readerID;
-
-        // Convertir readerID en nombre
-        const readerIndex = this.localReadersDefense.findIndex(r => r.id === Number(readerID));
 
         //Vérifie si la carte est scannée sur une case valide
         if (readerIndex === 2 || readerIndex === 3 || readerIndex === 5 ||
@@ -127,8 +127,8 @@ export default {
           }
         }else if (readerIndex === 6 && !ouvert.value)
           messageErreur.value = "Case verrouillée"
-      } else if (card.type !== "défense"){
-        messageErreur.value = 'Carte non valide: défense. Seules les cartes de type défense sont autorisées.'
+      } else if (readerIndex !== 0 && readerIndex !== 1 && card.name !== "Stockage") {
+        messageErreur.value = 'Type de carte invalide'
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type défense sont autorisées.`);
       }
     });
