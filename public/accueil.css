@@ -115,4 +115,8 @@ button.tutoriel {
     transform: none;
 }
 
+.image-tutoriel {
+    width: 100%;
+    height: 100%;
+}
 
