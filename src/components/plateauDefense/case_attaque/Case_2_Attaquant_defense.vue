@@ -1,9 +1,9 @@
 <template>
   <div class="topReader2_attaque">
     <img v-if="image" :src="getImagePath(image)" alt="Attack Card"
-         :class="{'attack-card2': !hasEntered}"
-         class="attack-card"
-         ref="attackingCard2">
+         :class="{'attack-card2_def': !hasEntered}"
+         class="attack-card_def"
+         ref="attackingCard2_def">
 
   </div>
 </template>
@@ -45,6 +45,7 @@ export default {
       milieu: -230,
       droite: 230,
       stockage: 680,
+      pv: 0,
       hasEntered: false
     }
   },
@@ -99,8 +100,10 @@ export default {
      * @param deplacementX emplacement de la carte en défense
      */
     attaquerCarteAnimation(deplacementX) {
-      const deplacementY = 420;
-      const attackingCard = this.$refs.attackingCard2;
+      let DEPLACEMENT_Y = 420;
+      if(deplacementX === this.pv)
+        DEPLACEMENT_Y= 800
+      const attackingCard = this.$refs.attackingCard2_def;
       console.log("Attacking card :", attackingCard);
 
       if (!attackingCard) {
@@ -116,7 +119,7 @@ export default {
       })
           .to(attackingCard, {
             duration: 0.3,
-            y: deplacementY,
+            y: DEPLACEMENT_Y,
             x: deplacementX,
             scale: 1,
             ease: "power2.inOut",
@@ -144,13 +147,13 @@ export default {
       //Attend que l'animation soit terminée avant de lancer la fonction d'attaque
       setTimeout(() => {
         fonctionnaliteDefense.methods.attaquer(this.readers, carteAttaquante);
-        if (deuxiemeAttaque) {
-          aFiniAttaque2.value = false;
-        }
       }, 2500)
       setTimeout(() => {
         if (this.readers[1].image === null)
-          this.hasEntered = true;
+          this.hasEntered = false;
+        if (deuxiemeAttaque) {
+          aFiniAttaque2.value = true;
+        }
       },2501)
     },
 
@@ -163,7 +166,7 @@ export default {
       let carteDefense = this.readers.find(carte => carteAttaquante.counter.includes(carte.name));
       //Retrouves les coordonnées auxquelles la carte doit se déplacer
       if (carteDefense === undefined) {
-        emplacement = 0;
+        emplacement = this.pv;
       } else {
         switch (carteDefense.id) {
           case 3 :
@@ -179,7 +182,7 @@ export default {
             emplacement = this.stockage;
             break;
           default:
-            emplacement = 0;
+            emplacement = this.pv;
         }
       }
       return emplacement
@@ -206,11 +209,11 @@ export default {
   background-color: rgba(255, 255, 255, 0.5);
 
 }
-.attack-card2 {
+.attack-card2_def {
   animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
   animation-duration: 1s; /* don't forget to set a duration! */
 }
-.attack-card {
+.attack-card_def {
   height: 420px;
   position: fixed;
 }

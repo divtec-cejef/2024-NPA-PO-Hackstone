@@ -1,11 +1,14 @@
 <template>
   <div class="bottomReader1_attaque">
     <!-- L'image de la carte (affichée tout le temps) -->
-    <img  v-if="image" :src="getImagePath(image)" alt="Attaque Card" class="attaque-card1" >
+    <img  v-if="image" :src="getImagePath(image)" alt="Attaque Card"
+          :class ="{'attack-card1': !hasEntered}"
+          class="attaque-card1" >
   </div>
 </template>
 
 <script>
+import 'animate.css'
 import io from "socket.io-client";
 import {gsap} from "gsap";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
@@ -34,51 +37,59 @@ export default {
       milieu: 230,
       droite: 680,
       stockage: 1140,
+      pv: 455,
+      hasEntered: false
     }
   },
 
   mounted() {
-      this.socket = io('http://localhost:3000');
-      this.socket.on('rfidData', (data) => {
-        let {readerID, card, uid} = data;
+    this.socket = io('http://localhost:3000');
+    this.socket.on('rfidData', (data) => {
+      let {readerID, card, uid} = data;
 
-        //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
-        if (readerID === '5)' && this.readers[2].name === card.name && UID1 === uid && !perdu) {
-          let emplacement;
-          //Retrouve le reader qui contient la carte qui va défendre
-          let carteEnDefense = fonctionnaliteesAttaque.methods.trouverCarteDefense(this.readers, card);
+      //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
+      if (readerID === '5)' && this.readers[2].name === card.name && UID1 === uid && !perdu) {
+        this.hasEntered = true;
+        let emplacement;
+        //Retrouve le reader qui contient la carte qui va défendre
+        let carteEnDefense = fonctionnaliteesAttaque.methods.trouverCarteDefense(this.readers, card);
 
-          //Retrouves les coordonnées auxquelles la carte doit se déplacer
-          if (carteEnDefense === undefined) {
-            emplacement = 0;
-          } else {
-            switch (carteEnDefense.id) {
-              case 1 :
-                emplacement = this.gauche;
-                break;
-              case 2 :
-                emplacement = this.milieu;
-                break;
-              case 5 :
-                emplacement = this.droite;
-                break;
-              case 7 :
-                emplacement = this.stockage;
-                break;
-              default:
-                emplacement = 0;
-            }
-          }
-          //Vérifie si la carte remplie les conditions pour attaquer
-          if (fonctionnaliteesAttaque.methods.peutAttaquer(card)) {
-            //Animation d'attaque
-            this.attaquerCarteCase1(1, emplacement);
-            setTimeout(() => {
-              fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[2], this.readers);
-            }, 2000);
+        //Retrouves les coordonnées auxquelles la carte doit se déplacer
+        if (carteEnDefense === undefined) {
+          emplacement = this.pv;
+        } else {
+          switch (carteEnDefense.id) {
+            case 1 :
+              emplacement = this.gauche;
+              break;
+            case 2 :
+              emplacement = this.milieu;
+              break;
+            case 5 :
+              emplacement = this.droite;
+              break;
+            case 7 :
+              emplacement = this.stockage;
+              break;
+            default:
+              emplacement = this.pv;
           }
         }
-      });
+        //Vérifie si la carte remplie les conditions pour attaquer
+        if (fonctionnaliteesAttaque.methods.peutAttaquer(card)) {
+          this.hasEntered = true;
+          //Animation d'attaque
+          this.attaquerCarteCase1(1, emplacement);
+          setTimeout(() => {
+            fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[2], this.readers);
+          }, 2000);
+          setTimeout(() => {
+            if (this.readers[2].image === null)
+              this.hasEntered = false
+          },2001)
+        }
+      }
+    });
 
   },
   methods: {
@@ -92,7 +103,10 @@ export default {
       }
     },
     attaquerCarteCase1(card_number, deplacementX) {
-      const deplacementY = -420;
+      let deplacementY = -420
+      if (deplacementX === this.pv)
+        deplacementY = -800;
+
       console.log(this.$el);
       const attackingCard = this.$el.querySelector('.attaque-card'+card_number); // Sélectionne l'élément par classe
       console.log("Attacking card :", attackingCard);
@@ -141,7 +155,14 @@ export default {
   background-size: 100%;
   background-color: rgba(255, 255, 255, 0.5);
 }
+.attack-card1 {
+  animation: slideInUp; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1s; /* don't forget to set a duration! */
+  position: fixed;
+  height: 420px;
+}
 .attaque-card1 {
-  height: 100%;
+  height: 420px;
+  position: fixed;
 }
 </style>

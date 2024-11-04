@@ -1,10 +1,13 @@
 <template>
   <div class="bottomReader3_attaque">
-    <img  v-if="image" :src="getImagePath(image)" alt="Attaque Card" class="attaque-card3">
+    <img  v-if="image" :src="getImagePath(image)"
+          alt="Attaque Card"
+          :class ="{'attack-card': !hasEntered}"
+          class="attaque-card3">
   </div>
 </template>
 <script>
-
+import "animate.css"
 import io from "socket.io-client";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {UID3, UID2, UID1}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
@@ -32,7 +35,9 @@ export default {
       gauche: -1140,
       milieu: -680,
       droite: -230,
-      stockage: 230
+      stockage: 230,
+      pv: -455,
+      hasEntered: false
     }
   },
 
@@ -43,6 +48,7 @@ export default {
 
       //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
       if (readerID === '5)' && this.readers[5].name === card.name && UID3 === uid && !perdu) {
+        this.hasEntered = true;
 
         let emplacement;
         //Retrouve le reader qui contient la carte qui va défendre
@@ -50,7 +56,7 @@ export default {
 
         //Retrouves les coordonnées auxquelles la carte doit se déplacer
         if (carteEnDefense === undefined) {
-          emplacement = 0;
+          emplacement = this.pv;
         } else {
           switch (carteEnDefense.id) {
             case 1 :
@@ -66,7 +72,7 @@ export default {
               emplacement = this.stockage;
               break;
             default:
-              emplacement = 0;
+              emplacement = this.pv;
           }
         }
 
@@ -77,6 +83,10 @@ export default {
           setTimeout(() => {
             fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[5], this.readers);
           }, 2000);
+          setTimeout(() => {
+            if (this.readers[5].image === null)
+              this.hasEntered = false
+          },2001)
         }
       } else if (UID1 !== uid && UID2 !== uid && UID3 !== uid && readerID === '5)')
         messageErreurAttaque.value = "Carte pas posée "
@@ -95,7 +105,9 @@ export default {
       return require('@/img/img_carte/img_attaque/anonymous.png');
     },
     attaquerCarteCase3(card_number, deplacementX) {
-      const deplacementY = -420;
+      let deplacementY = -420
+      if (deplacementX === this.pv)
+        deplacementY = -800;
       console.log(this.$el);
       const attackingCard = this.$el.querySelector('.attaque-card'+card_number); // Sélectionne l'élément par classe
       console.log("Attacking card :", attackingCard);
@@ -142,8 +154,14 @@ export default {
   background-size: 100%;
   background-color: rgba(255, 255, 255, 0.5);
 }
-
+.attack-card {
+  animation: slideInUp; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1s; /* don't forget to set a duration! */
+  position: fixed;
+  height: 420px;
+}
 .attaque-card3 {
-  height: 100%;
+  height: 420px;
+  position: fixed;
 }
 </style>

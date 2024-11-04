@@ -1,9 +1,9 @@
 <template>
   <div class="topReader1_attaque">
     <img v-if="image" :src="getImagePath(image)" alt="Attack Card"
-         :class="{'attack-card1': !hasEntered}"
-         class="attack-card"
-         ref="attackingCard1">
+         :class="{'attack-card1_def': !hasEntered}"
+         class="attack-card_def"
+         ref="attackingCard1_def">
   </div>
 </template>
 
@@ -41,6 +41,7 @@ export default {
       milieu: 230,
       droite: 680,
       stockage: 1140,
+      pv: 455,
       hasEntered : false
     }
   },
@@ -94,8 +95,10 @@ export default {
      * @param deplacementX emplacement de la carte en défense
      */
     attaquerCarteAnimation(deplacementX) {
-      const DEPLACEMENT_Y = 420;
-      const ATTACKING_CARD = this.$refs.attackingCard1;
+      let DEPLACEMENT_Y = 420;
+      if(deplacementX === this.pv)
+        DEPLACEMENT_Y= 800
+      const ATTACKING_CARD = this.$refs.attackingCard1_def;
 
       if (!ATTACKING_CARD) {
         console.error("La carte attaquante n'est pas disponible.");
@@ -155,7 +158,7 @@ export default {
       let carteDefense = this.readers.find(carte => carteAttaquante.counter.includes(carte.name));
       //Retrouves les coordonnées auxquelles la carte doit se déplacer
       if (carteDefense === undefined) {
-        emplacement = 0;
+        emplacement = this.pv;
       } else {
         switch (carteDefense.id) {
           case 3 :
@@ -171,7 +174,7 @@ export default {
             emplacement = this.stockage;
             break;
           default:
-            emplacement = 0;
+            emplacement = this.pv;
         }
       }
       return emplacement
@@ -198,11 +201,11 @@ export default {
   background-color: rgba(255, 255, 255, 0.5);
 
 }
-.attack-card1 {
+.attack-card1_def {
   animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
   animation-duration: 1s; /* don't forget to set a duration! */
 }
-.attack-card {
+.attack-card_def {
   height: 420px;
   position: fixed;
 }

@@ -1,6 +1,6 @@
 <template>
   <div :class="['topReader4_defense', { 'exploded': hasUnlocked }]">
-    <img v-if="isCardVisible && isStockageCard" :src="getImagePath(image)" class="defense-card" alt="">
+    <img v-if="image" :src="getImagePath(image)" class="defense-card4" alt="">
     <div v-if="!hasUnlocked" class="lock" :class="{ opening: isOpening, opened: isOpened, inaccessible: !isAccessible }">
       <div class="serrure"></div>
       <div class="base"></div>
@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import "animate.css";
 import io from "socket.io-client";
 import {watch} from "vue";
 import {stockage} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
@@ -45,9 +46,6 @@ export default {
   },
 
   mounted() {
-
-
-
     this.socket = io('http://localhost:3000');
     this.socket.on('rfidData', (data) => {
       let { readerID } = data;
@@ -70,15 +68,18 @@ export default {
         this.isAccessible = true;
       }
     });
-    },
+  },
 
   methods: {
     getImagePath(image) {
-      try {
-        return require(`@/${image}`);
-      } catch (e) {
-        console.error("Image not found:", image);
-        return '';
+      if (this.hasUnlocked) {
+        console.log("Pas stockage")
+        try {
+          return require(`@/${image}`);
+        } catch (e) {
+          console.error("Image not found:", image);
+          return '';
+        }
       }
     },
 
@@ -116,8 +117,11 @@ export default {
   align-items: center;
 }
 
-.defense-card{
-  height: 100%;
+.defense-card4{
+  height: 420px;
+  animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1s; /* don't forget to set a duration! */
+  position: fixed;
 }
 
 .topReader4_defense.exploded {

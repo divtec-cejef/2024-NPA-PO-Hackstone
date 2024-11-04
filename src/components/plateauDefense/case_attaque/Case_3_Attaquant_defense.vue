@@ -1,9 +1,9 @@
 <template>
   <div class="topReader3_attaque">
     <img v-if="image" :src="getImagePath(image)" alt="Attack Card"
-         :class="{'attack-card3': !hasEntered}"
-         class="attack-card"
-         ref="attackingCard3">
+         :class="{'attack-card3_def': !hasEntered}"
+         class="attack-card_def"
+         ref="attackingCard3_def">
 
   </div>
 </template>
@@ -46,6 +46,7 @@ export default {
       milieu: -680,
       droite: -230,
       stockage: 230,
+      pv: -455,
       hasEntered: false
     }
   },
@@ -103,8 +104,10 @@ export default {
      * @param deplacementX emplacement de la carte en défense
      */
     attaquerCarteAnimation(deplacementX) {
-      const deplacementY = 420;
-      const attackingCard = this.$refs.attackingCard3;
+      let DEPLACEMENT_Y = 420;
+      if(deplacementX === this.pv)
+        DEPLACEMENT_Y= 800
+      const attackingCard = this.$refs.attackingCard3_def;
 
       if (!attackingCard) {
         console.error("La carte attaquante n'est pas disponible.");
@@ -119,7 +122,7 @@ export default {
       })
           .to(attackingCard, {
             duration: 0.3,
-            y: deplacementY,
+            y: DEPLACEMENT_Y,
             x: deplacementX,
             scale: 1,
             ease: "power2.inOut",
@@ -161,7 +164,7 @@ export default {
       let carteDefense = this.readers.find(carte => carteAttaquante.counter.includes(carte.name));
       //Retrouves les coordonnées auxquelles la carte doit se déplacer
       if (carteDefense === undefined) {
-        emplacement = 0;
+        emplacement = this.pv;
       } else {
         switch (carteDefense.id) {
           case 3 :
@@ -177,7 +180,7 @@ export default {
             emplacement = this.stockage;
             break;
           default:
-            emplacement = 0;
+            emplacement = this.pv;
         }
       }
       return emplacement
@@ -204,11 +207,11 @@ export default {
   background-color: rgba(255, 255, 255, 0.5);
 
 }
-.attack-card3 {
+.attack-card3_def {
   animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
   animation-duration: 1s; /* don't forget to set a duration! */
 }
-.attack-card {
+.attack-card_def {
   height: 420px;
   position: fixed;
 }

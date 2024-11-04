@@ -40,10 +40,8 @@
 </template>
 
 <script setup>
-
 import { pv }  from '@/components/plateauAttaque/fonctionnaliteesAttaque.vue';
 import { ref, watch } from 'vue'
-import confetti from 'canvas-confetti'
 
 // Variable représentant les PV de l'attaquant (ici 5 PV pour commencer)
 const boucliers = ref([false, false, false, false, false]) // Etat des boucliers (intact ou cassé)
@@ -52,13 +50,7 @@ const boucliers = ref([false, false, false, false, false]) // Etat des boucliers
 const hasWon = ref(false)
 
 // Fonction pour déclencher les confettis
-function launchConfetti() {
-  confetti({
-    particleCount: 1000,
-    spread: 150,
-    origin: { y: 0.6 }
-  });
-}
+
 
 // Observer les PV de l'attaquant, si 0, affiche un message indiquant la victoire et déclenche les confettis
 watch(pv, (newVal) => {
@@ -66,7 +58,6 @@ watch(pv, (newVal) => {
     perdrePVAttaquant();
     setTimeout(() => {
       hasWon.value = true
-      launchConfetti()
     }, 1000);
   }else
     perdrePVAttaquant();
@@ -269,7 +260,7 @@ body {
   display: flex;
   justify-content: center;
   position: absolute;
-  top: 50px;
+  top: 20px;
   right: 50px;
 }
 .close-Page {

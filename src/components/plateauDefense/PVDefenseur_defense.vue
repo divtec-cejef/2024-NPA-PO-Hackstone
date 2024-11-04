@@ -54,7 +54,7 @@ function perdrePV() {
 
       <!-- Message de défaite affiché au centre -->
       <div class="defeat-message">
-        <h1>Vous avez perdu !</h1>
+        <h1> Le système a été infiltré !</h1>
         <button class="close-Page" onclick="window.close()"><b>MENU</b></button>
       </div>
     </div>
@@ -66,14 +66,14 @@ function perdrePV() {
   display: flex;
   justify-content: center;
   position: absolute;
-  bottom: 50px;
+  bottom : 1px;
   left: 50px;
 }
 
 .bouclier-container {
   position: relative;
   width: 150px; /* Largeur globale du bouclier */
-  height: 200px; /* Hauteur globale du bouclier */
+  height: 175px; /* Hauteur globale du bouclier */
   margin: 5px;
 }
 
@@ -98,15 +98,13 @@ function perdrePV() {
 }
 
 .left-half {
-  width: 50%;
-  height: 100%;
+  height: 150px;
   display: flex;
   justify-content: flex-end;
 }
 
 .right-half {
-  width: 50%;
-  height: 100%;
+  height: 150px;
   display: flex;
   justify-content: flex-start;
 }
@@ -137,6 +135,11 @@ function perdrePV() {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+  text-shadow: 0.05em 0 0 #ff0000, -0.03em -0.04em 0 #009eff,
+  0.025em 0.04em 0 #ff4d00;
+  font-weight: bold;
+  text-transform: uppercase;
+  animation: glitch 725ms infinite;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -144,7 +147,7 @@ function perdrePV() {
   flex-direction: column;
   align-items: center;
   z-index: 1000; /* S'assure que le message soit au-dessus du filtre */
-  font-size: 2em;
+  font-size: 3em;
 }
 .close-Page {
   border: 3px solid red;

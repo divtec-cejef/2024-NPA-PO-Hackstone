@@ -209,11 +209,9 @@ export default {
   letter-spacing: 0.05em;
   line-height: 1;
   text-align: center;
-  text-shadow:
-    /* Ombre noire plus nette */
-      2px 4px 1px rgba(255, 0, 0, 1),
-        /* Ombre rouge plus vive */
-      4px 6px 1px rgba(0, 38, 255, 1);
+  text-shadow: 0.05em 0 0 #ff0000, -0.03em -0.04em 0 #009eff,
+  0.025em 0.04em 0 #ff4d00;
+  animation: glitch 725ms infinite;
   position: fixed;
   top: 50%;
   left: 50%;

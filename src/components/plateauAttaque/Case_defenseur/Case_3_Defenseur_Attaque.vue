@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import "animate.css"
 export default {
   props: {
     id: {
@@ -47,6 +48,8 @@ export default {
 }
 
 .defense-card{
-  height: 100%;
-}
+  height: 420px;
+  animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1s; /* don't forget to set a duration! */
+  position: fixed;}
 </style>
