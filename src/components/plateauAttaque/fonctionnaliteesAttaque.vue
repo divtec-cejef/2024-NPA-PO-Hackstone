@@ -73,7 +73,7 @@ export default {
         console.log("Cadenas");
         stockage.value = true;
         let indexStockage = cartesEnMain.find(index => index.name === "Stockage");
-        cartesEnMain.splice(cartesEnMain.indexOf(indexStockage), 1)
+        cartesEnMain.splice(cartesEnMain.indexOf(indexStockage), 1);
       }
     },
 
@@ -132,7 +132,11 @@ export default {
         for (let i = 0; i < readerID.length; i++){
           if(reader[readerID[i]].name !== "Super-antivirus"
               || (reader[readerID[i]].name === "Super-antivirus" && pvSuperAntivirus === 1)) {
-            carteEnJeu.splice(i, 1);
+
+            //Retrouve l'index de la carte qui va être détruite
+            let indexCarteDefense = carteEnJeu.find(carte => carte.name === reader[readerID[i].name])
+            carteEnJeu.splice(carteEnJeu.indexOf(indexCarteDefense), 1);
+
             reader[readerID[i]].name = null;
             reader[readerID[i]].image = null;
           }else if (reader[readerID[i]].name === "Super-antivirus") {
@@ -146,7 +150,7 @@ export default {
      * L'ordinateur pose des cartes en défense en fonction de celle présente en attaque
      * @param cartesEnMains cartes dans la main de l'ordinateur
      * @param reader case sur laquelle la carte va être posée
-     * @param emplacementListe permet d'ordrer la liste des cartes en jeu en fonction de leur ordre sur le plateau
+     * @param emplacementListe permet d'ordres la liste des cartes en jeu en fonction de leur ordre sur le plateau
      */
     defendMalin(cartesEnMains, reader, emplacementListe) {
       nbrAttaqueAnonymous = 0;
@@ -264,6 +268,7 @@ export default {
 
             //Boucle passant tous les contre des cartes
             for (let i = 0; i < counterCarteEnJeu.length; i++) {
+              console.log("Je suis dedans", carteEnJeu)
               //Test si la carte qui attaque à un contre présent sur le terrain
               if (counterCarteEnJeu.includes(card.name)) {
                 carteDefendu = true;
@@ -273,17 +278,18 @@ export default {
 
                 //Retire le nom et l'image de la carte détruite de leur case
                 //et détruit l'Anonymous et le super-antivirus uniquement s'ils ont déjà été attaqués une fois
-                if ((carteDefense.name === "Super-antivirus" && pvSuperAntivirus === 1)
-                    || carteDefense.name !== "Super-antivirus") {
+                if (carteDefense !== undefined){
+                  if ((carteDefense.name === "Super-antivirus" && pvSuperAntivirus === 1)
+                      || carteDefense.name !== "Super-antivirus") {
 
-                  //Retire la carte détruite du jeu
-                  carteDefense.image = null;
-                  carteDefense.name = null;
-                  carteEnJeu.splice(j, 1);
+                    //Retire la carte détruite du jeu
+                    carteDefense.image = null;
+                    carteDefense.name = null;
+                    carteEnJeu.splice(j, 1);
 
-                } else
-                  pvSuperAntivirus = 1;
-
+                  } else
+                    pvSuperAntivirus = 1;
+                }
                 if ((reader.name === "Anonymous" && pvAnonymous === 1) || reader.name !== "Anonymous") {
                   reader.image = null;
                   reader.name = null;
@@ -298,11 +304,14 @@ export default {
         //Retire des points de vie au défenseur et rajoute la carte dans la liste si elle n'est pas défendue
         this.perdrePvAttaquant();
         cartesAttaque.push(card);
-      }
+        messageErreurAttaque.value = "Repose la carte sur la case"
+      }else
+        messageErreurAttaque.value = "Met cette carte au cimetière"
       if (card.name === "Anonymous" && pvAnonymous > 0 && nbrAttaqueAnonymous < 2) {
         //S'il reste des points de vie et des attaques disponibles à l'anonymous, le rajoute dans la liste
         card.poseeDepuis = 2;
         cartesAttaque.push(card);
+
       }
     },
 
@@ -321,15 +330,15 @@ export default {
         return true
 
       } else if (carteDejaAttaquer) {
-        messageErreurAttaque.value = "Cette carte a deja attaquer"
+        messageErreurAttaque.value = "Cette carte a déjà attaqué";
         cartesAttaque.push(card);
 
       } else if (card.poseeDepuis < 2) {
-        messageErreurAttaque.value = "Vous devez attendre un tour avant d'attaquer"
+        messageErreurAttaque.value = "Vous devez attendre un tour avant d'attaquer";
         cartesAttaque.push(card);
 
       } else if (!carteTrouvee)
-        messageErreurAttaque.value = "Carte pas posée"
+        messageErreurAttaque.value = "La carte doit être posée avant de pouvoir attaquer";
       return false;
     }
   }

@@ -6,10 +6,6 @@
            :style="{ visibility: visibility[index] ? 'visible' : 'hidden' }"
            class="compteur-attaque">
     </div>
-    <div v-if="messageVisible && !hasLost" class="message">
-      <img v-if="tourAdverse" class="imageFinDeTour" src="../../img/FinDeTour%202.png" alt="Fin de tour"/>
-      <img v-else class="imageFinDeTour" src="../../img/AVousDeJouer%202.png" alt="Fin de tour"/>
-    </div>
 
     <div v-if="errorVisible" class="test-Image">
       <img src="../../img/FinDeTour 2 1.png" alt="" class="image"/>
@@ -57,24 +53,31 @@ export default {
   },
 
   mounted() {
-    this.socket = io('http://localhost:3000');
+    messageErreurAttaque.value = "pioche des cartes jusqu'à en avoir 6";
+    setTimeout(() => {
+      this.showUserError(messageErreurAttaque.value);
+    }, 1000);
 
+    this.socket = io('http://localhost:3000');
     this.socket.on('rfidData', (data) => {
       const { readerID } = data;
+
+      if (readerID === '7)')
+        messageErreurAttaque.value = "Cette case n'est pas disponible en attaque";
 
       // Vérifier si le readerID est 1
       if (readerID === '1)') {
         this.updateVisibility();
-        this.showMessage();
+        messageErreurAttaque.value = "FIN DE TOUR";
       }
     });
 
     //Obsèrve si le joueur termine son tour, si c'est le cas, affiche un message temporaire
     watch(finDeTour, (newVal) => {
       if (newVal === true) {
-        this.showMessage();
+        messageErreurAttaque.value = "A vous de jouer, pioche des cartes jusqu'à en avoir 5";
       }else if (newVal === false)
-        this.showMessage();
+        messageErreurAttaque.value = "A vous de jouer, pioche des cartes jusqu'à en avoir 5";
     });
 
     watch(messageErreurAttaque, (newVal, oldValue) => {
@@ -84,7 +87,7 @@ export default {
 
       setTimeout(() => {
         messageErreurAttaque.value ="";
-      }, 2500)
+      }, 3000)
     })
   },
 
@@ -105,19 +108,6 @@ export default {
       }
     },
 
-    showMessage() {
-      console.log("Je le fait la")
-      console.log("tour adverse", this.tourAdverse);
-      // Affiche le message
-      this.tourAdverse = !this.tourAdverse;
-      this.messageVisible = true;
-
-      // Cache le message après 2 secondes
-      setTimeout(() => {
-        this.messageVisible = false;
-      }, 2000); // 2000 millisecondes = 2 secondes
-    },
-
     /**
      * Affiche un message temporaire
      * @param message texte à afficher
@@ -127,7 +117,7 @@ export default {
       this.errorVisible = true;
       setTimeout(() => {
         this.errorVisible = false;
-      },2500)
+      },3000)
     }
   }
 };
@@ -189,22 +179,11 @@ export default {
     opacity: 1;
   }
 }
-.message {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 43.5%;
-  left: 0;
-  text-align: center;
-}
-.imageFinDeTour {
-  height: 175px;
-}
 
 .overlay-image {
   /* Taille, couleur et espacement du texte */
   font-size: 50px;
-  font-weight: normal;
+  font-weight: bold;
   color: rgb(255, 255, 255);
   letter-spacing: 0.05em;
   line-height: 1;
@@ -216,7 +195,7 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 530px;
+  width: 800px;
 }
 .test-Image {
   height: 100%;
@@ -226,9 +205,11 @@ export default {
   left: 0;
   text-align: center;
   z-index: 1;
+  font-weight: bold;
 }
 .image {
   height: 175px;
+  width: 850px;
 }
 .close-Page {
   border: 3px solid red;

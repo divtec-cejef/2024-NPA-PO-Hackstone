@@ -164,5 +164,17 @@ export default {
 .attaque-card1 {
   height: 420px;
   position: fixed;
+  border: 2px solid red;
+  box-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px red;
+  }
+  100% {
+    box-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px red;
+  }
 }
 </style>
