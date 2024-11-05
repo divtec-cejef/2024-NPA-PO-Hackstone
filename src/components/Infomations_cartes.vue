@@ -3,7 +3,7 @@
     <h1>Information sur la carte : {{ cardName }}</h1>
     <div class="container-2">
       <div class="affichage_carte">
-        <img v-if="image" :src="getImagePath(image)" alt="{{cardType}} card" class="carte_posee">
+        <img v-if="image_info" :src="getImagePath(image_info)" alt="{{cardType}} card" class="carte_posee">
         <p v-else></p>
       </div>
       <div class="container-3">
@@ -30,7 +30,6 @@ export default {
     return {
       cardName: '',
       cardType: '',
-      image: '',
       image_info: '',
       descriptionJeu: '',
       descriptionVie: ''
@@ -49,11 +48,7 @@ export default {
       if (readerID === '2') {
         this.cardName = card.name
         this.cardType = card.type
-
-        if (this.cardType === "défense")
-          this.image = card.image
-        else
-          this.image = card.image_info
+        this.image_info = card.image_info
         this.descriptionJeu = card.description_jeu
         this.descriptionVie = card.description_vie
       }

@@ -190,7 +190,7 @@
       "description_vie": "Une protection A2F est comme utiliser une clé pour ouvrir une porte, mais en plus d'avoir la clé, on te demande un deuxième élément, comme un code envoyé sur ton téléphone, pour s'assurer que c'est vraiment toi.",
       "description_jeu": "Cette carte te permet de te défendre brutforcing et anonymous",
       "image": "img/img_carte/img_defense/A2F.png",
-      "image_info": "img/img_carte/img_infoCarte/",
+      "image_info": "img/img_carte/img_infoCarte/a2f.png",
       "type": "défense",
       "level": "bas niveau",
       "counter": [
@@ -208,7 +208,7 @@
       "description_vie": "Un antivirus est comme un chien de garde devant une maison, il va empêcher les voleurs d’entrer. Dès qu’il voit quelque chose de suspect essayer d’entrer il va l’en empêcher.",
       "description_jeu": "Cette carte te permet de te défendre les virus, cheval de troie et anonymous.",
       "image": "img/img_carte/img_defense/antivirus.png",
-      "image_info": "img/img_carte/img_infoCarte/",
+      "image_info": "img/img_carte/img_infoCarte/antivirus.png",
       "type": "défense",
       "level": "bas niveau",
       "counter": [
@@ -226,7 +226,7 @@
       "description_vie": "Une sauvegarde, c'est une copie de secours de tes données importantes pour les récupérer si ton appareil a un problème.",
       "description_jeu": "Cette carte te permet de te défendre contre une attaque de panne réseau.",
       "image": "img/img_carte/img_defense/backup.png",
-      "image_info": "img/img_carte/img_infoCarte/",
+      "image_info": "img/img_carte/img_infoCarte/backup.png",
       "type": "défense",
       "level": "bas niveau",
       "counter": [
@@ -243,7 +243,7 @@
       "description_vie": "Le chiffrement de données fonctionne comme un coffre-fort, les données sont stockées à l’intérieur et seules les personnes possédant la clé peuvent y accéder.",
       "description_jeu": "Cette carte te permet de te défendre contre elévation de privilège et anonymous",
       "image": "img/img_carte/img_defense/chiffrement_donnee.png",
-      "image_info": "img/img_carte/img_infoCarte/",
+      "image_info": "img/img_carte/img_infoCarte/chiffrement_donnee.png",
       "type": "défense",
       "level": "bas niveau",
       "counter": [
@@ -260,7 +260,7 @@
       "description_vie": "Les firewall (pare-feu en français), est un gardien dans un ordinateur, il va vérifier tout ce qui entre et ce qui ressort de l’ordinateur ou du réseau et va décider de qui peut passer et qui va être bloquer.",
       "description_jeu": "Cette carte te permet de te défendre contre DDOS et anonymous",
       "image": "img/img_carte/img_defense/firewall.png",
-      "image_info": "img/img_carte/img_infoCarte/",
+      "image_info": "img/img_carte/img_infoCarte/firewall.png",
       "type": "défense",
       "level": "bas niveau",
       "counter": [
@@ -277,7 +277,7 @@
       "description_vie": "Les mises à jour sont comme des améliorations ou des réparations, c’est comme si tu avais un pneu crever à ta voiture, la mise à jour va le remplacer, elle peut aussi remplacer le moteur par un nouveau plus puissant. La mise à jour va aussi te garantir du bon fonctionnement et de la sécurité de ta voiture.",
       "description_jeu": "Cette carte te permet de te défendre contre logiciel malveillant et Anonymous.",
       "image": "img/img_carte/img_defense/mise_a_jour.png",
-      "image_info": "img/img_carte/img_infoCarte/",
+      "image_info": "img/img_carte/img_infoCarte/mise_a_jour.png",
       "type": "défense",
       "level": "bas niveau",
       "counter": [
@@ -294,7 +294,7 @@
       "description_vie": "La redondance de données consiste à faire une ou plusieurs sauvegardes des données et de les placées à plusieurs endroits différents, ce qui va empêcher leur perte.",
       "description_jeu": "Une fois cette carte posée sur le terrain vous pourrez choisir une de vos cartes déjà présente sur le plateau et la dupliquer",
       "image": "img/img_carte/img_defense/redondance_donnee.png",
-      "image_info": "img/img_carte/img_infoCarte/",
+      "image_info": "img/img_carte/img_infoCarte/redondance_donnee.png",
       "type": "défense",
       "level": "bas niveau",
       "counter": [
@@ -307,7 +307,7 @@
       "description_vie": "Le stockage c’est comme une grande boîte pour ranger tes affaires, une fois pleine on ne peut plus rien mettre dedans, dans un ordinateur c’est la même chose.",
       "description_jeu": "Cette carte te permet de dévérouiller la 4ème case du plateau du coté défenseur",
       "image": "img/img_carte/img_defense/stockage.png",
-      "image_info": "img/img_carte/img_infoCarte/",
+      "image_info": "img/img_carte/img_infoCarte/stockage.png",
       "type": "défense",
       "level": "bas niveau",
       "counter": [
@@ -320,7 +320,7 @@
       "description_vie": "le super-antivirus n'existe pas dans la vraie vie, c'est un peu comme un super-héros, si il existait tout le monde serait très content.",
       "description_jeu": "Cette carte te permet de te défendre contre toutes les cartes, il à 2 PV ce qui veut dire qu'il peut encaisser deux coups d'attaque d'autres cartes",
       "image": "img/img_carte/img_defense/super_antivirus.png",
-      "image_info": "img/img_carte/img_infoCarte/",
+      "image_info": "img/img_carte/img_infoCarte/super_antivirus.png",
       "type": "défense",
       "level": "haut niveau",
       "counter": [
@@ -344,7 +344,7 @@
       "description_vie": "Un VPN rends priver toutes tes informations sur internet, tu peux aller te balader sur internet sans que personne ne puisse voir qui tu es et ce que tu fais.",
       "description_jeu": "Cette carte te permet de te défendre contre les hackeurs et anonymous",
       "image": "img/img_carte/img_defense/VPN.png",
-      "image_info": "img/img_carte/img_infoCarte/",
+      "image_info": "img/img_carte/img_infoCarte/vpn.png",
       "type": "défense",
       "level": "bas niveau",
       "counter": [
@@ -361,7 +361,7 @@
       "description_vie": "Les white hat sont des hackeurs bienveillants, ils vont essayer de pirater des ordinateurs ou des systèmes, pour ensuite dire au propriétaire ce qui n’est pas assez sécurisé afin qu’il puisse changer ça. Ils sont un peu comme des mécaniciens qui vont vérifier si une voiture est en bonne état pour éviter des pannes.",
       "description_jeu": "Cette carte te permet de te défendre contre toutes les cartes",
       "image": "img/img_carte/img_defense/white_hat.png",
-      "image_info": "img/img_carte/img_infoCarte/",
+      "image_info": "img/img_carte/img_infoCarte/white_hat.png",
       "type": "défense",
       "level": "bas niveau",
       "counter": [
