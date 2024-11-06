@@ -2,6 +2,7 @@
   <div class="topReader1_attaque">
     <img v-if="image" :src="getImagePath(image)" alt="Attack Card"
          :class="{'attack-card1_def': !hasEntered}"
+         :id ="canAttack ? 'flame_case1' : ''"
          class="attack-card_def"
          ref="attackingCard1_def">
   </div>
@@ -11,13 +12,15 @@
 import io from "socket.io-client";
 import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 import {gsap} from "gsap";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import 'animate.css'
 
 let deckAttaque = fonctionnaliteDefense.methods.genererDeckAttaque();
 let emplacement;
+let delaisAnonymous = 2500;
 let carteAttaquante;
 export let aFiniAttaque = ref(false);
+export let poseeDepuis1 = ref(false);
 
 export default {
   props: {
@@ -42,7 +45,8 @@ export default {
       droite: 680,
       stockage: 1140,
       pv: 455,
-      hasEntered : false
+      hasEntered : false,
+      canAttack : false
     }
   },
   mounted() {
@@ -51,6 +55,13 @@ export default {
     this.socket.on('rfidData', (data) => {
       let {readerID} = data;
       if (readerID === '1)') {
+
+        watch(poseeDepuis1, (newVal) => {
+          if (newVal)
+            this.canAttack = newVal
+          else
+            this.canAttack = newVal
+        });
 
         setTimeout(() => {
           this.hasEntered = true;
@@ -135,18 +146,25 @@ export default {
       //Retrouve l'emplacement de la carte en défense
       emplacement = this.findEmplacement();
       //Lance l'animation
-      this.attaquerCarteAnimation(emplacement);
-
+      if (this.readers[0].name !== null) {
+        this.attaquerCarteAnimation(emplacement);
+        setTimeout(() => {
+          fonctionnaliteDefense.methods.attaquer(this.readers, carteAttaquante);
+        }, 2500)
+      }
       //Attend que l'animation soit terminée avant de lancer la fonction d'attaque
-      setTimeout(() => {
-        fonctionnaliteDefense.methods.attaquer(this.readers, carteAttaquante);
-        if (deuxiemeAttaque)
+
+
+      if (deuxiemeAttaque || this.readers[0].name === null && deuxiemeAttaque) {
+        if (this.readers[0].name === null)
+          delaisAnonymous = 100;
+        setTimeout(() => {
           aFiniAttaque.value = true;
-      }, 2500)
-      setTimeout(() => {
-        if (this.readers[0].image === null)
-          this.hasEntered = false;
-      },2501)
+          poseeDepuis1.value = false
+          if (this.readers[0].image === null)
+            this.hasEntered = false;
+        }, delaisAnonymous)
+      }
     },
 
     /**
@@ -208,5 +226,46 @@ export default {
 .attack-card_def {
   height: 420px;
   position: fixed;
+}
+
+img#flame_case1 {
+  height: 420px;
+  position: relative;
+  display: block;
+  border: 2px transparent;
+  animation:  flame 2s infinite ease-in-out;
+}
+
+@keyframes flame {
+  0% {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8),
+    0 0 30px rgba(255, 0, 0, 0.6),
+    0 0 40px rgba(255, 69, 0, 0.5),
+    0 0 50px rgba(255, 0, 0, 0.4);
+  }
+  25% {
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.9),
+    0 0 35px rgba(255, 69, 0, 0.7),
+    0 0 45px rgba(255, 0, 0, 0.6),
+    0 0 55px rgba(255, 69, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 0, 0, 1),
+    0 0 40px rgba(255, 69, 0, 0.8),
+    0 0 50px rgba(255, 0, 0, 0.7),
+    0 0 60px rgba(255, 69, 0, 0.6);
+  }
+  75% {
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.9),
+    0 0 35px rgba(255, 69, 0, 0.7),
+    0 0 45px rgba(255, 0, 0, 0.6),
+    0 0 55px rgba(255, 69, 0, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8),
+    0 0 30px rgba(255, 0, 0, 0.6),
+    0 0 40px rgba(255, 69, 0, 0.5),
+    0 0 50px rgba(255, 0, 0, 0.4);
+  }
 }
 </style>

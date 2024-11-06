@@ -3,6 +3,7 @@
     <img v-if="image" :src="getImagePath(image)" alt="Attack Card"
          :class="{'attack-card3_def': !hasEntered}"
          class="attack-card_def"
+         :id ="canAttack3 ? 'flame_case3' : ''"
          ref="attackingCard3_def">
 
   </div>
@@ -18,6 +19,7 @@ import {ref, watch} from "vue";
 import {aFiniAttaque2} from "@/components/plateauDefense/case_attaque/Case_2_Attaquant_defense.vue";
 import {defaite} from "@/components/plateauDefense/TourAttaquant_defense.vue";
 
+export let poseeDepuis3 = ref (false);
 export let finTour = ref(false)
 let delaisAnonymous = 1;
 let emplacement;
@@ -47,12 +49,17 @@ export default {
       droite: -230,
       stockage: 230,
       pv: -455,
-      hasEntered: false
+      hasEntered: false,
+      canAttack3: false
     }
   },
   mounted() {
     this.socket = io('http://localhost:3001');
     this.socket.on('rfidData', (data) => {
+
+      watch(poseeDepuis3, (newVal) => {
+        this.canAttack3 = newVal
+      });
 
       let {readerID} = data;
       if (readerID === '1)') {
@@ -143,16 +150,19 @@ export default {
       //Retrouve l'emplacement de la carte en défense
       emplacement = this.findEmplacement();
       this.attaquerCarteAnimation(emplacement);
-      setTimeout(() => {
-        fonctionnaliteDefense.methods.attaquer(this.readers, carteAttaquante);
-      }, 2000)
-      setTimeout(() => {
-        if (derniereAttaque) {
-          if (this.readers[4].image === null)
+      if (this.readers[4].name !== null) {
+        setTimeout(() => {
+          fonctionnaliteDefense.methods.attaquer(this.readers, carteAttaquante);
+        }, 2000)
+      }
+      if (derniereAttaque || this.readers[4].name === null && derniereAttaque) {
+        setTimeout(() => {
+          poseeDepuis3.value = false;
+          if (this.readers[4].name === null)
             this.hasEntered = false;
-        }
-      },2001)
 
+        }, 2001)
+      }
     },
 
     /**
@@ -214,5 +224,47 @@ export default {
 .attack-card_def {
   height: 420px;
   position: fixed;
+}
+
+
+img#flame_case3 {
+  height: 420px;
+  position: relative;
+  display: block;
+  border: 2px transparent;
+  animation:  flame 2s infinite ease-in-out;
+}
+
+@keyframes flame {
+  0% {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8),
+    0 0 30px rgba(255, 0, 0, 0.6),
+    0 0 40px rgba(255, 69, 0, 0.5),
+    0 0 50px rgba(255, 0, 0, 0.4);
+  }
+  25% {
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.9),
+    0 0 35px rgba(255, 69, 0, 0.7),
+    0 0 45px rgba(255, 0, 0, 0.6),
+    0 0 55px rgba(255, 69, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 0, 0, 1),
+    0 0 40px rgba(255, 69, 0, 0.8),
+    0 0 50px rgba(255, 0, 0, 0.7),
+    0 0 60px rgba(255, 69, 0, 0.6);
+  }
+  75% {
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.9),
+    0 0 35px rgba(255, 69, 0, 0.7),
+    0 0 45px rgba(255, 0, 0, 0.6),
+    0 0 55px rgba(255, 69, 0, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8),
+    0 0 30px rgba(255, 0, 0, 0.6),
+    0 0 40px rgba(255, 69, 0, 0.5),
+    0 0 50px rgba(255, 0, 0, 0.4);
+  }
 }
 </style>

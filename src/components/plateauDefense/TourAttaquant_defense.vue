@@ -39,9 +39,13 @@
 <script>
 import io from 'socket.io-client';
 import {ref, watch} from "vue";
+import {poseeDepuis1} from "@/components/plateauDefense/case_attaque/Case_1_Attaquant_defense.vue";
+import {poseeDepuis2} from "@/components/plateauDefense/case_attaque/Case_2_Attaquant_defense.vue";
+import {poseeDepuis3} from "@/components/plateauDefense/case_attaque/Case_3_Attaquant_defense.vue";
+import {messageErreur} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
+
 export let defaite = ref(false);
 export let finDeTourDefense = ref(false)
-export let messageErreur = ref("");
 export default {
   data() {
     return {
@@ -144,6 +148,11 @@ export default {
       setTimeout(() => {
         this.tourAdverseDefense = !this.tourAdverseDefense;
         this.messageVisibleDefense = true;
+        if (this.tourAdverseDefense) {
+          poseeDepuis1.value = true;
+          poseeDepuis2.value = true;
+          poseeDepuis3.value = true;
+        }
       }, 500)
       // Cache le message après 2 secondes
       setTimeout(() => {
@@ -338,24 +347,23 @@ button:hover {
 }
 .imageFinDeTour {
   height: 175px;
-}
-.overlay-image {
-  /* Taille, couleur et espacement du texte */
-  font-size: 50px;
-  font-weight: normal;
-  color: rgb(255, 255, 255);
-  letter-spacing: 0.05em;
-  line-height: 1;
-  text-align: center;
-  text-shadow: 0.05em 0 0 #ff0000, -0.03em -0.04em 0 #009eff,
-  0.025em 0.04em 0 #ff4d00;
-  animation: glitch 725ms infinite;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 530px;
-}
+}.overlay-image {
+   /* Taille, couleur et espacement du texte */
+   font-size: 50px;
+   font-weight: bold;
+   color: rgb(255, 255, 255);
+   letter-spacing: 0.05em;
+   line-height: 1;
+   text-align: center;
+   text-shadow: 0.05em 0 0 #ff0000, -0.03em -0.04em 0 #009eff,
+   0.025em 0.04em 0 #ff4d00;
+   animation: glitch 725ms infinite;
+   position: fixed;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   width: 800px;
+ }
 .test-Image {
   height: 100%;
   width: 100%;
@@ -364,9 +372,10 @@ button:hover {
   left: 0;
   text-align: center;
   z-index: 1;
+  font-weight: bold;
 }
 .image {
   height: 175px;
+  width: 850px;
 }
-
 </style>

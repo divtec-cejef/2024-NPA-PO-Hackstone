@@ -3,6 +3,7 @@
     <!-- L'image de la carte (affichée tout le temps) -->
     <img  v-if="image" :src="getImagePath(image)" alt="Attaque Card"
           :class ="{'attack-card1': !hasEntered}"
+          :id ="canAttack ? 'flame_case1' : ''"
           class="attaque-card1" >
   </div>
 </template>
@@ -14,6 +15,8 @@ import {gsap} from "gsap";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {UID1}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
 import {perdu} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+import {ref, watch} from "vue";
+export let poseeDepuis1 = ref(false);
 
 export default {
   props: {
@@ -38,7 +41,8 @@ export default {
       droite: 680,
       stockage: 1140,
       pv: 455,
-      hasEntered: false
+      hasEntered: false,
+      canAttack: false
     }
   },
 
@@ -47,6 +51,12 @@ export default {
     this.socket.on('rfidData', (data) => {
       let {readerID, card, uid} = data;
 
+      watch(poseeDepuis1, (newVal) => {
+        if (newVal)
+          this.canAttack = newVal
+        else
+          this.canAttack = newVal
+      });
       //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
       if (readerID === '5)' && this.readers[2].name === card.name && UID1 === uid && !perdu) {
         this.hasEntered = true;
@@ -107,9 +117,7 @@ export default {
       if (deplacementX === this.pv)
         deplacementY = -800;
 
-      console.log(this.$el);
       const attackingCard = this.$el.querySelector('.attaque-card'+card_number); // Sélectionne l'élément par classe
-      console.log("Attacking card :", attackingCard);
 
       if (!attackingCard) {
         console.error("La carte attaquante n'est pas disponible.");
@@ -164,17 +172,50 @@ export default {
 .attaque-card1 {
   height: 420px;
   position: fixed;
-  border: 2px solid red;
-  box-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red;
-  animation: glow 1.5s infinite alternate;
+
+}
+img#flame_case1 {
+  height: 420px;
+  position: relative;
+  display: block;
+  border: 2px transparent;
+  animation:  flame 2s infinite ease-in-out;
 }
 
-@keyframes glow {
+@keyframes flame {
   0% {
-    box-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px red;
+    box-shadow:
+        0 0 20px rgba(255, 0, 0, 0.8),
+        0 0 30px rgba(255, 0, 0, 0.6),
+        0 0 40px rgba(255, 69, 0, 0.5),
+        0 0 50px rgba(255, 0, 0, 0.4);
+  }
+  25% {
+    box-shadow:
+        0 0 25px rgba(255, 0, 0, 0.9),
+        0 0 35px rgba(255, 69, 0, 0.7),
+        0 0 45px rgba(255, 0, 0, 0.6),
+        0 0 55px rgba(255, 69, 0, 0.5);
+  }
+  50% {
+    box-shadow:
+        0 0 30px rgba(255, 0, 0, 1),
+        0 0 40px rgba(255, 69, 0, 0.8),
+        0 0 50px rgba(255, 0, 0, 0.7),
+        0 0 60px rgba(255, 69, 0, 0.6);
+  }
+  75% {
+    box-shadow:
+        0 0 25px rgba(255, 0, 0, 0.9),
+        0 0 35px rgba(255, 69, 0, 0.7),
+        0 0 45px rgba(255, 0, 0, 0.6),
+        0 0 55px rgba(255, 69, 0, 0.5);
   }
   100% {
-    box-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px red;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8),
+    0 0 30px rgba(255, 0, 0, 0.6),
+    0 0 40px rgba(255, 69, 0, 0.5),
+    0 0 50px rgba(255, 0, 0, 0.4);
   }
 }
 </style>

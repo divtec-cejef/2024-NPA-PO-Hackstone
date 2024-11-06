@@ -15,6 +15,9 @@ import Case_3_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur
 import Case_4_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_4_Defenseur_Attaque.vue";
 import fonctionnaliteesAttaque, {cartesAttaque, stockage} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {finDeTour} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+import {poseeDepuis1} from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
+import {poseeDepuis4} from "@/components/plateauAttaque/Case_attaquant/Case_2_Attaquant_Attaque.vue";
+import {poseeDepuis3} from "@/components/plateauAttaque/Case_attaquant/Case_3_Attaquant_Attaque.vue";
 
 let carteEnMain = [];
 //Génère le deck du défenseur
@@ -40,7 +43,6 @@ export default {
       let {readerID} = data;
       // Nettoie readerID pour enlever les caractères non numériques
       readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
-
       if (readerID === "1") {
         //Pioche des cartes
         fonctionnaliteesAttaque.methods.DebutTour(deckDefense, carteEnMain);
@@ -64,7 +66,10 @@ export default {
         // Changement de la valeur de `finDeTour` après 6 secondes
         setTimeout(() => {
           finDeTour.value = !finDeTour.value;
-        }, 6000);
+            poseeDepuis1.value = (this.readers[2].image !== null);
+            poseeDepuis4.value = (this.readers[3].image !== null)
+            poseeDepuis3.value = (this.readers[5].image !== null)
+        }, 6001);
 
         //Change le champ poseeDepuis des cartes en attaque à 2
         //afin qu'elles puissent attaquer lors du tour de l'attaquant

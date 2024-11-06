@@ -47,9 +47,7 @@ export default {
 
   mounted() {
     this.socket = io('http://localhost:3000');
-    this.socket.on('rfidData', (data) => {
-      let { readerID } = data;
-      console.log("Presque", readerID)
+    this.socket.on('rfidData', () => {
       if (stockage.value === true) {
         this.isStockageCard = true;
         this.triggerLockAnimation();
@@ -73,7 +71,6 @@ export default {
   methods: {
     getImagePath(image) {
       if (this.hasUnlocked) {
-        console.log("Pas stockage")
         try {
           return require(`@/${image}`);
         } catch (e) {

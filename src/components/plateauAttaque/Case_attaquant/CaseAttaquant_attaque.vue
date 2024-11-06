@@ -53,6 +53,7 @@ export default {
 
 
         if ((reader === 2 || reader === 3 || reader === 5)) {
+
           //Vérifie si la carte n'es pas déjà présente sur le plateau
           if (!uidPrecedent.includes(uid)) {
             //Ajoute la carte seulement s'il n'y en a pas sur cette case.
@@ -73,7 +74,6 @@ export default {
               }
               if (!exist)
                 cartesAttaque.push(card);
-
               //Copie des readers
               let newReaders = [...this.localReaders];
               this.$emit('update-readers', newReaders);
@@ -95,7 +95,6 @@ export default {
         }
       } else if (reader !== 0 && reader !== 1) {
         messageErreurAttaque.value = "Type de carte invalide"
-        console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);
       }
     });
   }

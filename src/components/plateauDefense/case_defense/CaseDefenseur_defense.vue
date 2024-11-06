@@ -14,7 +14,7 @@ import Case_2_Defenseur_defense from "@/components/plateauDefense/case_defense/C
 import Case_3_Defenseur_defense from "@/components/plateauDefense/case_defense/Case_3_Defenseur_defense.vue";
 import Case_4_Defenseur_defense, {ouvert} from "@/components/plateauDefense/case_defense/Case_4_Defenseur_defense.vue";
 import {cartesEnDefense} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
-import {messageErreur} from "@/components/plateauDefense/TourAttaquant_defense.vue";
+import {messageErreur} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 
 let uidList = [];
 

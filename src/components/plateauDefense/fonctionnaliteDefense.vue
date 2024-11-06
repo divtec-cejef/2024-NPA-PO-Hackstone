@@ -1,7 +1,6 @@
 <script>
 // Importation du fichier JSON des CARTES
 import {ref} from "vue";
-
 const CARDS_DATA = require('../../../cards.json');
 const DECK = { CARDS_DATA };
 const CARTES = DECK.CARDS_DATA.cards;
@@ -11,6 +10,7 @@ let dejaPosee = false;
 let carteEnJeu = [];
 export let cartesEnDefense = [null, null, null, null];
 export let pv = ref(5);
+export let messageErreur = ref("")
 
 export default {
   methods: {
@@ -58,9 +58,9 @@ export default {
         cartesEnMain.push(cartesDeck[index]);
         cartesDeck.splice(index, 1);
       }
-      // let anon = cartesDeck.find(carte => carte.name === "Anonymous")
-      // if (anon !== undefined)
-      //    cartesEnMain.push(anon)
+      let anon = cartesDeck.find(carte => carte.name === "Anonymous")
+      if (anon !== undefined)
+        cartesEnMain.push(anon)
       cartesEnMain.splice(cartesEnMain.length, 1);
     },
 
@@ -96,8 +96,6 @@ export default {
      */
     arriveeAnonymous(card, reader) {
       //Lorsque l'Anonymous rentre sur le terrain, passe ses points de vie à deux
-      pvAnonymous = 2;
-
       //Vérifie si la carte est bel et bien l'anonymous et qu'elle n'a pas déjà été posée
       if (card.name === "Anonymous" && !dejaPosee) {
         dejaPosee = true;
@@ -106,7 +104,7 @@ export default {
         for (let i = 0; i < readerID.length; i++){
           //Vérifie si la carte à l'index actuel est un super-antivirus et son nombre de points de vie
           if ((cartesEnDefense[i] !== null && reader[readerID[i]].name !== "Super-antivirus")
-               || reader[readerID[i]].name === "Super-antivirus" && pvSuperAntivirus === 1) {
+              || reader[readerID[i]].name === "Super-antivirus" && pvSuperAntivirus === 1) {
             //Retire la carte du jeu
             cartesEnDefense.splice(i, 1, null);
             reader[readerID[i]].name = null;
@@ -153,6 +151,7 @@ export default {
             if ((carteDefense.name === "Super-antivirus" && pvSuperAntivirus < 2)
                 || carteDefense.name !== "Super-antivirus") {
               //Retire la carte du jeu
+              messageErreur.value = `Défense solide, envoie la carte ${carteDefense.name} au cimetière`
               carteDefense.image = null;
               carteDefense.name = null;
               cartesEnDefense.splice(j, 1, null);

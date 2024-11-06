@@ -1,6 +1,9 @@
 <script>
 import {ref} from "vue";
 import {messageErreurAttaque} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+import {poseeDepuis1} from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
+import {poseeDepuis3} from "@/components/plateauAttaque/Case_attaquant/Case_3_Attaquant_Attaque.vue";
+import {poseeDepuis4} from "@/components/plateauAttaque/Case_attaquant/Case_2_Attaquant_Attaque.vue";
 // Importation de `ref` pour créer des variables réactives
 export let pv = ref(5);
 export let stockage = ref(false);
@@ -70,7 +73,6 @@ export default {
       let stockagePresent = cartesEnMain.some(a => a.name === "Stockage");
 
       if (stockagePresent) {
-        console.log("Cadenas");
         stockage.value = true;
         let indexStockage = cartesEnMain.find(index => index.name === "Stockage");
         cartesEnMain.splice(cartesEnMain.indexOf(indexStockage), 1);
@@ -106,7 +108,6 @@ export default {
 
         //La carte redondance de données devient une copie de la carte sur la case de gauche.
         if (cartePosee.name === "Redondance de données") {
-          console.log("Redondance de données");
           cartePosee = carteEnJeu[0];
         }
         //Change le nom et l'image des cases à l'écran par ceux de la carte scannée
@@ -200,7 +201,6 @@ export default {
     perdrePvAttaquant() {
       if (pv.value > 0) {
         pv.value--;
-        console.log("pv", pv.value);
       }
     },
 
@@ -228,7 +228,19 @@ export default {
      * @returns {*} l'emplacement de la carte en défense
      */
     trouverCarteDefense(readers, card) {
-      return readers.find(defenseur => card.counter.includes(defenseur.name));
+      let counterCarteEnJeu
+      //Boucle passant sur chaque case de l'ordinateur
+      for (let j = 0; j < carteEnJeu.length; j++) {
+        //Liste des cartes qui contrent les cartes présentent sur le jeu
+        counterCarteEnJeu = carteEnJeu[j].counter;
+
+        //Boucle passant tous les contre des cartes
+          let carteDefense = this.trouverObjet(carteEnJeu[j], readers);
+          if (carteDefense !== undefined && counterCarteEnJeu.includes(card.name)){
+            return carteDefense;
+        }
+      }
+      return undefined;
     },
 
     /**
@@ -245,7 +257,6 @@ export default {
 
       //Retrouve le nombre de fois qu'une carte est présente sur le plateau
       const occurrences = cartesAttaque.filter(c => c.name === card.name).length;
-
       //Retire la carte attaquante des cartes en attaque
       cartesAttaque.splice(indexCarteScannee, 1);
 
@@ -268,7 +279,6 @@ export default {
 
             //Boucle passant tous les contre des cartes
             for (let i = 0; i < counterCarteEnJeu.length; i++) {
-              console.log("Je suis dedans", carteEnJeu)
               //Test si la carte qui attaque à un contre présent sur le terrain
               if (counterCarteEnJeu.includes(card.name)) {
                 carteDefendu = true;
@@ -302,16 +312,44 @@ export default {
           }
       if (!carteDefendu) {
         //Retire des points de vie au défenseur et rajoute la carte dans la liste si elle n'est pas défendue
+        if (card.name === "Anonymous"){
+          switch (reader.id){
+            case 3 : poseeDepuis1.value = readers[2].name !== "Anonymous";
+              break;
+            case 4 : poseeDepuis4.value = readers[3].name !== "Anonymous";
+              break;
+            case 6 : poseeDepuis3.value = readers[5].name !== "Anonymous";
+          }
+        }
+        if (card.name !== "Anonymous"){
+          switch (reader.id) {
+            case 3 : poseeDepuis1.value = false;
+              break;
+            case 4 : poseeDepuis4.value = false;
+              break;
+            case 6 : poseeDepuis3.value = false;
+          }
+        }
+
         this.perdrePvAttaquant();
         cartesAttaque.push(card);
         messageErreurAttaque.value = "Repose la carte sur la case"
-      }else
+
+
+      } else if (reader.name === null ){
         messageErreurAttaque.value = "Met cette carte au cimetière"
+        switch (reader.id) {
+          case 3 : poseeDepuis1.value = false;
+            break;
+          case 4 : poseeDepuis4.value = false;
+            break;
+          case 6 : poseeDepuis3.value = false;
+        }
+      }
       if (card.name === "Anonymous" && pvAnonymous > 0 && nbrAttaqueAnonymous < 2) {
         //S'il reste des points de vie et des attaques disponibles à l'anonymous, le rajoute dans la liste
         card.poseeDepuis = 2;
         cartesAttaque.push(card);
-
       }
     },
 
@@ -331,16 +369,14 @@ export default {
 
       } else if (carteDejaAttaquer) {
         messageErreurAttaque.value = "Cette carte a déjà attaqué";
-        cartesAttaque.push(card);
 
       } else if (card.poseeDepuis < 2) {
         messageErreurAttaque.value = "Vous devez attendre un tour avant d'attaquer";
-        cartesAttaque.push(card);
 
       } else if (!carteTrouvee)
         messageErreurAttaque.value = "La carte doit être posée avant de pouvoir attaquer";
       return false;
-    }
+    },
   }
 };
 </script>
