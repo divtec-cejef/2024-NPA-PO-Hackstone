@@ -151,7 +151,7 @@ export default {
             if ((carteDefense.name === "Super-antivirus" && pvSuperAntivirus < 2)
                 || carteDefense.name !== "Super-antivirus") {
               //Retire la carte du jeu
-              messageErreur.value = `Défense solide, envoie la carte ${carteDefense.name} au cimetière`
+              messageErreur.value = `Défense réussie, envoie la carte ${carteDefense.name} au cimetière`
               carteDefense.image = null;
               carteDefense.name = null;
               cartesEnDefense.splice(j, 1, null);

@@ -91,16 +91,17 @@ export default {
     });
     //Vérifie si le tour précédent est terminé
     watch(finDeTourDefense, (newVal) => {
-
       if (newVal === true && defaite.value === false) {
         this.showMessageDefense();
+        messageErreur.value = "A toi de jouer, pioche 5 cartes"
         this.updateVisibility();
 
       } else if (newVal === false && defaite.value === false) {
         this.showMessageDefense();
         this.updateVisibility();
+        messageErreur.value = "A toi de jouer, pioche 5 cartes"
       }
-
+    });
       //Dès que la variable messageErreur est modifié, affiche un message temporaire contenant son texte.
       watch(messageErreur, (newVal, oldValue) => {
         if (oldValue !== newVal && newVal !== ""){
@@ -111,7 +112,7 @@ export default {
           messageErreur.value ="";
         }, 2500)
       })
-    });
+
   },
 
   computed: {

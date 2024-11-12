@@ -333,11 +333,11 @@ export default {
 
         this.perdrePvAttaquant();
         cartesAttaque.push(card);
-        messageErreurAttaque.value = "Repose la carte sur la case"
+        messageErreurAttaque.value = "Attaque réussie, repose ta carte sur sa case"
 
 
       } else if (reader.name === null ){
-        messageErreurAttaque.value = "Met cette carte au cimetière"
+        messageErreurAttaque.value = "Attaque défendue, envoie ta carte au cimetière"
         switch (reader.id) {
           case 3 : peutAttaquer.value = false;
             break;
@@ -371,10 +371,10 @@ export default {
         messageErreurAttaque.value = "Cette carte a déjà attaqué";
 
       } else if (card.poseeDepuis < 2) {
-        messageErreurAttaque.value = "Vous devez attendre un tour avant d'attaquer";
+        messageErreurAttaque.value = "Attaque échoué, cette carte viens d'être posée";
 
       } else if (!carteTrouvee)
-        messageErreurAttaque.value = "La carte doit être posée avant de pouvoir attaquer";
+        messageErreurAttaque.value = "Attaque impossible, cette carte n'a pas été posée";
       return false;
     },
   }

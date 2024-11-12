@@ -88,7 +88,7 @@ export default {
                 UID3 = uid;
 
             } else if (this.localReaders[reader].image !== card.image)
-              messageErreurAttaque.value = "Une carte est déjà présente sur cette zone"
+              messageErreurAttaque.value = "Une autre carte est déjà présente sur cette zone"
           } else if (uidPrecedent.includes(uid) && this.localReaders[reader].image !== card.image) {
             messageErreurAttaque.value = "Cette carte à déjà été utilisée"
           }

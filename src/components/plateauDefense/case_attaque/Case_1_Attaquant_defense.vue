@@ -54,16 +54,15 @@ export default {
     this.socket = io('http://localhost:3001');
     this.socket.on('rfidData', (data) => {
       let {readerID} = data;
+      //Affiche une lueur rouge autour de la carte lorsqu'elle peut attaquer
+      watch(peutAttaquer, (newVal) => {
+        console.log("allo", newVal)
+        if (newVal)
+          this.canAttack = newVal
+        else
+          this.canAttack = newVal
+      });
       if (readerID === '1)') {
-
-        //Affiche une lueur rouge autour de la carte lorsqu'elle peut attaquer
-        watch(peutAttaquer, (newVal) => {
-          if (newVal)
-            this.canAttack = newVal
-          else
-            this.canAttack = newVal
-        });
-
         setTimeout(() => {
           this.hasEntered = true;
           //Retrouve la carte qui attaque
@@ -172,8 +171,18 @@ export default {
      * @returns {number} coordonnée X de la carte en défense
      */
     findEmplacement() {
+      let carteDefense = undefined;
       //Retrouve le reader qui contient la carte qui va défendre
-      let carteDefense = this.readers.find(carte => carteAttaquante.counter.includes(carte.name));
+      let readersID = [2, 3, 5, 6]
+      for (let i = 0; i < this.readers.length; i++) {
+        let carteEnCours = this.readers[readersID[i]];
+        if (carteEnCours !== undefined) {
+          if (carteAttaquante.counter.includes(carteEnCours.name)) {
+            carteDefense = carteEnCours;
+            break;
+          }
+        }
+      }
       //Retrouves les coordonnées auxquelles la carte doit se déplacer
       if (carteDefense === undefined) {
         emplacement = this.pv;

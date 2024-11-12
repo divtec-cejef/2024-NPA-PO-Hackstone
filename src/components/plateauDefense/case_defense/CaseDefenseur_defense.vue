@@ -83,7 +83,7 @@ export default {
 
                   //Si aucune carte n'est présente sur le plateau,
                   // affiche un message d'erreur et ne lance pas les opérations suivantes.
-                  messageErreur.value = "Vous n'avez aucune carte à copier"
+                  messageErreur.value = "Tu n'as aucune carte à copier"
                   return;
                 }
               }
@@ -123,10 +123,10 @@ export default {
           }else if ((!uidList.includes(uid) && this.readersDefense[readerIndex].image !== null)
               || this.readersDefense[readerIndex].image !== card.image) {
             //Affiche un message d'erreur si l'on essaie de poser la carte par-dessus une autre
-            messageErreur.value = "Il y a déjà une carte ici"
+            messageErreur.value = "Une autre carte est déjà posée sur cette case"
           }
         }else if (readerIndex === 6 && !ouvert.value)
-          messageErreur.value = "Case verrouillée"
+          messageErreur.value = "Case verrouillée, utilise la carte Stockage"
       } else if (readerIndex !== 0 && readerIndex !== 1 && card.name !== "Stockage") {
         messageErreur.value = 'Type de carte invalide'
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type défense sont autorisées.`);

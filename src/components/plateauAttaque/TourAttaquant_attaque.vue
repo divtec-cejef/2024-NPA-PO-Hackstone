@@ -53,7 +53,7 @@ export default {
   },
 
   mounted() {
-    messageErreurAttaque.value = "pioche des cartes jusqu'à en avoir 6";
+    messageErreurAttaque.value = "Pioche des cartes jusqu'à en avoir 6";
     setTimeout(() => {
       this.showUserError(messageErreurAttaque.value);
     }, 1000);
@@ -75,9 +75,9 @@ export default {
     //Obsèrve si le joueur termine son tour, si c'est le cas, affiche un message temporaire
     watch(finDeTour, (newVal) => {
       if (newVal === true) {
-        messageErreurAttaque.value = "A vous de jouer, pioche des cartes jusqu'à en avoir 5";
+        messageErreurAttaque.value = "A toi de jouer, pioche des cartes jusqu'à en avoir 5";
       }else if (newVal === false)
-        messageErreurAttaque.value = "A vous de jouer, pioche des cartes jusqu'à en avoir 5";
+        messageErreurAttaque.value = "A toi de jouer, pioche des cartes jusqu'à en avoir 5";
     });
 
     watch(messageErreurAttaque, (newVal, oldValue) => {

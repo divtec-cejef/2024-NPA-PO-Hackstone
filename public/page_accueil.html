@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'accueil</title>
-    <link rel="stylesheet" href="../public/accueil.css">
+    <link rel="stylesheet" href="accueil.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap">
+
 </head>
 <body>
 
@@ -16,11 +17,17 @@
 
     // Fonction pour ouvrir l'overlay et lancer la vidéo
     function openOverlay() {
+        const video = document.querySelector('#videoOverlay video');
         document.getElementById('videoOverlay').style.display = 'flex'; // Affiche l'overlay
+        video.currentTime = 0; // Remet la vidéo au début
+        video.play(); // Lance la vidéo automatiquement
     }
 
     // Fonction pour fermer l'overlay et arrêter la vidéo
     function closeOverlay() {
+        const video = document.querySelector('#videoOverlay video');
+        video.pause(); // Met la vidéo en pause
+        video.currentTime = 0; // Remet la vidéo à 0
         document.getElementById('videoOverlay').style.display = 'none'; // Cache l'overlay
     }
 
@@ -44,7 +51,10 @@
 <div id="videoOverlay" class="overlay">
     <div class="overlay-content">
         <button class="close-btn" onclick="closeOverlay()">&times;</button> <!-- Bouton pour fermer l'overlay -->
-        <img src="../src/img/plateau_tuto.png" alt="Tutoriel" class="image-tutoriel">
+        <video controls width="100%">
+            <source src="../src/img/Présentation1.mp4" type="video/mp4"> <!-- Lien vers la vidéo -->
+            Votre navigateur ne supporte pas la lecture de vidéo.
+        </video>
     </div>
 </div>
 

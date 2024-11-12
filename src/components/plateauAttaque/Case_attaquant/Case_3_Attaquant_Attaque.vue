@@ -101,7 +101,7 @@ export default {
           },2001)
         }
       } else if (UID1 !== uid && UID2 !== uid && UID3 !== uid && readerID === '5)')
-        messageErreurAttaque.value = "La carte doit être posée avant d'attaquer"
+        messageErreurAttaque.value = "Attaque impossible, cette carte n'a pas été posée"
     });
   },
 

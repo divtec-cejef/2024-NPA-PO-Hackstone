@@ -74,12 +74,12 @@ export default {
 
               //Lance deux attaques si la carte attaquante est l'Anonymous
               if (carteAttaquante.name === "Anonymous") {
-                delaisAnonymous = 1000;
+                delaisAnonymous = 3000;
                 this.attaquerAnimation(false);
 
                 setTimeout(() => {
                   this.attaquerAnimation(true)
-                },2000)
+                },4000)
 
               }else
                 this.attaquerAnimation(true);
@@ -170,8 +170,18 @@ export default {
      * @returns {number} coordonnée X de la carte en défense
      */
     findEmplacement() {
+      let carteDefense = undefined;
       //Retrouve le reader qui contient la carte qui va défendre
-      let carteDefense = this.readers.find(carte => carteAttaquante.counter.includes(carte.name));
+      let readersID = [2, 3, 5, 6]
+      for (let i = 0; i < this.readers.length; i++) {
+        let carteEnCours = this.readers[readersID[i]];
+        if (carteEnCours !== undefined) {
+          if (carteAttaquante.counter.includes(carteEnCours.name)) {
+            carteDefense = carteEnCours;
+            break;
+          }
+        }
+      }
       //Retrouves les coordonnées auxquelles la carte doit se déplacer
       if (carteDefense === undefined) {
         emplacement = this.pv;
