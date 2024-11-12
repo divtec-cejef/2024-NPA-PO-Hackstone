@@ -20,7 +20,7 @@ let emplacement;
 let delaisAnonymous = 2500;
 let carteAttaquante;
 export let aFiniAttaque = ref(false);
-export let poseeDepuis1 = ref(false);
+export let peutAttaquer = ref(false);
 
 export default {
   props: {
@@ -56,7 +56,8 @@ export default {
       let {readerID} = data;
       if (readerID === '1)') {
 
-        watch(poseeDepuis1, (newVal) => {
+        //Affiche une lueur rouge autour de la carte lorsqu'elle peut attaquer
+        watch(peutAttaquer, (newVal) => {
           if (newVal)
             this.canAttack = newVal
           else
@@ -152,15 +153,14 @@ export default {
           fonctionnaliteDefense.methods.attaquer(this.readers, carteAttaquante);
         }, 2500)
       }
+
       //Attend que l'animation soit terminée avant de lancer la fonction d'attaque
-
-
       if (deuxiemeAttaque || this.readers[0].name === null && deuxiemeAttaque) {
         if (this.readers[0].name === null)
           delaisAnonymous = 100;
         setTimeout(() => {
           aFiniAttaque.value = true;
-          poseeDepuis1.value = false
+          peutAttaquer.value = false
           if (this.readers[0].image === null)
             this.hasEntered = false;
         }, delaisAnonymous)

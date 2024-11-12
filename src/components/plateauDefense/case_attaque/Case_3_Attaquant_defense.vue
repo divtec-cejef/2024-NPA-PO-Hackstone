@@ -19,7 +19,7 @@ import {ref, watch} from "vue";
 import {aFiniAttaque2} from "@/components/plateauDefense/case_attaque/Case_2_Attaquant_defense.vue";
 import {defaite} from "@/components/plateauDefense/TourAttaquant_defense.vue";
 
-export let poseeDepuis3 = ref (false);
+export let peutAttaquerCase3 = ref (false);
 export let finTour = ref(false)
 let delaisAnonymous = 1;
 let emplacement;
@@ -57,7 +57,7 @@ export default {
     this.socket = io('http://localhost:3001');
     this.socket.on('rfidData', (data) => {
 
-      watch(poseeDepuis3, (newVal) => {
+      watch(peutAttaquerCase3, (newVal) => {
         this.canAttack3 = newVal
       });
 
@@ -157,7 +157,7 @@ export default {
       }
       if (derniereAttaque || this.readers[4].name === null && derniereAttaque) {
         setTimeout(() => {
-          poseeDepuis3.value = false;
+          peutAttaquerCase3.value = false;
           if (this.readers[4].name === null)
             this.hasEntered = false;
 

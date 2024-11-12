@@ -1,9 +1,9 @@
 <script>
 import {ref} from "vue";
 import {messageErreurAttaque} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
-import {poseeDepuis1} from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
-import {poseeDepuis3} from "@/components/plateauAttaque/Case_attaquant/Case_3_Attaquant_Attaque.vue";
-import {poseeDepuis4} from "@/components/plateauAttaque/Case_attaquant/Case_2_Attaquant_Attaque.vue";
+import {peutAttaquer} from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
+import {peutAttaquerCase3} from "@/components/plateauAttaque/Case_attaquant/Case_3_Attaquant_Attaque.vue";
+import {peutAttaquerCase2} from "@/components/plateauAttaque/Case_attaquant/Case_2_Attaquant_Attaque.vue";
 // Importation de `ref` pour créer des variables réactives
 export let pv = ref(5);
 export let stockage = ref(false);
@@ -314,20 +314,20 @@ export default {
         //Retire des points de vie au défenseur et rajoute la carte dans la liste si elle n'est pas défendue
         if (card.name === "Anonymous"){
           switch (reader.id){
-            case 3 : poseeDepuis1.value = readers[2].name !== "Anonymous";
+            case 3 : peutAttaquer.value = readers[2].name !== "Anonymous";
               break;
-            case 4 : poseeDepuis4.value = readers[3].name !== "Anonymous";
+            case 4 : peutAttaquerCase2.value = readers[3].name !== "Anonymous";
               break;
-            case 6 : poseeDepuis3.value = readers[5].name !== "Anonymous";
+            case 6 : peutAttaquerCase3.value = readers[5].name !== "Anonymous";
           }
         }
         if (card.name !== "Anonymous"){
           switch (reader.id) {
-            case 3 : poseeDepuis1.value = false;
+            case 3 : peutAttaquer.value = false;
               break;
-            case 4 : poseeDepuis4.value = false;
+            case 4 : peutAttaquerCase2.value = false;
               break;
-            case 6 : poseeDepuis3.value = false;
+            case 6 : peutAttaquerCase3.value = false;
           }
         }
 
@@ -339,11 +339,11 @@ export default {
       } else if (reader.name === null ){
         messageErreurAttaque.value = "Met cette carte au cimetière"
         switch (reader.id) {
-          case 3 : poseeDepuis1.value = false;
+          case 3 : peutAttaquer.value = false;
             break;
-          case 4 : poseeDepuis4.value = false;
+          case 4 : peutAttaquerCase2.value = false;
             break;
-          case 6 : poseeDepuis3.value = false;
+          case 6 : peutAttaquerCase3.value = false;
         }
       }
       if (card.name === "Anonymous" && pvAnonymous > 0 && nbrAttaqueAnonymous < 2) {

@@ -11,12 +11,12 @@
 <script>
 import "animate.css"
 import io from "socket.io-client";
-import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-import  {UID2}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
-import {gsap} from "gsap";
-import {perdu} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 import {watch, ref} from "vue";
-export let poseeDepuis4 = ref(false);
+import {gsap} from "gsap";
+import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
+import {UID2}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
+import {perdu} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+export let peutAttaquerCase2 = ref(false);
 
 export default {
   props: {
@@ -46,17 +46,17 @@ export default {
     }
   },
   mounted() {
-    watch(poseeDepuis4, (newVal) => {
+    //Affiche une lueur rouge autour de la carte lorsqu'elle peut attaquer
+    watch(peutAttaquerCase2, (newVal) => {
       if (newVal)
         this.canAttack4 = newVal
       else
         this.canAttack4 = newVal
     });
+
     this.socket = io('http://localhost:3000');
     this.socket.on('rfidData', (data) => {
       let {readerID, card, uid} = data;
-
-
 
       //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
       if (readerID === '5)' && this.readers[3].name === card.name && UID2 === uid && !perdu) {
@@ -89,12 +89,12 @@ export default {
         }
         //Vérifie si la carte remplie les conditions pour attaquer
         if (fonctionnaliteesAttaque.methods.peutAttaquer(card)) {
-          //Animation d'attaque
           this.attaquerCarteCase2(2, emplacement);
           setTimeout(() => {
             fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[3], this.readers);
           }, 2000);
           setTimeout(() => {
+            //Réactive l'animation d'entrer si la carte a été détruite
             if (this.readers[3].image === null)
               this.hasEntered = false
           },2001)

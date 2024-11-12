@@ -15,9 +15,9 @@ import Case_3_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur
 import Case_4_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_4_Defenseur_Attaque.vue";
 import fonctionnaliteesAttaque, {cartesAttaque, stockage} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {finDeTour} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
-import {poseeDepuis1} from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
-import {poseeDepuis4} from "@/components/plateauAttaque/Case_attaquant/Case_2_Attaquant_Attaque.vue";
-import {poseeDepuis3} from "@/components/plateauAttaque/Case_attaquant/Case_3_Attaquant_Attaque.vue";
+import {peutAttaquer} from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
+import {peutAttaquerCase2} from "@/components/plateauAttaque/Case_attaquant/Case_2_Attaquant_Attaque.vue";
+import {peutAttaquerCase3} from "@/components/plateauAttaque/Case_attaquant/Case_3_Attaquant_Attaque.vue";
 
 let carteEnMain = [];
 //Génère le deck du défenseur
@@ -66,9 +66,9 @@ export default {
         // Changement de la valeur de `finDeTour` après 6 secondes
         setTimeout(() => {
           finDeTour.value = !finDeTour.value;
-            poseeDepuis1.value = (this.readers[2].image !== null);
-            poseeDepuis4.value = (this.readers[3].image !== null)
-            poseeDepuis3.value = (this.readers[5].image !== null)
+            peutAttaquer.value = (this.readers[2].image !== null);
+            peutAttaquerCase2.value = (this.readers[3].image !== null)
+            peutAttaquerCase3.value = (this.readers[5].image !== null)
         }, 6001);
 
         //Change le champ poseeDepuis des cartes en attaque à 2
@@ -79,6 +79,7 @@ export default {
 
         //Vide la liste des cartes ayant déjà attaqué
         //Afin qu'elles puissent le refaire au prochain tour
+
         fonctionnaliteesAttaque.methods.resetDejaAttaquer();
 
         // Copie des readers

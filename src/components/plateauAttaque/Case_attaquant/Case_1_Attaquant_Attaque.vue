@@ -12,11 +12,12 @@
 import 'animate.css'
 import io from "socket.io-client";
 import {gsap} from "gsap";
+import {ref, watch} from "vue";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {UID1}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
 import {perdu} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
-import {ref, watch} from "vue";
-export let poseeDepuis1 = ref(false);
+
+export let peutAttaquer = ref(false);
 
 export default {
   props: {
@@ -51,16 +52,19 @@ export default {
     this.socket.on('rfidData', (data) => {
       let {readerID, card, uid} = data;
 
-      watch(poseeDepuis1, (newVal) => {
+      //Affiche une lueur rouge autour de la carte lorsqu'elle peut attaquer
+      watch(peutAttaquer, (newVal) => {
         if (newVal)
           this.canAttack = newVal
         else
           this.canAttack = newVal
       });
+
       //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
       if (readerID === '5)' && this.readers[2].name === card.name && UID1 === uid && !perdu) {
         this.hasEntered = true;
         let emplacement;
+
         //Retrouve le reader qui contient la carte qui va défendre
         let carteEnDefense = fonctionnaliteesAttaque.methods.trouverCarteDefense(this.readers, card);
 
@@ -94,6 +98,7 @@ export default {
             fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[2], this.readers);
           }, 2000);
           setTimeout(() => {
+            //Réactive l'animation d'entrée si la carte a été détruite
             if (this.readers[2].image === null)
               this.hasEntered = false
           },2001)

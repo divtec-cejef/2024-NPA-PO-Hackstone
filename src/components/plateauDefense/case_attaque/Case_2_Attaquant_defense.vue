@@ -24,7 +24,7 @@ let emplacement;
 let carteAttaquante
 let delaisAnonymous = 2500;
 let deckAttaque = fonctionnaliteDefense.methods.genererDeckAttaque();
-export let poseeDepuis2 = ref(false);
+export let peutAttaquerCase2 = ref(false);
 export default {
   props: {
     id: {
@@ -58,7 +58,7 @@ export default {
 
       let {readerID} = data;
 
-      watch(poseeDepuis2, (newVal) => {
+      watch(peutAttaquerCase2, (newVal) => {
         if (newVal)
           this.canAttack2 = newVal
         else
@@ -164,7 +164,7 @@ export default {
           delaisAnonymous = 100;
         setTimeout(() => {
           aFiniAttaque2.value = true;
-          poseeDepuis2.value = false;
+          peutAttaquerCase2.value = false;
           if (this.readers[1].image === null)
             this.hasEntered = false;
 

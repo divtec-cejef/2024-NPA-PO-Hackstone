@@ -8,15 +8,17 @@
   </div>
 </template>
 <script>
-import "animate.css"
+import "animate.css";
 import io from "socket.io-client";
+import {gsap} from "gsap";
+import {watch, ref} from "vue";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {UID3, UID2, UID1}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
-import {gsap} from "gsap";
 import {perdu, messageErreurAttaque} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
-import {watch, ref} from "vue";
-export let poseeDepuis3 = ref (false);
+
+export let peutAttaquerCase3 = ref (false);
 export default {
+
   props: {
     id: {
       type: Number,
@@ -49,18 +51,19 @@ export default {
     this.socket.on('rfidData', (data) => {
       let {readerID, card, uid} = data;
 
-      watch(poseeDepuis3, (newVal) => {
+      //Affiche une lueur rouge autour de la carte lorsqu'elle peut attaquer
+      watch(peutAttaquerCase3, (newVal) => {
         this.canAttack3 = newVal
       });
 
       //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
       if (readerID === '5)' && this.readers[5].name === card.name && UID3 === uid && !perdu) {
         this.hasEntered = true;
-
         let emplacement;
+
         //Retrouve le reader qui contient la carte qui va défendre
         let carteEnDefense = fonctionnaliteesAttaque.methods.trouverCarteDefense(this.readers, card);
-        console.log("Carte def", carteEnDefense);
+
         //Retrouves les coordonnées auxquelles la carte doit se déplacer
         if (carteEnDefense === undefined) {
           emplacement = this.pv;
@@ -86,12 +89,13 @@ export default {
 
         //Vérifie si la carte remplie les conditions pour attaquer
         if (fonctionnaliteesAttaque.methods.peutAttaquer(card)) {
-          //Animation d'attaque
+
           this.attaquerCarteCase3(3, emplacement);
           setTimeout(() => {
             fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[5], this.readers);
           }, 2000);
           setTimeout(() => {
+            //Réactive l'animation d'entrer si la carte a été détruite
             if (this.readers[5].image === null)
               this.hasEntered = false
           },2001)

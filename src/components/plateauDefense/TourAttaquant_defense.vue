@@ -39,9 +39,9 @@
 <script>
 import io from 'socket.io-client';
 import {ref, watch} from "vue";
-import {poseeDepuis1} from "@/components/plateauDefense/case_attaque/Case_1_Attaquant_defense.vue";
-import {poseeDepuis2} from "@/components/plateauDefense/case_attaque/Case_2_Attaquant_defense.vue";
-import {poseeDepuis3} from "@/components/plateauDefense/case_attaque/Case_3_Attaquant_defense.vue";
+import {peutAttaquer} from "@/components/plateauDefense/case_attaque/Case_1_Attaquant_defense.vue";
+import {peutAttaquerCase2} from "@/components/plateauDefense/case_attaque/Case_2_Attaquant_defense.vue";
+import {peutAttaquerCase3} from "@/components/plateauDefense/case_attaque/Case_3_Attaquant_defense.vue";
 import {messageErreur} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 
 export let defaite = ref(false);
@@ -149,9 +149,9 @@ export default {
         this.tourAdverseDefense = !this.tourAdverseDefense;
         this.messageVisibleDefense = true;
         if (this.tourAdverseDefense) {
-          poseeDepuis1.value = true;
-          poseeDepuis2.value = true;
-          poseeDepuis3.value = true;
+          peutAttaquer.value = true;
+          peutAttaquerCase2.value = true;
+          peutAttaquerCase3.value = true;
         }
       }, 500)
       // Cache le message après 2 secondes
