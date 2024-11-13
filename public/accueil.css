@@ -94,9 +94,8 @@ button.tutoriel {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 1200px;
+    max-width: 100%;
     border: 2px solid white;
-
 }
 
 /* Style pour le bouton de fermeture */

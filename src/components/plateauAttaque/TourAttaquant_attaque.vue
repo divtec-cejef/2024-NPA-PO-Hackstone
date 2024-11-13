@@ -18,8 +18,12 @@
       <div class="overlay"></div>
 
       <!-- Message de défaite -->
-      <div class="resist-message">
-        <h1>Le système a résisté à vos attaques</h1>
+      <div class="glitch-text-container">
+        <p class="glitch">
+          <span aria-hidden="true">Le système a résisté à vos attaques</span>
+          Le système a résisté à vos attaques
+          <span aria-hidden="true">Le système a résisté à vos attaques</span>
+        </p>
         <button class="close-Page" onclick="window.close()"><b>MENU</b></button>
       </div>
     </div>
@@ -53,7 +57,7 @@ export default {
   },
 
   mounted() {
-    messageErreurAttaque.value = "Pioche des cartes jusqu'à en avoir 6";
+    messageErreurAttaque.value = "A toi de jouer, pioche 6 cartes";
     setTimeout(() => {
       this.showUserError(messageErreurAttaque.value);
     }, 1000);
@@ -150,22 +154,55 @@ export default {
   z-index: 999; /* S'assure que le filtre soit en dessous du message */
 }
 
-/* Style pour le message de défaite "LE SYSTÈME A RÉSISTÉ À VOS ATTAQUES" */
-.resist-message {
+/* Conteneur pour centrer le texte */
+.glitch-text-container {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1); /* Centrer et effet de zoom initial */
-  color: red; /* Couleur verte pour signifier la résistance */
-  font-size: 40px; /* Taille du texte */
-  font-family: Impact, serif;
-  text-align: center;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  opacity: 1;
-  animation: resist-animation 1s ease-out forwards; /* Animation de zoom, sans fade-out */
-  z-index: 1000; /* S'assure que le message soit au-dessus du filtre */
+  text-align: center;
+  flex-direction: column;
+}
+
+.glitch {
+  font-size: 5rem;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: relative;
+  text-shadow: 0.05em 0 0 #ff0000, -0.03em -0.04em 0 #009eff,
+  0.025em 0.04em 0 #ff4d00;
+  animation: glitch 725ms infinite;
+}
+
+
+/* Conteneur pour centrer le texte */
+.glitch-text-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.glitch {
+  font-size: 5rem;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: relative;
+  text-shadow: 0.05em 0 0 #ff0000, -0.03em -0.04em 0 #009eff,
+  0.025em 0.04em 0 #ff4d00;
+  animation: glitch 725ms infinite;
 }
 
 /* Animation pour le message (sans disparition) */

@@ -46,6 +46,8 @@ import {messageErreur} from "@/components/plateauDefense/fonctionnaliteDefense.v
 
 export let defaite = ref(false);
 export let finDeTourDefense = ref(false)
+let premierTour = true;
+
 export default {
   data() {
     return {
@@ -86,32 +88,33 @@ export default {
       const {readerID} = data;
       // Vérifier si le readerID est 1
       if (readerID === '1)') {
-        this.showMessageDefense();
+        this.showCanAttackDefense();
+        messageErreur.value = "Fin de tour"
       }
     });
     //Vérifie si le tour précédent est terminé
-    watch(finDeTourDefense, (newVal) => {
-      if (newVal === true && defaite.value === false) {
-        this.showMessageDefense();
-        messageErreur.value = "A toi de jouer, pioche 5 cartes"
+    watch(finDeTourDefense, () => {
+      if (defaite.value === false) {
+        this.showCanAttackDefense();
         this.updateVisibility();
-
-      } else if (newVal === false && defaite.value === false) {
-        this.showMessageDefense();
-        this.updateVisibility();
-        messageErreur.value = "A toi de jouer, pioche 5 cartes"
+        if (premierTour) {
+          messageErreur.value = "A toi de jouer, pioche 6 cartes"
+          premierTour = false;
+        }  else
+          messageErreur.value = "A toi de jouer, pioche des cartes jusqu'à en avoir 5";
       }
-    });
-      //Dès que la variable messageErreur est modifié, affiche un message temporaire contenant son texte.
-      watch(messageErreur, (newVal, oldValue) => {
-        if (oldValue !== newVal && newVal !== ""){
-          this.showUserError(messageErreur.value);
-        }
 
-        setTimeout(() => {
-          messageErreur.value ="";
-        }, 2500)
-      })
+    });
+    //Dès que la variable messageErreur est modifié, affiche un message temporaire contenant son texte.
+    watch(messageErreur, (newVal, oldValue) => {
+      if (oldValue !== newVal && newVal !== ""){
+        this.showUserError(messageErreur.value);
+      }
+
+      setTimeout(() => {
+        messageErreur.value ="";
+      }, 2500)
+    })
 
   },
 
@@ -144,21 +147,16 @@ export default {
     /**
      * Affiche un message temporaire lors de la fin du tour du défenseur et lors du début de son tour
      */
-    showMessageDefense() {
+    showCanAttackDefense() {
       // Affiche le message
       setTimeout(() => {
         this.tourAdverseDefense = !this.tourAdverseDefense;
-        this.messageVisibleDefense = true;
         if (this.tourAdverseDefense) {
           peutAttaquer.value = true;
           peutAttaquerCase2.value = true;
           peutAttaquerCase3.value = true;
         }
       }, 500)
-      // Cache le message après 2 secondes
-      setTimeout(() => {
-        this.messageVisibleDefense = false;
-      }, 2500);
     },
 
     /**

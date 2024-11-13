@@ -1,5 +1,7 @@
 <template>
-  <div class="plateau-finale-attaque">
+  <div class="plateau-finale-attaque"
+       :class="{ 'red-border': isRedBorder }"
+  >
     <!-- PV du défenseur -->
     <PVDefenseur_attaque />
 
@@ -17,11 +19,13 @@
 </template>
 
 <script>
+import {watch, ref} from "vue";
 import CaseAttaquant_attaque from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
 import CaseDefenseur_attaque from "@/components/plateauAttaque/Case_defenseur/CaseDefenseur_attaque.vue";
 import TourAttaquant_attaque from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 import PVDefenseur_attaque from "@/components/plateauAttaque/PVDefenseur_attaque.vue";
 import io from "socket.io-client";
+export let redBorder = ref(false);
 export default {
   components: {
     CaseAttaquant_attaque,
@@ -41,12 +45,18 @@ export default {
         {id: 7, name: 'Reader 7', image: null},
       ],
       socket: null,
+      isRedBorder: false,
     };
   },
   mounted() {
+
+    watch(redBorder, (newVal) => {
+      this.isRedBorder = newVal
+
+    });
     this.socket = io('http://localhost:3000');
-    this.socket.on('rfidData', (data) => {
-      const { readerID, card } = data;
+    /**     this.socket.on('rfidData', () => {
+           const { readerID, card } = data;
 
       if (card.type === 'attaque') {
         let mappedReaderID = null;
@@ -80,10 +90,12 @@ export default {
         if (!reader) {
           console.log(`No reader found with mapped ID ${mappedReaderID}.`);
         }
+
       } else {
         console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);
       }
-    });
+
+    }); */
   },
   methods: {
     updateReaders(newReaders){
@@ -101,6 +113,7 @@ export default {
   height: auto;
   mix-blend-mode: lighten;
   opacity: 0.9;
+  z-index: 0;
 }
 
 #ligne_attaque.line {
@@ -114,5 +127,30 @@ export default {
   height: 100vh;
   align-items: center;
   gap: 15px;
+}
+@keyframes red-border-flash {
+
+  0% {
+    border: 10px solid rgba(255, 0, 0, 0); /* Bordure invisible */
+  }
+  5% {
+    border: 10px solid rgba(255, 0, 0, 0.5); /* Bordure rouge semi-transparente */
+  }
+  20% {
+    border: 10px solid rgba(255, 0, 0, 1); /* Bordure rouge opaque */
+  }
+  50% {
+    border: 10px solid rgba(255, 0, 0, 0.5); /* Bordure rouge semi-transparente */
+  }
+  100% {
+    border: 10px solid rgba(255, 0, 0, 0); /* Bordure invisible */
+  }
+}
+
+.red-border {
+  border: 20px solid transparent;
+  animation: red-border-flash 2s ease-out;
+  box-sizing: border-box;
+  z-index: 1;
 }
 </style>

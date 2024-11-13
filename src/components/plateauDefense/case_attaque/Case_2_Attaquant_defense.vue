@@ -14,6 +14,7 @@
 import 'animate.css'
 import io from "socket.io-client";
 import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
+import caseAttaquant_defense from "@/components/plateauDefense/case_attaque/CaseAttaquant_defense.vue";
 import {gsap} from "gsap";
 import {aFiniAttaque} from "@/components/plateauDefense/case_attaque/Case_1_Attaquant_defense.vue";
 import {defaite} from "@/components/plateauDefense/TourAttaquant_defense.vue";
@@ -23,6 +24,7 @@ export let aFiniAttaque2 = ref(false);
 let emplacement;
 let carteAttaquante
 let delaisAnonymous = 2500;
+let DEPLACEMENT_Y = 420;
 let deckAttaque = fonctionnaliteDefense.methods.genererDeckAttaque();
 export let peutAttaquerCase2 = ref(false);
 export default {
@@ -78,12 +80,16 @@ export default {
               //Lance deux attaques si la carte attaquante est l'Anonymous
               if (carteAttaquante.name === "Anonymous") {
                 this.attaquerAnimation(false);
+                caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);
                 setTimeout(() => {
                   this.attaquerAnimation(true)
+                  caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);
                 }, 4000)
 
               } else {
                 this.attaquerAnimation(true);
+                caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);
+
               }
             }
           }, 2000);
@@ -111,7 +117,6 @@ export default {
      * @param deplacementX emplacement de la carte en défense
      */
     attaquerCarteAnimation(deplacementX) {
-      let DEPLACEMENT_Y = 420;
       if(deplacementX === this.pv)
         DEPLACEMENT_Y= 800
       const attackingCard = this.$refs.attackingCard2_def;
@@ -134,8 +139,9 @@ export default {
             x: deplacementX,
             scale: 1,
             ease: "power2.inOut",
-            delay: 0.6
+            delay: 0.6,
           })
+
           .to(attackingCard, {
             duration: 0.3,
             y: 0,

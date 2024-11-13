@@ -83,7 +83,7 @@ export default {
 
                   //Si aucune carte n'est présente sur le plateau,
                   // affiche un message d'erreur et ne lance pas les opérations suivantes.
-                  messageErreur.value = "Tu n'as aucune carte à copier"
+                  messageErreur.value = "Tu n'as aucune carte à copier "
                   return;
                 }
               }

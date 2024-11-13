@@ -1,5 +1,5 @@
 <template>
-  <div class="plateau-finale-defense">
+  <div class="plateau-finale-defense"  :class="{ 'red-border': isRedBorder }">
     <!-- Compteurs de l'attaque -->
     <TourAttaquant_defense :socket="socket" />
 
@@ -22,6 +22,8 @@ import CaseDefenseur_defense from "@/components/plateauDefense/case_defense/Case
 import TourAttaquant_defense from "@/components/plateauDefense/TourAttaquant_defense.vue";
 import PVDefenseur_defense from "@/components/plateauDefense/PVDefenseur_defense.vue";
 import io from "socket.io-client";
+import {ref, watch} from "vue";
+export let redBorder = ref(false);
 
 export default {
   components: {
@@ -46,10 +48,15 @@ export default {
       showOverlay: false,
       overlayCard: {},
       reader: null,
+      isRedBorder: false,
       socket: null
     };
   },
   mounted() {
+    watch(redBorder, (newVal) => {
+      this.isRedBorder = newVal
+
+    });
     this.socket = io('http://localhost:3001');
     this.socket.on('rfidData', (data) => {
       const {readerID, card} = data;
@@ -105,7 +112,8 @@ export default {
   margin-top: 50px;
   margin-bottom: 50px;
   max-width: 100%;
-  height: auto;
+  min-width: 100%;
+  min-height: 50.45px;
   mix-blend-mode: lighten;
   opacity: 0.9;
 }
@@ -117,5 +125,31 @@ export default {
   height: 100vh;
   align-items: center;
   gap: 15px;
+}
+
+@keyframes red-border-flash {
+
+  0% {
+    border: 10px solid rgba(255, 0, 0, 0); /* Bordure invisible */
+  }
+  5% {
+    border: 10px solid rgba(255, 0, 0, 0.5); /* Bordure rouge semi-transparente */
+  }
+  20% {
+    border: 10px solid rgba(255, 0, 0, 1); /* Bordure rouge opaque */
+  }
+  50% {
+    border: 10px solid rgba(255, 0, 0, 0.5); /* Bordure rouge semi-transparente */
+  }
+  100% {
+    border: 10px solid rgba(255, 0, 0, 0); /* Bordure invisible */
+  }
+}
+
+.red-border {
+  border: 20px solid transparent;
+  animation: red-border-flash 2s ease-out;
+  box-sizing: border-box;
+  z-index: 1;
 }
 </style>

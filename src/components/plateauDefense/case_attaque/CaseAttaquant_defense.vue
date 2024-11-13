@@ -15,6 +15,7 @@ import Case_2_Attaquant_defense from "@/components/plateauDefense/case_attaque/C
 import Case_3_Attaquant_defense, {finTour} from "@/components/plateauDefense/case_attaque/Case_3_Attaquant_defense.vue";
 import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 import {finDeTourDefense} from "@/components/plateauDefense/TourAttaquant_defense.vue";
+import {redBorder} from "@/components/plateauDefense/PlateauFinaleDefenseur.vue";
 import {watch} from "vue";
 
 export let deckAttaque = fonctionnaliteDefense.methods.genererDeckAttaque();
@@ -85,6 +86,20 @@ export default {
       }
     });
   },
+  methods: {
+    showRedBorder(emplacement){
+      if (emplacement !== 420){
+
+        setTimeout(() => {
+          redBorder.value = true
+        },1000)
+
+        setTimeout(() => {
+          redBorder.value = false
+        },3000)
+      }
+    }
+  }
 }
 </script>
 

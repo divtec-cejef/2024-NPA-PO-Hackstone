@@ -42,6 +42,7 @@
 <script setup>
 import { pv }  from '@/components/plateauAttaque/fonctionnaliteesAttaque.vue';
 import { ref, watch } from 'vue'
+import {redBorder} from "@/components/plateauAttaque/PlateauFinaleAttaquant.vue";
 
 // Variable représentant les PV de l'attaquant (ici 5 PV pour commencer)
 const boucliers = ref([false, false, false, false, false]) // Etat des boucliers (intact ou cassé)
@@ -65,6 +66,10 @@ watch(pv, (newVal) => {
 
 // Fonction pour simuler la perte de PV de l'attaquant (par exemple après une attaque)
 function perdrePVAttaquant() {
+  redBorder.value = true;
+  setTimeout(() => {
+    redBorder.value = false
+  },2000)
   if (pv.value >= 0) {
     boucliers.value[(pv.value - 4) *-1] = true // Casser le bouclier correspondant
   }

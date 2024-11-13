@@ -77,6 +77,10 @@ export default {
         let indexStockage = cartesEnMain.find(index => index.name === "Stockage");
         cartesEnMain.splice(cartesEnMain.indexOf(indexStockage), 1);
       }
+       let anon = cartesDeck.find(carte => carte.name === "Super-antivirus")
+       if (anon !== undefined)
+         cartesEnMain.push(anon)
+      cartesEnMain.splice(cartesEnMain.length, 1);
     },
 
     /**
@@ -114,7 +118,6 @@ export default {
         reader.image = cartePosee.image;
         reader.name = cartePosee.name;
         cartesEnMains.splice(index, 1);
-
         carteEnJeu.push(cartePosee);
       }
     },
@@ -133,14 +136,14 @@ export default {
         for (let i = 0; i < readerID.length; i++){
           if(reader[readerID[i]].name !== "Super-antivirus"
               || (reader[readerID[i]].name === "Super-antivirus" && pvSuperAntivirus === 1)) {
-
             //Retrouve l'index de la carte qui va être détruite
             let indexCarteDefense = carteEnJeu.find(carte => carte.name === reader[readerID[i].name])
+            if (reader[readerID[i]].image !== null )
             carteEnJeu.splice(carteEnJeu.indexOf(indexCarteDefense), 1);
 
             reader[readerID[i]].name = null;
             reader[readerID[i]].image = null;
-          }else if (reader[readerID[i]].name === "Super-antivirus") {
+          } else if (reader[readerID[i]].name === "Super-antivirus") {
             pvSuperAntivirus = 1;
           }
         }
@@ -235,9 +238,9 @@ export default {
         counterCarteEnJeu = carteEnJeu[j].counter;
 
         //Boucle passant tous les contre des cartes
-          let carteDefense = this.trouverObjet(carteEnJeu[j], readers);
-          if (carteDefense !== undefined && counterCarteEnJeu.includes(card.name)){
-            return carteDefense;
+        let carteDefense = this.trouverObjet(carteEnJeu[j], readers);
+        if (carteDefense !== undefined && counterCarteEnJeu.includes(card.name)){
+          return carteDefense;
         }
       }
       return undefined;

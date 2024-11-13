@@ -14,11 +14,13 @@ import fonctionnaliteDefense from "@/components/plateauDefense/fonctionnaliteDef
 import {gsap} from "gsap";
 import {ref, watch} from "vue";
 import 'animate.css'
-
+import caseAttaquant_defense from "@/components/plateauDefense/case_attaque/CaseAttaquant_defense.vue";
 let deckAttaque = fonctionnaliteDefense.methods.genererDeckAttaque();
 let emplacement;
 let delaisAnonymous = 2500;
 let carteAttaquante;
+let DEPLACEMENT_Y = 420;
+
 export let aFiniAttaque = ref(false);
 export let peutAttaquer = ref(false);
 
@@ -71,15 +73,19 @@ export default {
           //Si la carte qui attaque est l'anonymous, attaque deux fois, sinon, attaque une seule fois
           if (carteAttaquante.name === "Anonymous") {
             this.attaquerAnimation(false);
+            caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);
 
             //Attend que la première attaque soit terminée avant de lancer la deuxième
             setTimeout(() => {
               this.attaquerAnimation(true);
-            }, 2500)
-          } else
-            this.attaquerAnimation(true);
+              caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);
 
-        },1000);
+            }, 2500)
+          } else {
+            this.attaquerAnimation(true);
+            caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);
+          }
+        },2000);
       }
     });
 
@@ -106,7 +112,6 @@ export default {
      * @param deplacementX emplacement de la carte en défense
      */
     attaquerCarteAnimation(deplacementX) {
-      let DEPLACEMENT_Y = 420;
       if(deplacementX === this.pv)
         DEPLACEMENT_Y= 800
       const ATTACKING_CARD = this.$refs.attackingCard1_def;
@@ -128,8 +133,9 @@ export default {
             x: deplacementX,
             scale: 1,
             ease: "power2.inOut",
-            delay: 0.6
+            delay: 0.6,
           })
+
           .to(ATTACKING_CARD, {
             duration: 0.3,
             y: 0,

@@ -2,7 +2,7 @@
 import {ref, watch} from 'vue'
 import {pv} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 import {defaite} from "@/components/plateauDefense/TourAttaquant_defense.vue";
-
+//import {redBorder} from "@/components/plateauDefense/PlateauFinaleDefenseur.vue";
 // État des boucliers
 const boucliers = ref([false, false, false, false, false]); // false signifie que le bouclier est intact
 
@@ -20,7 +20,11 @@ watch(pv, (newVal) => {
 
 // Fonction pour simuler la perte de PV (par exemple après une attaque)
 function perdrePV() {
-  if (pv.value >= 0) {
+  // redBorder.value = true;
+  // setTimeout(() => {
+  //   redBorder.value = false
+  // },2000)
+if (pv.value >= 0) {
     // Mettre à jour l'état du bouclier correspondant
     boucliers.value[(pv.value)] = true; // Casser le bouclier correspondant
   }
