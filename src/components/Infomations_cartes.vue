@@ -45,7 +45,7 @@ export default {
       // Nettoie readerID pour enlever les caractères non numériques
       readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
-      if (readerID !== '1' && readerID !== '7' && card.type === 'attaque') {
+      if (readerID !== '1' && readerID !== '7' && readerID !== '5' && card.type === 'attaque') {
         this.cardName = card.name
         this.cardType = card.type
         this.image_info = card.image_info
