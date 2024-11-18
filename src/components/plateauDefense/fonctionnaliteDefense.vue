@@ -58,10 +58,10 @@ export default {
         cartesEnMain.push(cartesDeck[index]);
         cartesDeck.splice(index, 1);
       }
-      let anon = cartesDeck.find(carte => carte.name === "Anonymous")
-      if (anon !== undefined)
-        cartesEnMain.push(anon)
-      cartesEnMain.splice(cartesEnMain.length, 1);
+      // let anon = cartesDeck.find(carte => carte.name === "Anonymous")
+      // if (anon !== undefined)
+      //   cartesEnMain.push(anon)
+      // cartesEnMain.splice(cartesEnMain.length, 1);
     },
 
     /**
