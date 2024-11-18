@@ -53,8 +53,10 @@ button {
     transition: transform 0.1s linear;
 }
 
+
 button:hover {
     transform: scale(1.1); /* Agrandit le bouton de 10% */
+
 }
 
 button.attaque {

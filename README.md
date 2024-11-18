@@ -16,6 +16,8 @@ Le hacker a jusqu'à la fin de son 5ème tour pour réduire les points de vie de
 # Plateau de jeu 
 ![image du plateau](src/img/Plateau.png)
 
+
+
 La zone d'informations sur une carte permet de poser une carte de jeu dessus et d'afficher une page à l'écran faisant une courte description de la carte posée.
 
 # Règles 
