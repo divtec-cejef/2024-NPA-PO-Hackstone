@@ -11,20 +11,34 @@ html, body {
 body {
     color: rgb(158, 158, 158);
     height: 100vh;
-    background: url('../src/img_carte/fond_accueil.png') center center / cover no-repeat fixed;
+    background: url('../src/img/fond_accueil.png') center center / cover no-repeat fixed;
     font: 1rem Lato, Arial, sans-serif;
     margin: 0;
 
-    display: flex; /* Active Flexbox */
-    flex-direction: row; /* Aligne les boutons côte à côte */
-    justify-content: center; /* Centre horizontalement */
-    align-items: flex-end; /* Aligne les éléments vers le bas */
-    padding-bottom: 200px; /* Ajuste la distance depuis le bas */
-    gap: 800px; /* Séparation des boutons */
+    display: flex;
+    flex-direction: column; /* Réorganise en colonne pour le centrage du bouton tutoriel */
+    justify-content: space-between; /* Espace entre le bouton tutoriel et les autres */
+    align-items: center; /* Centre horizontalement tous les éléments */
+}
+
+.tutoriel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 800px; /* Séparation des boutons attaque et défense */
+    padding-bottom: 200px;
 }
 
 button {
-    margin: 0; /* Retire les marges auto pour éviter de désaligner les boutons */
+    margin: 0;
     justify-content: center;
     width: 270px;
     height: 70px;
@@ -33,22 +47,80 @@ button {
     color: white;
     align-items: center;
     border-radius: 100px;
+}
 
-    transition: background-color 0.3s ease-in-out, border-color 0.3s ease;
+button {
+    transition: transform 0.1s linear;
+}
+
+
+button:hover {
+    transform: scale(1.1); /* Agrandit le bouton de 10% */
+
 }
 
 button.attaque {
-    border: 3px solid red; /* Bordure rouge */
+    border: 3px solid red;
     background-color: red;
     box-shadow: 0 0 50px rgba(255, 0, 0, 100);
 }
 
 button.defense {
-    border: 3px solid blue; /* Bordure bleue */
-    background-color: blue;
-    box-shadow: 0 0 50px rgba(0, 0, 255, 100);
+    border: 3px solid #4d4dff;
+    background-color: #4d4dff;
+    box-shadow: 0 0 50px rgb(77, 77, 255);
 }
 
-button:hover {
-    opacity: 0.8; /* Effet de survol pour les boutons */
+button.tutoriel {
+    background: transparent;
+    border-color: transparent;
+    color: red;
 }
+/* Style pour l'overlay (initialement caché) */
+.overlay {
+    position: fixed; /* L'overlay couvre toute la page */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Fond semi-transparent */
+    display: none; /* Caché par défaut */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* S'assure que l'overlay est au-dessus de tout */
+}
+
+/* Centrer et styliser la vidéo */
+.overlay-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    border: 2px solid white;
+}
+
+/* Style pour le bouton de fermeture */
+.close-btn {
+    position: absolute; /* Positionne le bouton en fonction de la vidéo */
+    top: -75px; /* Espace par rapport au haut de la vidéo */
+    right: -10px;
+    font-size: 50px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    margin-top: 20px; /* Ajoute de l'espace entre la vidéo et le bouton */
+    width: 50px;
+    height: 50px;
+    transition: none;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    transform: none;
+}
+
+.image-tutoriel {
+    width: 100%;
+}
+
