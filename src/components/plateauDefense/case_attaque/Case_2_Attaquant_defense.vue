@@ -192,6 +192,7 @@ export default {
         if (carteEnCours !== undefined) {
           if (carteAttaquante.counter.includes(carteEnCours.name)) {
             carteDefense = carteEnCours;
+            console.log("Trouver", carteEnCours)
             break;
           }
         }

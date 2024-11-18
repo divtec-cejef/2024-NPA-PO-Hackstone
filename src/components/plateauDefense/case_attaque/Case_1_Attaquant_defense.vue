@@ -178,14 +178,17 @@ export default {
      * @returns {number} coordonnée X de la carte en défense
      */
     findEmplacement() {
+      console.log(carteAttaquante)
       let carteDefense = undefined;
       //Retrouve le reader qui contient la carte qui va défendre
       let readersID = [2, 3, 5, 6]
       for (let i = 0; i < this.readers.length; i++) {
         let carteEnCours = this.readers[readersID[i]];
         if (carteEnCours !== undefined) {
+          console.log("passage ", i, carteAttaquante.counter.includes(carteEnCours.name))
           if (carteAttaquante.counter.includes(carteEnCours.name)) {
             carteDefense = carteEnCours;
+            console.log("Trouver", carteEnCours)
             break;
           }
         }
