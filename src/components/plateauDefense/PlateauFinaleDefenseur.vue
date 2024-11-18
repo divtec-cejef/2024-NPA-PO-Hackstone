@@ -1,5 +1,9 @@
 <template>
-  <div class="plateau-finale-defense"  :class="{ 'red-border': isRedBorder }">
+  <div class="plateau-finale-defense"  >
+    <div
+        :class="{ 'red-border': isRedBorder }">
+      <div :class="{'center-clear' : isRedBorder}"></div>
+    </div>
     <!-- Compteurs de l'attaque -->
     <TourAttaquant_defense :socket="socket" />
 
@@ -112,10 +116,9 @@ export default {
   margin-top: 50px;
   margin-bottom: 50px;
   max-width: 100%;
-  min-width: 100%;
-  min-height: 50.45px;
   mix-blend-mode: lighten;
   opacity: 0.9;
+  position: absolute;
 }
 
 .plateau-finale-defense {
@@ -126,30 +129,51 @@ export default {
   align-items: center;
   gap: 15px;
 }
-
 @keyframes red-border-flash {
-
-  0% {
-    border: 10px solid rgba(255, 0, 0, 0); /* Bordure invisible */
+  100% {
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0); /* Invisible at the start */
   }
-  5% {
-    border: 10px solid rgba(255, 0, 0, 0.5); /* Bordure rouge semi-transparente */
-  }
-  20% {
-    border: 10px solid rgba(255, 0, 0, 1); /* Bordure rouge opaque */
+  75% {
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.25); /* Invisible at the start */
   }
   50% {
-    border: 10px solid rgba(255, 0, 0, 0.5); /* Bordure rouge semi-transparente */
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.5); /* Partial flash with red */
   }
-  100% {
-    border: 10px solid rgba(255, 0, 0, 0); /* Bordure invisible */
+  25% {
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.75); /* Invisible at the start */
+  }
+  0% {
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 1); /* Full red border flash */
   }
 }
 
 .red-border {
-  border: 20px solid transparent;
-  animation: red-border-flash 2s ease-out;
-  box-sizing: border-box;
-  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 999;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+  padding-top: 1.25%;
 }
+
+.center-clear {
+  position: fixed;
+  height: 95%;
+  width: 95%;
+  /**margin-left: 2.5%;
+  margin-right: 2.5%;
+  margin-top: 1.25%;
+
+   */
+  border-radius: 20%;
+  background-color: transparent;
+  box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.5); /* Crée un trou en transparence */
+  z-index: 998;
+  animation: red-border-flash 1s ease-out;
+}
+
 </style>

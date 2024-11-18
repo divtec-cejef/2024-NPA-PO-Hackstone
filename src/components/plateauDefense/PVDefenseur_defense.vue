@@ -3,7 +3,7 @@ import {ref, watch} from 'vue'
 import {pv} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 import {defaite} from "@/components/plateauDefense/TourAttaquant_defense.vue";
 //import {redBorder} from "@/components/plateauDefense/PlateauFinaleDefenseur.vue";
-// État des boucliers
+// État des shields
 const boucliers = ref([false, false, false, false, false]); // false signifie que le bouclier est intact
 
 let hasLost = ref(false);
@@ -33,7 +33,7 @@ if (pv.value >= 0) {
 
 <template>
   <div>
-    <!-- Affichage des boucliers -->
+    <!-- Affichage des shields -->
     <div class="defense_pvDefenses">
       <div v-for="(isBroken, index) in boucliers" :key="index" class="bouclier-container">
         <div v-if="!isBroken" class="bouclier">
@@ -51,7 +51,7 @@ if (pv.value >= 0) {
       </div>
     </div>
 
-    <!-- Filtre gris et message de défaite affichés si le joueur a perdu -->
+    <!-- Filtre gris et message de défaite affichés si le joueur a hasLostAttack -->
     <div v-if="hasLost">
       <!-- Filtre gris sur tout l'arrière-plan -->
       <div class="overlay"></div>

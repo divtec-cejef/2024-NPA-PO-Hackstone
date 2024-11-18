@@ -96,7 +96,7 @@ export default {
 
         setTimeout(() => {
           redBorder.value = false
-        },3000)
+        },2000)
       }
     }
   }
@@ -108,5 +108,7 @@ export default {
   display: flex;
   justify-content: center;
   gap: 147px;
+  position: absolute;
+  margin-bottom: 430px;
 }
 </style>

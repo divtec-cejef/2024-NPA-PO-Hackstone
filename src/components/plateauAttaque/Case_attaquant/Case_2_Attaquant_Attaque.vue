@@ -15,7 +15,10 @@ import {watch, ref} from "vue";
 import {gsap} from "gsap";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {UID2}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
-import {perdu} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+import {hasLostAttack} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+import caseAttaquant_attaque from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
+let deplacementY = -420
+
 export let peutAttaquerCase2 = ref(false);
 
 export default {
@@ -59,7 +62,7 @@ export default {
       let {readerID, card, uid} = data;
 
       //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
-      if (readerID === '5)' && this.readers[3].name === card.name && UID2 === uid && !perdu) {
+      if (readerID === '5)' && this.readers[3].name === card.name && UID2 === uid && !hasLostAttack) {
         this.hasEntered = true;
 
         let emplacement;
@@ -90,6 +93,7 @@ export default {
         //Vérifie si la carte remplie les conditions pour attaquer
         if (fonctionnaliteesAttaque.methods.peutAttaquer(card)) {
           this.attaquerCarteCase2(2, emplacement);
+          caseAttaquant_attaque.methods.showRedBorder(deplacementY)
           setTimeout(() => {
             fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[3], this.readers);
           }, 2000);
@@ -115,7 +119,7 @@ export default {
       return require('@/img/img_carte/img_attaque/anonymous.png');
     },
     attaquerCarteCase2(card_number, deplacementX) {
-      let deplacementY = -420
+      deplacementY = -420;
       if (deplacementX === this.pv)
         deplacementY = -800;
       const attackingCard = this.$el.querySelector('.attaque-card'+card_number); // Sélectionne l'élément par classe
@@ -154,13 +158,18 @@ export default {
 .bottomReader2_attaque {
   width: 300px;
   height: 420px;
-  position: relative;
-  border: 4px solid white;
+  background-size: 100%;
+  border-width: 4px;
+  border-style: solid;
+  border-color: white;
+  border-image: initial;
+  font-size: 24px;
+  justify-content: center;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-size: 100%;
+  z-index: 1;
   background-color: rgba(255, 255, 255, 0.5);
+  margin-top: 200px;
 }
 
 .attack-card {

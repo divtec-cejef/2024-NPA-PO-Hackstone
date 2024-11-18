@@ -11,8 +11,9 @@ import io from "socket.io-client";
 import Case_1_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
 import Case_2_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_2_Attaquant_Attaque.vue";
 import Case_3_Attaquant_Attaque from "@/components/plateauAttaque/Case_attaquant/Case_3_Attaquant_Attaque.vue";
-import fonctionnaliteesAttaque, {cartesAttaque} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-import {perdu, messageErreurAttaque} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+import fonctionnaliteesAttaque, {attackingCards} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
+import {hasLostAttack, userMessageAttack} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+import {redBorder} from "@/components/plateauAttaque/PlateauFinaleAttaquant.vue";
 
 export let UID1;
 export let UID2;
@@ -49,7 +50,7 @@ export default {
       //Retrouve le reader sur lequel la carte a été scannée
       const reader = this.localReaders.findIndex(r => r.id === Number(readerID));
       //Vérifie si la carte est de type attaque et si la partie n'est pas terminée
-      if (card.type === 'attaque' && !perdu) {
+      if (card.type === 'attaque' && !hasLostAttack) {
 
 
         if ((reader === 2 || reader === 3 || reader === 5)) {
@@ -66,14 +67,14 @@ export default {
 
               //Ajoute la carte dans la liste des cartes en attaque si elle n'est pas déjà présente
               let exist = false;
-              for (let i = 0; i < cartesAttaque.length; i++) {
-                if (cartesAttaque[i].uid.includes(card.uid)) {
+              for (let i = 0; i < attackingCards.length; i++) {
+                if (attackingCards[i].uid.includes(card.uid)) {
                   exist = true;
                   break;
                 }
               }
               if (!exist)
-                cartesAttaque.push(card);
+                attackingCards.push(card);
               //Copie des readers
               let newReaders = [...this.localReaders];
               this.$emit('update-readers', newReaders);
@@ -88,15 +89,29 @@ export default {
                 UID3 = uid;
 
             } else if (this.localReaders[reader].image !== card.image)
-              messageErreurAttaque.value = "Une autre carte est déjà présente sur cette zone"
+              userMessageAttack.value = "Une autre carte est déjà présente sur cette zone"
           } else if (uidPrecedent.includes(uid) && this.localReaders[reader].image !== card.image) {
-            messageErreurAttaque.value = "Cette carte à déjà été utilisée"
+            userMessageAttack.value = "Cette carte à déjà été utilisée"
           }
         }
       } else if (reader !== 0 && reader !== 1) {
-        messageErreurAttaque.value = "Type de carte invalide"
+        userMessageAttack.value = "Type de carte invalide"
       }
     });
+  },
+  methods: {
+    showRedBorder(emplacement) {
+      if (emplacement !== -420) {
+
+        setTimeout(() => {
+          redBorder.value = true
+        }, 1000)
+
+        setTimeout(() => {
+          redBorder.value = false
+        }, 3000)
+      }
+    }
   }
 };
 </script>
@@ -106,5 +121,7 @@ export default {
   display: flex;
   justify-content: center;
   gap: 147px;
+  position: absolute;
+  margin-top: 430px;
 }
 </style>

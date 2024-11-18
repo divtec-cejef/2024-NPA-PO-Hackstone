@@ -112,8 +112,9 @@ export default {
      * @param deplacementX emplacement de la carte en défense
      */
     attaquerCarteAnimation(deplacementX) {
+      DEPLACEMENT_Y = 420;
       if(deplacementX === this.pv)
-        DEPLACEMENT_Y= 800
+        DEPLACEMENT_Y = 800
       const ATTACKING_CARD = this.$refs.attackingCard1_def;
 
       if (!ATTACKING_CARD) {
@@ -232,7 +233,7 @@ export default {
   align-items: center;
   z-index: 1;
   background-color: rgba(255, 255, 255, 0.5);
-
+  margin-bottom: 200px;
 }
 .attack-card1_def {
   animation: slideInDown; /* referring directly to the animation's @keyframe declaration */

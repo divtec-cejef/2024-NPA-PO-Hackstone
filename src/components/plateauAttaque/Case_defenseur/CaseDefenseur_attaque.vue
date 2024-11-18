@@ -13,8 +13,8 @@ import Case_1_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur
 import Case_2_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_2_Defenseur_Attaque.vue";
 import Case_3_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_3_Defenseur_Attaque.vue";
 import Case_4_Defenseur_Attaque from "@/components/plateauAttaque/Case_defenseur/Case_4_Defenseur_Attaque.vue";
-import fonctionnaliteesAttaque, {cartesAttaque, stockage} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-import {finDeTour} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+import fonctionnaliteesAttaque, {attackingCards, stockage} from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
+import {isTurnEnding} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 import {peutAttaquer} from "@/components/plateauAttaque/Case_attaquant/Case_1_Attaquant_Attaque.vue";
 import {peutAttaquerCase2} from "@/components/plateauAttaque/Case_attaquant/Case_2_Attaquant_Attaque.vue";
 import {peutAttaquerCase3} from "@/components/plateauAttaque/Case_attaquant/Case_3_Attaquant_Attaque.vue";
@@ -63,9 +63,9 @@ export default {
           }, 5000);
         });
 
-        // Changement de la valeur de `finDeTour` après 6 secondes
+        // Changement de la valeur de `isTurnEnding` après 6 secondes
         setTimeout(() => {
-          finDeTour.value = !finDeTour.value;
+          isTurnEnding.value = !isTurnEnding.value;
             peutAttaquer.value = (this.readers[2].image !== null);
             peutAttaquerCase2.value = (this.readers[3].image !== null)
             peutAttaquerCase3.value = (this.readers[5].image !== null)
@@ -73,8 +73,8 @@ export default {
 
         //Change le champ poseeDepuis des cartes en attaque à 2
         //afin qu'elles puissent attaquer lors du tour de l'attaquant
-        for (let i = 0; i < cartesAttaque.length; i++){
-          cartesAttaque[i].poseeDepuis = 2;
+        for (let i = 0; i < attackingCards.length; i++){
+          attackingCards[i].poseeDepuis = 2;
         }
 
         //Vide la liste des cartes ayant déjà attaqué
@@ -96,5 +96,8 @@ export default {
   display: flex;
   justify-content: center;
   gap: 147px;
+  position: absolute;
+  margin-bottom: 630px;
+
 }
 </style>

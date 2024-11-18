@@ -141,5 +141,7 @@ export default {
   display: flex;
   justify-content: center;
   gap: 147px;
+  position: absolute;
+  margin-top: 630px;
 }
 </style>

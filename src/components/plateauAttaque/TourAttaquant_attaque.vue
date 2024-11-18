@@ -8,8 +8,8 @@
     </div>
 
     <div v-if="errorVisible" class="test-Image">
-      <img src="../../img/FinDeTour 2 1.png" alt="" class="image"/>
-      <div class="overlay-image">{{ texte }}</div>
+      <img src="../../img/UserMessage.png" alt="" class="image"/>
+      <div class="overlay-image">{{ userMessage }}</div>
     </div>
 
     <!-- Filtre noir et blanc et message de défaite s'affiche si tous les tours sont épuisés -->
@@ -33,9 +33,9 @@
 <script>
 import io from 'socket.io-client';
 import {ref, watch} from "vue";
-export let perdu = false;
-export let finDeTour = ref(false);
-export let messageErreurAttaque = ref("");
+export let hasLostAttack = false;
+export let isTurnEnding = ref(false);
+export let userMessageAttack = ref("");
 export default {
   data() {
     return {
@@ -48,18 +48,17 @@ export default {
         require('@/img/compteur/compteur_5.png')
       ],
       visibility: [true, true, true, true, true], // Tous les compteurs sont visibles au début
-      hasLost: false, // Variable qui indique si le joueur a perdu
+      hasLost: false, // Variable qui indique si le joueur a hasLostAttack
       messageVisible : false,
-      tourAdverse : false,
-      texte: '',
+      userMessage: '',
       errorVisible: false
     };
   },
 
   mounted() {
-    messageErreurAttaque.value = "A toi de jouer, pioche 6 cartes";
+    userMessageAttack.value = "A toi de jouer, pioche 6 cartes";
     setTimeout(() => {
-      this.showUserError(messageErreurAttaque.value);
+      this.showUserMessageAttack(userMessageAttack.value);
     }, 1000);
 
     this.socket = io('http://localhost:3000');
@@ -67,30 +66,27 @@ export default {
       const { readerID } = data;
 
       if (readerID === '7)')
-        messageErreurAttaque.value = "Cette case n'est pas disponible en attaque";
+        userMessageAttack.value = "Cette case n'est pas disponible en attaque";
 
       // Vérifier si le readerID est 1
       if (readerID === '1)') {
         this.updateVisibility();
-        messageErreurAttaque.value = "FIN DE TOUR";
+        userMessageAttack.value = "FIN DE TOUR";
       }
     });
 
     //Obsèrve si le joueur termine son tour, si c'est le cas, affiche un message temporaire
-    watch(finDeTour, (newVal) => {
-      if (newVal === true) {
-        messageErreurAttaque.value = "A toi de jouer, pioche des cartes jusqu'à en avoir 5";
-      }else if (newVal === false)
-        messageErreurAttaque.value = "A toi de jouer, pioche des cartes jusqu'à en avoir 5";
+    watch(isTurnEnding, () => {
+        userMessageAttack.value = "A toi de jouer, pioche des cartes jusqu'à en avoir 5";
     });
 
-    watch(messageErreurAttaque, (newVal, oldValue) => {
+    watch(userMessageAttack, (newVal, oldValue) => {
       if (oldValue !== newVal && newVal !== ""){
-        this.showUserError(messageErreurAttaque.value);
+        this.showUserMessageAttack(userMessageAttack.value);
       }
 
       setTimeout(() => {
-        messageErreurAttaque.value ="";
+        userMessageAttack.value ="";
       }, 3000)
     })
   },
@@ -105,19 +101,19 @@ export default {
         }
       }
 
-      // Vérifier si tous les compteurs sont masqués, le joueur a perdu
+      // Vérifier si tous les compteurs sont masqués, le joueur a hasLostAttack
       if (this.visibility.every(v => !v)) {
         this.hasLost = true;
-        perdu = true
+        hasLostAttack = true
       }
     },
 
     /**
      * Affiche un message temporaire
-     * @param message texte à afficher
+     * @param message userMessage à afficher
      */
-    showUserError(message){
-      this.texte = message;
+    showUserMessageAttack(message){
+      this.userMessage = message;
       this.errorVisible = true;
       setTimeout(() => {
         this.errorVisible = false;
@@ -154,7 +150,7 @@ export default {
   z-index: 999; /* S'assure que le filtre soit en dessous du message */
 }
 
-/* Conteneur pour centrer le texte */
+/* Conteneur pour centrer le userMessage */
 .glitch-text-container {
   position: fixed;
   top: 50%;
@@ -180,7 +176,7 @@ export default {
 }
 
 
-/* Conteneur pour centrer le texte */
+/* Conteneur pour centrer le userMessage */
 .glitch-text-container {
   position: fixed;
   top: 50%;
@@ -218,7 +214,7 @@ export default {
 }
 
 .overlay-image {
-  /* Taille, couleur et espacement du texte */
+  /* Taille, couleur et espacement du userMessage */
   font-size: 50px;
   font-weight: bold;
   color: rgb(255, 255, 255);

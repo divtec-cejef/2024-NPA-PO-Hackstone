@@ -10,13 +10,13 @@ let dejaPosee = false;
 let carteEnJeu = [];
 export let cartesEnDefense = [null, null, null, null];
 export let pv = ref(5);
-export let messageErreur = ref("")
+export let messageErreur = ref("");
 
 export default {
   methods: {
     /**
      * Génère le deck du défenseur à partir d'un fichier json
-     * @returns cartesAttaque cartes présentent dans le deck
+     * @returns attackingCards cartes présentent dans le deck
      */
     genererDeckAttaque() {
       let cartesAttaque = [];
@@ -58,10 +58,10 @@ export default {
         cartesEnMain.push(cartesDeck[index]);
         cartesDeck.splice(index, 1);
       }
-      // let anon = cartesDeck.find(carte => carte.name === "Anonymous")
-      // if (anon !== undefined)
-      //   cartesEnMain.push(anon)
-      // cartesEnMain.splice(cartesEnMain.length, 1);
+      let anon = cartesDeck.find(carte => carte.name === "Anonymous")
+      if (anon !== undefined)
+        cartesEnMain.push(anon)
+      cartesEnMain.splice(cartesEnMain.length, 1);
     },
 
     /**

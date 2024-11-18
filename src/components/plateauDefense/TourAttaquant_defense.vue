@@ -13,12 +13,12 @@
     </div>
 
     <div v-if="messageVisibleDefense && !victoire" class="message">
-      <img v-if="tourAdverseDefense" class="imageFinDeTour" src="../../img/FinDeTour%202.png" alt="Fin de tour"/>
-      <img v-else class="imageFinDeTour" src="../../img/AVousDeJouer%202.png" alt="Fin de tour"/>
+      <img v-if="tourAdverseDefense" class="imageFinDeTour" src="../../img/UserMessage.png" alt="Fin de tour"/>
+      <img v-else class="imageFinDeTour" src="../../img/UserMessage.png" alt="Fin de tour"/>
     </div>
     <div v-if="errorVisible" class="test-Image">
-      <img src="../../img/FinDeTour 2 1.png" alt="" class="image"/>
-      <div class="overlay-image"><b>{{ texte }}</b></div>
+      <img src="../../img/UserMessage.png" alt="" class="image"/>
+      <div class="overlay-image"><b>{{ userMessage }}</b></div>
     </div>
 
     <!-- Message de victoire avec effet glitch si victoire -->
@@ -76,7 +76,7 @@ export default {
       victoire: false,
       messageVisibleDefense: false,
       tourAdverseDefense: true,
-      texte: '',
+      userMessage: '',
       errorVisible: false
 
     };
@@ -105,7 +105,7 @@ export default {
       }
 
     });
-    //Dès que la variable messageErreur est modifié, affiche un message temporaire contenant son texte.
+    //Dès que la variable messageErreur est modifié, affiche un message temporaire contenant son userMessage.
     watch(messageErreur, (newVal, oldValue) => {
       if (oldValue !== newVal && newVal !== ""){
         this.showUserError(messageErreur.value);
@@ -115,7 +115,6 @@ export default {
         messageErreur.value ="";
       }, 2500)
     })
-
   },
 
   computed: {
@@ -161,10 +160,10 @@ export default {
 
     /**
      * Affiche un message temporaire
-     * @param message texte à afficher
+     * @param message userMessage à afficher
      */
     showUserError(message){
-      this.texte = message;
+      this.userMessage = message;
       this.errorVisible = true;
       setTimeout(() => {
         this.errorVisible = false;
@@ -347,7 +346,7 @@ button:hover {
 .imageFinDeTour {
   height: 175px;
 }.overlay-image {
-   /* Taille, couleur et espacement du texte */
+   /* Taille, couleur et espacement du userMessage */
    font-size: 50px;
    font-weight: bold;
    color: rgb(255, 255, 255);

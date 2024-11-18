@@ -1,6 +1,8 @@
 <template>
   <div class="plateau-finale-attaque"
-       :class="{ 'red-border': isRedBorder }"
+
+       :class="{ 'red-border': isRedBorder }">
+    <div :class="{'center-clear' : isRedBorder}"></div>
   >
     <!-- PV du défenseur -->
     <PVDefenseur_attaque />
@@ -19,13 +21,15 @@
 </template>
 
 <script>
+import io from "socket.io-client";
 import {watch, ref} from "vue";
 import CaseAttaquant_attaque from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
 import CaseDefenseur_attaque from "@/components/plateauAttaque/Case_defenseur/CaseDefenseur_attaque.vue";
 import TourAttaquant_attaque from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 import PVDefenseur_attaque from "@/components/plateauAttaque/PVDefenseur_attaque.vue";
-import io from "socket.io-client";
+
 export let redBorder = ref(false);
+
 export default {
   components: {
     CaseAttaquant_attaque,
@@ -52,51 +56,11 @@ export default {
 
     watch(redBorder, (newVal) => {
       this.isRedBorder = newVal
-
     });
+
     this.socket = io('http://localhost:3000');
-    /**     this.socket.on('rfidData', () => {
-           const { readerID, card } = data;
+    },
 
-      if (card.type === 'attaque') {
-        let mappedReaderID = null;
-        switch (parseInt(readerID)) {
-          case 1:
-            mappedReaderID = 0; // Capteur 1 -> Reader 1
-            break;
-          case 2:
-            mappedReaderID = 1; // Capteur 2 -> Reader 2
-            break;
-          case 3:
-            mappedReaderID = 4; // Capteur 3 -> Reader 5
-            break;
-          case 4:
-            mappedReaderID = 5; // Capteur 4 -> Reader 6
-            break;
-          case 5:
-            mappedReaderID = 3; // Capteur 5 -> Reader 3
-            break;
-          case 6:
-            mappedReaderID = 6; // Capteur 6 -> Reader 7
-            break;
-          case 7:
-            mappedReaderID = 2; // Capteur 7 -> Reader 4
-            break;
-        }
-
-        //Retrouve le reader scanné
-        const reader = this.readers.find(r => r.id === mappedReaderID);
-
-        if (!reader) {
-          console.log(`No reader found with mapped ID ${mappedReaderID}.`);
-        }
-
-      } else {
-        console.log(`Carte non valide: type ${card.type}. Seules les cartes de type attaque sont autorisées.`);
-      }
-
-    }); */
-  },
   methods: {
     updateReaders(newReaders){
       this.readers = newReaders;
@@ -106,14 +70,14 @@ export default {
 </script>
 
 <style scoped>
+
 .line {
   margin-top: 50px;
   margin-bottom: 50px;
   max-width: 100%;
-  height: auto;
   mix-blend-mode: lighten;
   opacity: 0.9;
-  z-index: 0;
+  position: absolute;
 }
 
 #ligne_attaque.line {
@@ -128,29 +92,61 @@ export default {
   align-items: center;
   gap: 15px;
 }
-@keyframes red-border-flash {
 
+
+@keyframes red-border-flash {
   0% {
-    border: 10px solid rgba(255, 0, 0, 0); /* Bordure invisible */
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 1); /* Rouge total */
   }
-  5% {
-    border: 10px solid rgba(255, 0, 0, 0.5); /* Bordure rouge semi-transparente */
+  10% {
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.95); /* Rouge très intense */
   }
   20% {
-    border: 10px solid rgba(255, 0, 0, 1); /* Bordure rouge opaque */
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.9); /* Approche du rouge complet */
+  }
+  30% {
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.75); /* Rouge fort */
+  }
+  40% {
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.65); /* Rouge modéré */
   }
   50% {
-    border: 10px solid rgba(255, 0, 0, 0.5); /* Bordure rouge semi-transparente */
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.5); /* Moitié rouge */
+  }
+  60% {
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.35); /* Rouge léger */
+  }
+  70% {
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.2); /* Transition douce */
+  }
+  80% {
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.1); /* Très léger rouge */
+  }
+  90% {
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.05); /* Presque invisible */
   }
   100% {
-    border: 10px solid rgba(255, 0, 0, 0); /* Bordure invisible */
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0); /* Complètement transparent */
   }
 }
 
 .red-border {
-  border: 20px solid transparent;
-  animation: red-border-flash 2s ease-out;
-  box-sizing: border-box;
-  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("../../img/fondEcranAttaque.jpeg") 50%/cover no-repeat fixed;
+  z-index: 999;
 }
+
+.center-clear {
+  position: fixed;
+  height: 95%;
+  width: 95%;
+  border-radius: 20%;
+  z-index: 998;
+  animation: red-border-flash 1s ease-out ;
+}
+
 </style>

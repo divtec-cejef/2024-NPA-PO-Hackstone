@@ -15,9 +15,10 @@ import {gsap} from "gsap";
 import {ref, watch} from "vue";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {UID1}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
-import {perdu} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
-
+import {hasLostAttack} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+import caseAttaquant_attaque from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
 export let peutAttaquer = ref(false);
+let deplacementY = -420
 
 export default {
   props: {
@@ -61,7 +62,7 @@ export default {
       });
 
       //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
-      if (readerID === '5)' && this.readers[2].name === card.name && UID1 === uid && !perdu) {
+      if (readerID === '5)' && this.readers[2].name === card.name && UID1 === uid && !hasLostAttack) {
         this.hasEntered = true;
         let emplacement;
 
@@ -94,6 +95,7 @@ export default {
           this.hasEntered = true;
           //Animation d'attaque
           this.attaquerCarteCase1(1, emplacement);
+          caseAttaquant_attaque.methods.showRedBorder(deplacementY)
           setTimeout(() => {
             fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[2], this.readers);
           }, 2000);
@@ -118,7 +120,7 @@ export default {
       }
     },
     attaquerCarteCase1(card_number, deplacementX) {
-      let deplacementY = -420
+      deplacementY = -420;
       if (deplacementX === this.pv)
         deplacementY = -800;
 
@@ -158,13 +160,18 @@ export default {
 .bottomReader1_attaque {
   width: 300px;
   height: 420px;
-  position: relative; /* Pour placer le bouton par-dessus l'image */
-  border: 4px solid white;
+  background-size: 100%;
+  border-width: 4px;
+  border-style: solid;
+  border-color: white;
+  border-image: initial;
+  font-size: 24px;
+  justify-content: center;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-size: 100%;
+  z-index: 1;
   background-color: rgba(255, 255, 255, 0.5);
+  margin-top: 200px;
 }
 .attack-card1 {
   animation: slideInUp; /* referring directly to the animation's @keyframe declaration */

@@ -2,7 +2,7 @@
   <div class="container">
     <!-- Affichage des cœurs pour l'attaquant -->
     <div class="attaque_pvDefenses">
-      <div v-for="(isBroken, index) in boucliers" :key="index" class="bouclier-container">
+      <div v-for="(isBroken, index) in shields" :key="index" class="bouclier-container">
         <!-- Bouclier intact -->
         <div v-if="!isBroken" class="bouclier">
           <img src="../../img/PV_defenseur.png" alt="Heart" />
@@ -42,39 +42,31 @@
 <script setup>
 import { pv }  from '@/components/plateauAttaque/fonctionnaliteesAttaque.vue';
 import { ref, watch } from 'vue'
-import {redBorder} from "@/components/plateauAttaque/PlateauFinaleAttaquant.vue";
 
 // Variable représentant les PV de l'attaquant (ici 5 PV pour commencer)
-const boucliers = ref([false, false, false, false, false]) // Etat des boucliers (intact ou cassé)
+const shields = ref([false, false, false, false, false]) // Etat des shields (intact ou cassé)
 
 // Variable pour afficher ou masquer le message de victoire
 const hasWon = ref(false)
 
-// Fonction pour déclencher les confettis
-
-
-// Observer les PV de l'attaquant, si 0, affiche un message indiquant la victoire et déclenche les confettis
+// Observer les PV de l'attaquant, si 0, affiche un message indiquant la victoire
 watch(pv, (newVal) => {
   if (newVal <= 0) {
-    perdrePVAttaquant();
+    lostHPAttack();
     setTimeout(() => {
       hasWon.value = true
     }, 1000);
   }else
-    perdrePVAttaquant();
+    lostHPAttack();
 })
 
 // Fonction pour simuler la perte de PV de l'attaquant (par exemple après une attaque)
-function perdrePVAttaquant() {
-  redBorder.value = true;
-  setTimeout(() => {
-    redBorder.value = false
-  },2000)
+function lostHPAttack() {
+
   if (pv.value >= 0) {
-    boucliers.value[(pv.value - 4) *-1] = true // Casser le bouclier correspondant
+    shields.value[(pv.value - 4) *-1] = true // Casser le bouclier correspondant
   }
 }
-
 </script>
 
 <style>
@@ -186,7 +178,7 @@ body {
   z-index: 999;
 }
 
-/* Conteneur pour centrer le texte */
+/* Conteneur pour centrer le userMessage */
 .glitch-text-container {
   position: fixed;
   top: 50%;

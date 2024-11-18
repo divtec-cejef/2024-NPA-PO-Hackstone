@@ -14,9 +14,11 @@ import {gsap} from "gsap";
 import {watch, ref} from "vue";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
 import {UID3, UID2, UID1}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
-import {perdu, messageErreurAttaque} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
-
+import {hasLostAttack, userMessageAttack} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+import caseAttaquant_attaque from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
 export let peutAttaquerCase3 = ref (false);
+let deplacementY = -420
+
 export default {
 
   props: {
@@ -57,7 +59,7 @@ export default {
       });
 
       //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
-      if (readerID === '5)' && this.readers[5].name === card.name && UID3 === uid && !perdu) {
+      if (readerID === '5)' && this.readers[5].name === card.name && UID3 === uid && !hasLostAttack) {
         this.hasEntered = true;
         let emplacement;
 
@@ -91,6 +93,7 @@ export default {
         if (fonctionnaliteesAttaque.methods.peutAttaquer(card)) {
 
           this.attaquerCarteCase3(3, emplacement);
+          caseAttaquant_attaque.methods.showRedBorder(deplacementY)
           setTimeout(() => {
             fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[5], this.readers);
           }, 2000);
@@ -101,7 +104,7 @@ export default {
           },2001)
         }
       } else if (UID1 !== uid && UID2 !== uid && UID3 !== uid && readerID === '5)')
-        messageErreurAttaque.value = "Attaque impossible, cette carte n'a pas été posée"
+        userMessageAttack.value = "Attaque impossible, cette carte n'a pas été posée"
     });
   },
 
@@ -117,7 +120,7 @@ export default {
       return require('@/img/img_carte/img_attaque/anonymous.png');
     },
     attaquerCarteCase3(card_number, deplacementX) {
-      let deplacementY = -420
+      deplacementY = -420;
       if (deplacementX === this.pv)
         deplacementY = -800;
       const attackingCard = this.$el.querySelector('.attaque-card'+card_number); // Sélectionne l'élément par classe
@@ -156,13 +159,18 @@ export default {
 .bottomReader3_attaque {
   width: 300px;
   height: 420px;
-  position: relative;
-  border: 4px solid white;
+  background-size: 100%;
+  border-width: 4px;
+  border-style: solid;
+  border-color: white;
+  border-image: initial;
+  font-size: 24px;
+  justify-content: center;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-size: 100%;
+  z-index: 1;
   background-color: rgba(255, 255, 255, 0.5);
+  margin-top: 200px;
 }
 .attack-card {
   animation: slideInUp;
