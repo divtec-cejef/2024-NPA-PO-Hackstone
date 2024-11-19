@@ -116,8 +116,8 @@ export default {
 
 .defense-card4{
   height: 420px;
-  animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: 1s; /* don't forget to set a duration! */
+  animation: slideInDown;
+  animation-duration: 1s;
   position: fixed;
 }
 

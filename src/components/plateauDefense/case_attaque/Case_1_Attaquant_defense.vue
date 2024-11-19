@@ -97,14 +97,12 @@ export default {
      * @returns {*} le chemin de l'image
      */
     getImagePath(image) {
-      if (image) {
-        try {
-          return require(`@/${image}`);
-        } catch (e) {
-          console.error("Image non trouvée :", image);
-        }
+      try {
+        return require(`@/${image}`);
+      } catch (e) {
+        console.error("Image not found:", image);
+        return '';
       }
-      return require('@/img/img_carte/img_attaque/anonymous.png');
     },
 
     /**
@@ -185,10 +183,8 @@ export default {
       for (let i = 0; i < this.readers.length; i++) {
         let carteEnCours = this.readers[readersID[i]];
         if (carteEnCours !== undefined) {
-          console.log("passage ", i, carteAttaquante.counter.includes(carteEnCours.name))
           if (carteAttaquante.counter.includes(carteEnCours.name)) {
             carteDefense = carteEnCours;
-            console.log("Trouver", carteEnCours)
             break;
           }
         }
@@ -239,8 +235,8 @@ export default {
   margin-bottom: 200px;
 }
 .attack-card1_def {
-  animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: 1s; /* don't forget to set a duration! */
+  animation: slideInDown;
+  animation-duration: 1s;
 }
 .attack-card_def {
   height: 420px;

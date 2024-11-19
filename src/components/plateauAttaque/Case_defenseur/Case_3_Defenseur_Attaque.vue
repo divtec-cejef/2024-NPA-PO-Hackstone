@@ -24,7 +24,7 @@ export default {
         return require(`@/${image}`);
       } catch (e) {
         console.error("Image not found:", image);
-        return ''; // Return a default or empty string if image not found
+        return '';
       }
     }
   }
@@ -49,7 +49,7 @@ export default {
 
 .defense-card{
   height: 420px;
-  animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: 1s; /* don't forget to set a duration! */
+  animation: slideInDown;
+  animation-duration: 1s;
   position: fixed;}
 </style>

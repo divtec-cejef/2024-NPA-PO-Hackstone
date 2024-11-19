@@ -24,7 +24,7 @@ export default {
         return require(`@/${image}`);
       } catch (e) {
         console.error("Image not found:", image);
-        return ''; // Retourne un chemin vide si l'image n'est pas trouvée
+        return '';
       }
     }
   }

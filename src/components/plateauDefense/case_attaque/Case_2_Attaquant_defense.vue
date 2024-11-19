@@ -102,14 +102,12 @@ export default {
   },
   methods: {
     getImagePath(image) {
-      if (image) {
-        try {
-          return require(`@/${image}`);
-        } catch (e) {
-          console.error("Image non trouvée :", image);
-        }
+      try {
+        return require(`@/${image}`);
+      } catch (e) {
+        console.error("Image not found:", image);
+        return '';
       }
-      return require('@/img/img_carte/img_attaque/anonymous.png');
     },
 
     /**

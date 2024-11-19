@@ -131,19 +131,19 @@ export default {
 }
 @keyframes red-border-flash {
   100% {
-    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0); /* Invisible at the start */
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0);
   }
   75% {
-    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.25); /* Invisible at the start */
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.25);
   }
   50% {
-    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.5); /* Partial flash with red */
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.5);
   }
   25% {
-    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.75); /* Invisible at the start */
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.75);
   }
   0% {
-    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 1); /* Full red border flash */
+    box-shadow: 0 0 0 100vw rgba(255, 0, 0, 1);
   }
 }
 
@@ -164,11 +164,6 @@ export default {
   position: fixed;
   height: 95%;
   width: 95%;
-  /**margin-left: 2.5%;
-  margin-right: 2.5%;
-  margin-top: 1.25%;
-
-   */
   border-radius: 20%;
   background-color: transparent;
   box-shadow: 0 0 0 100vw rgba(255, 0, 0, 0.5); /* Crée un trou en transparence */

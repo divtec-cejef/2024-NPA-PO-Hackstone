@@ -104,14 +104,12 @@ export default {
   },
   methods: {
     getImagePath(image) {
-      if (image) {
-        try {
-          return require(`@/${image}`);
-        } catch (e) {
-          console.error("Image non trouvée :", image);
-        }
+      try {
+        return require(`@/${image}`);
+      } catch (e) {
+        console.error("Image not found:", image);
+        return '';
       }
-      return require('@/img/img_carte/img_attaque/anonymous.png');
     },
 
     /**
@@ -237,8 +235,8 @@ export default {
   margin-bottom: 200px;
 }
 .attack-card3_def {
-  animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: 1s; /* don't forget to set a duration! */
+  animation: slideInDown;
+  animation-duration: 1s;
 }
 .attack-card_def {
   height: 420px;
