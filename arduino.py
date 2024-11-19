@@ -26,26 +26,11 @@ try:
             server_url_2 = 'http://localhost:3001/send_rfid_data'  # Plateau Défense
             server_url_3 = 'http://localhost:3003/send_rfid_data'  # Information d'une carte
 
-            # Envoyer les données au serveur 1
-            response_1 = requests.post(server_url_1, data=data)
-            if response_1.status_code == 200:
-                print(f"Data sent successfully to server 1. Response: {response_1.text}")
-            else:
-                print(f"Failed to send data to server 1. Status: {response_1.status_code}")
-
-            # Envoyer les données au serveur 2
-            response_2 = requests.post(server_url_2, data=data)
-            if response_2.status_code == 200:
-                print(f"Data sent successfully to server 2. Response: {response_2.text}")
-            else:
-                print(f"Failed to send data to server 2. Status: {response_2.status_code}")
-
-            # Envoyer les données au serveur 3
-            response_3 = requests.post(server_url_3, data=data)
-            if response_3.status_code == 200:
-                print(f"Data sent successfully to server 3. Response: {response_3.text}")
-            else:
-                print(f"Failed to send data to server 3. Status: {response_3.status_code}")
+            server_urls = [server_url_1, server_url_2, server_url_3]
+            for i, server_url in enumerate(server_urls, start=1):
+                response = requests.post(server_url, data=data)
+                status = "réussi" if response.status_code == 200 else "raté"
+                print(f"Données envoyé : {status} : au serveur {i}. Status : {response.status_code}, Réponse : {response.text}")
 
 except KeyboardInterrupt:
     print("Programme interrompu manuellement.")
