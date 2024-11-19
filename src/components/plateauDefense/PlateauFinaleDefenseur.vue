@@ -10,7 +10,7 @@
     <!-- Case de l'attaque -->
     <CaseAttaquant_defense :readersDefense="readersDefense" :socket="socket"  @update-readers-defense="updateReadersDefense" />
 
-    <img src="../../img/ligne.png" alt="Ligne" class="line" id="ligne_attaque">
+    <img src="../../img/composant_plateau/ligne.png" alt="Ligne" class="line" id="ligne_attaque">
 
     <!-- Case de la défense -->
     <CaseDefenseur_defense :readersDefense="readersDefense" :socket="socket"  @update-readers-defense="updateReadersDefense" />

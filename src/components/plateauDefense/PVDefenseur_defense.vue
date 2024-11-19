@@ -37,15 +37,15 @@ if (pv.value >= 0) {
     <div class="defense_pvDefenses">
       <div v-for="(isBroken, index) in boucliers" :key="index" class="bouclier-container">
         <div v-if="!isBroken" class="bouclier">
-          <img src="../../img/PV_defenseur.png" alt="Heart" class="defense_pvDefense"/>
+          <img src="../../img/composant_plateau/shield/PV_defenseur.png" alt="Heart" class="defense_pvDefense"/>
         </div>
 
         <div v-else class="bouclier-casse">
           <div class="bouclier-half left-half">
-            <img src="../../img/shield-left.png" alt="Bouclier Gauche"/>
+            <img src="../../img/composant_plateau/shield/shield-left.png" alt="Bouclier Gauche"/>
           </div>
           <div class="bouclier-half right-half">
-            <img src="../../img/shield-right.png" alt="Bouclier Droit"/>
+            <img src="../../img/composant_plateau/shield/shield-right.png" alt="Bouclier Droit"/>
           </div>
         </div>
       </div>

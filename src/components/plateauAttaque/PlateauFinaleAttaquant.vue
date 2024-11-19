@@ -10,7 +10,7 @@
     <!-- Case de la défense -->
     <CaseDefenseur_attaque :readers="readers" :socket="socket"  @update-readers="updateReaders" />
 
-    <img src="../../img/ligne.png" alt="Ligne" class="line" id="ligne_attaque">
+    <img src="../../img/composant_plateau/ligne.png" alt="Ligne" class="line" id="ligne_attaque">
 
     <!-- Compteurs de l'attaque -->
     <TourAttaquant_attaque :socket="socket" />
@@ -136,7 +136,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("../../img/fondEcranAttaque.jpeg") 50%/cover no-repeat fixed;
+  background: url("../../img/composant_plateau/fond_ecran/fondEcranAttaque.jpeg") 50%/cover no-repeat fixed;
   z-index: 999;
 }
 

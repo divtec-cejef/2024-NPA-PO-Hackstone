@@ -5,16 +5,16 @@
       <div v-for="(isBroken, index) in shields" :key="index" class="bouclier-container">
         <!-- Bouclier intact -->
         <div v-if="!isBroken" class="bouclier">
-          <img src="../../img/PV_defenseur.png" alt="Heart" />
+          <img src="../../img/composant_plateau/shield/PV_defenseur.png" alt="Heart" />
         </div>
 
         <!-- Bouclier cassé avec images séparées pour la gauche et la droite -->
         <div v-else class="bouclier-casse">
           <div class="bouclier-half left-half">
-            <img src="../../img/shield-left.png" alt="Bouclier Gauche" />
+            <img src="../../img/composant_plateau/shield/shield-left.png" alt="Bouclier Gauche" />
           </div>
           <div class="bouclier-half right-half">
-            <img src="../../img/shield-right.png" alt="Bouclier Droit" />
+            <img src="../../img/composant_plateau/shield/shield-right.png" alt="Bouclier Droit" />
           </div>
         </div>
       </div>

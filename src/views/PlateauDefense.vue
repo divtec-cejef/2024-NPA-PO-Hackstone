@@ -22,7 +22,7 @@ body {
 }
 
 #app2 {
-  background: url("../img/plateau_defenseur.png")  center center / cover no-repeat fixed;
+  background: url("../img/composant_plateau/fond_ecran/plateau_defenseur.png")  center center / cover no-repeat fixed;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

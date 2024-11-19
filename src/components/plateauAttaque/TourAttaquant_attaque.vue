@@ -8,7 +8,7 @@
     </div>
 
     <div v-if="errorVisible" class="test-Image">
-      <img src="../../img/UserMessage.png" alt="" class="image"/>
+      <img src="../../img/composant_plateau/UserMessage.png" alt="" class="image"/>
       <div class="overlay-image">{{ userMessage }}</div>
     </div>
 
@@ -41,11 +41,11 @@ export default {
     return {
       socket: null,
       images_compteur: [
-        require('@/img/compteur/compteur_1.png'),
-        require('@/img/compteur/compteur_2.png'),
-        require('@/img/compteur/compteur_3.png'),
-        require('@/img/compteur/compteur_4.png'),
-        require('@/img/compteur/compteur_5.png')
+        require('@/img/composant_plateau/compteur/compteur_1.png'),
+        require('@/img/composant_plateau/compteur/compteur_2.png'),
+        require('@/img/composant_plateau/compteur/compteur_3.png'),
+        require('@/img/composant_plateau/compteur/compteur_4.png'),
+        require('@/img/composant_plateau/compteur/compteur_5.png')
       ],
       visibility: [true, true, true, true, true], // Tous les compteurs sont visibles au début
       hasLost: false, // Variable qui indique si le joueur a hasLostAttack
