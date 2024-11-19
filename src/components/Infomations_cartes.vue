@@ -80,7 +80,8 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  text-align: left;
+  text-align: justify;
+  background-color: rgba(0, 0, 0, .3);
 }
 
 .container-2 {
@@ -133,7 +134,7 @@ img {
 }
 
 p {
-  margin: 10px;
+  margin: 10px 20px 10px 0;
   font-size: 30px;
   color: white;
 }
