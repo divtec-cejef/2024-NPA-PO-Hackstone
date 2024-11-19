@@ -78,10 +78,12 @@ export default {
         let indexStockage = cartesEnMain.find(index => index.name === "Stockage");
         cartesEnMain.splice(cartesEnMain.indexOf(indexStockage), 1);
       }
+      /*
         let anon = cartesDeck.find(carte => carte.name === "Super-antivirus")
         if (anon !== undefined)
           cartesEnMain.push(anon)
        cartesEnMain.splice(cartesEnMain.length, 1);
+       */
     },
 
     /**

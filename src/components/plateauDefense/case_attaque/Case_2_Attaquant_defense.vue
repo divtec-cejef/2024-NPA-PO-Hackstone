@@ -19,6 +19,7 @@ import {gsap} from "gsap";
 import {aFiniAttaque} from "@/components/plateauDefense/case_attaque/Case_1_Attaquant_defense.vue";
 import {defaite} from "@/components/plateauDefense/TourAttaquant_defense.vue";
 import {ref, watch} from "vue";
+import {anonymousNumberAttack} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 
 export let aFiniAttaque2 = ref(false);
 let emplacement;
@@ -80,6 +81,7 @@ export default {
               //Lance deux attaques si la carte attaquante est l'Anonymous
               if (carteAttaquante.name === "Anonymous") {
                 this.attaquerAnimation(false);
+                anonymousNumberAttack.value = 1;
                 caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);
                 setTimeout(() => {
                   this.attaquerAnimation(true)

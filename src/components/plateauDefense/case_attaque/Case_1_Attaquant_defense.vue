@@ -15,6 +15,8 @@ import {gsap} from "gsap";
 import {ref, watch} from "vue";
 import 'animate.css'
 import caseAttaquant_defense from "@/components/plateauDefense/case_attaque/CaseAttaquant_defense.vue";
+import {anonymousNumberAttack} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
+
 let deckAttaque = fonctionnaliteDefense.methods.genererDeckAttaque();
 let emplacement;
 let delaisAnonymous = 2500;
@@ -73,13 +75,13 @@ export default {
           //Si la carte qui attaque est l'anonymous, attaque deux fois, sinon, attaque une seule fois
           if (carteAttaquante.name === "Anonymous") {
             this.attaquerAnimation(false);
-            caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);
+            anonymousNumberAttack.value = 1;
 
+            caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);
             //Attend que la première attaque soit terminée avant de lancer la deuxième
             setTimeout(() => {
               this.attaquerAnimation(true);
               caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);
-
             }, 2500)
           } else {
             this.attaquerAnimation(true);

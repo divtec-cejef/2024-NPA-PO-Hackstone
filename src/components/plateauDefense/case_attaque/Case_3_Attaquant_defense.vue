@@ -19,6 +19,7 @@ import {ref, watch} from "vue";
 import {aFiniAttaque2} from "@/components/plateauDefense/case_attaque/Case_2_Attaquant_defense.vue";
 import {defaite} from "@/components/plateauDefense/TourAttaquant_defense.vue";
 import caseAttaquant_defense from "@/components/plateauDefense/case_attaque/CaseAttaquant_defense.vue";
+import {anonymousNumberAttack} from "@/components/plateauDefense/fonctionnaliteDefense.vue";
 
 export let peutAttaquerCase3 = ref (false);
 export let finTour = ref(false)
@@ -78,14 +79,14 @@ export default {
               if (carteAttaquante.name === "Anonymous") {
                 delaisAnonymous = 3000;
                 this.attaquerAnimation(false);
+                anonymousNumberAttack.value = 1;
                 caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);
-
-                setTimeout(() => {
-                  this.attaquerAnimation(true)
-                  caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);
-
-                },4000)
-
+                if (this.readers[4]. name !== null) {
+                  setTimeout(() => {
+                    this.attaquerAnimation(true)
+                    caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);
+                  }, 4000)
+                }
               }else
                 this.attaquerAnimation(true);
               caseAttaquant_defense.methods.showRedBorder(DEPLACEMENT_Y);

@@ -1,15 +1,17 @@
 <script>
 // Importation du fichier JSON des CARTES
 import {ref} from "vue";
+
 const CARDS_DATA = require('../../../cards.json');
 const DECK = { CARDS_DATA };
 const CARTES = DECK.CARDS_DATA.cards;
 let pvAnonymous = 2;
-let pvSuperAntivirus;
+let pvSuperAntivirus = 2;
 let dejaPosee = false;
 let carteEnJeu = [];
 export let cartesEnDefense = [null, null, null, null];
 export let pv = ref(5);
+export let anonymousNumberAttack = ref(0)
 export let messageErreur = ref("");
 
 export default {
@@ -58,10 +60,13 @@ export default {
         cartesEnMain.push(cartesDeck[index]);
         cartesDeck.splice(index, 1);
       }
-      // let anon = cartesDeck.find(carte => carte.name === "Anonymous")
-      // if (anon !== undefined)
-      //   cartesEnMain.push(anon)
-      // cartesEnMain.splice(cartesEnMain.length, 1);
+      /*
+       let anon = cartesDeck.find(carte => carte.name === "Anonymous")
+       if (anon !== undefined)
+         cartesEnMain.push(anon)
+       cartesEnMain.splice(cartesEnMain.length, 1);
+
+       */
     },
 
     /**
@@ -135,6 +140,18 @@ export default {
             let carteDefense = readers.find(carte => carte.name === cartesEnDefense[j].name);
             carteDefendue = true;
 
+            if (carteDefense.name === "Super-antivirus" && pvSuperAntivirus === 2 && card.name === "Anonymous" && anonymousNumberAttack.value === 1 && pvAnonymous === 2) {
+              pvSuperAntivirus = 0;
+              pvAnonymous = 0;
+              anonymousNumberAttack.value = 2;
+              carteDefense.image = null;
+              carteDefense.name = null;
+              carteAttaque.image = null;
+              carteAttaque.name = null;
+              cartesEnDefense.splice(j, 1, null);
+              messageErreur.value = `Défense réussie, envoie la carte Super-antivirus au cimetière`
+            }
+
             //Vérifie si la carte attaquante est "Anonymous" et, si oui, son nombre de points de vie
             if ((card.name === "Anonymous" && pvAnonymous < 2)
                 || card.name !== "Anonymous") {
@@ -149,7 +166,7 @@ export default {
 
             //Vérifie si la carte attaquante est "Super-antivirus" et, si oui, son nombre de points de vie
             if ((carteDefense.name === "Super-antivirus" && pvSuperAntivirus < 2)
-                || carteDefense.name !== "Super-antivirus") {
+                || carteDefense.name !== "Super-antivirus" && carteDefense.name !== null) {
               //Retire la carte du jeu
               messageErreur.value = `Défense réussie, envoie la carte ${carteDefense.name} au cimetière`
               carteDefense.image = null;
