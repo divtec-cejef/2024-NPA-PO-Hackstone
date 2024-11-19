@@ -11,7 +11,7 @@ html, body {
 body {
     color: rgb(158, 158, 158);
     height: 100vh;
-    background: url('../src/img/fond_accueil.png') center center / cover no-repeat fixed;
+    background: url('../src/img/composant_plateau/fond_ecran/fond_accueil.png') center center / cover no-repeat fixed;
     font: 1rem Lato, Arial, sans-serif;
     margin: 0;
 

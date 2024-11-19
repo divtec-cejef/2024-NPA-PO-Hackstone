@@ -174,8 +174,8 @@ export default {
   margin-top: 200px;
 }
 .attack-card1 {
-  animation: slideInUp; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: 1s; /* don't forget to set a duration! */
+  animation: slideInUp;
+  animation-duration: 1s;
   position: fixed;
   height: 420px;
 }

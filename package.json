@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "C:\\Users\\courluc\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service serve",
-    "build:plateauAttaque": "C:\\Users\\courluc\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/plateauAttaque",
-    "build:plateauDefense": "C:\\Users\\courluc\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/plateauDefense",
-    "build:informationCarte": "C:\\Users\\courluc\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/informationCarte",
-    "lint": "C:\\Users\\courluc\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service lint"
+    "serve": "C:\\Users\\admin\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service serve",
+    "build:plateauAttaque": "C:\\Users\\admin\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/plateauAttaque",
+    "build:plateauDefense": "C:\\Users\\admin\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/plateauDefense",
+    "build:informationCarte": "C:\\Users\\admin\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service build --dest dist/informationCarte",
+    "lint": "C:\\Users\\admin\\IdeaProjects\\2024-NPA-PO-Hackstone/node_modules/.bin/vue-cli-service lint"
   },
   "dependencies": {
     "animate.css": "^4.1.1",

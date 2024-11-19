@@ -78,10 +78,10 @@ export default {
         let indexStockage = cartesEnMain.find(index => index.name === "Stockage");
         cartesEnMain.splice(cartesEnMain.indexOf(indexStockage), 1);
       }
-      //  let anon = cartesDeck.find(carte => carte.name === "Super-antivirus")
-      //  if (anon !== undefined)
-      //    cartesEnMain.push(anon)
-      // cartesEnMain.splice(cartesEnMain.length, 1);
+        let anon = cartesDeck.find(carte => carte.name === "Super-antivirus")
+        if (anon !== undefined)
+          cartesEnMain.push(anon)
+       cartesEnMain.splice(cartesEnMain.length, 1);
     },
 
     /**
@@ -294,6 +294,16 @@ export default {
                 //Retire le nom et l'image de la carte détruite de leur case
                 //et détruit l'Anonymous et le super-antivirus uniquement s'ils ont déjà été attaqués une fois
                 if (carteDefense !== undefined){
+                  if (carteDefense.name === "Super-antivirus" && pvSuperAntivirus === 2 && card.name === "Anonymous" && anonymousAttackNumber === 1 && pvAnonymous === 2) {
+                    pvSuperAntivirus = 0;
+                    pvAnonymous = 0;
+                    anonymousAttackNumber = 2;
+                    carteDefense.image = null;
+                    carteDefense.name = null;
+                    reader.image = null;
+                    reader.name = null;
+                  }
+
                   if ((carteDefense.name === "Super-antivirus" && pvSuperAntivirus === 1)
                       || carteDefense.name !== "Super-antivirus") {
 
@@ -302,8 +312,10 @@ export default {
                     carteDefense.name = null;
                     inGameCards.splice(j, 1);
 
-                  } else
+                  } else {
                     pvSuperAntivirus = 1;
+                  }
+
                 }
                 if ((reader.name === "Anonymous" && pvAnonymous === 1) || reader.name !== "Anonymous") {
                   reader.image = null;

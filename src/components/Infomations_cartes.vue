@@ -10,7 +10,7 @@
         <div class="description_jeu">
           <p><b> Description jeu : </b></p>
           <P>{{ descriptionJeu }}</P>
-          <P><b>Type en jeu : </b>{{ cardType }}</P>
+          <P><b>Type en jeu : {{ cardType }}</b></P>
         </div>
 
         <div class="description_vie">
@@ -45,7 +45,7 @@ export default {
       // Nettoie readerID pour enlever les caractères non numériques
       readerID = readerID.replace(/\D/g, ''); // Garde seulement les chiffres
 
-      if (readerID !== '1' && readerID !== '7' && card.type === 'attaque') {
+      if (readerID !== '1' && readerID !== '7' && readerID !== '5' && card.type === 'attaque') {
         this.cardName = card.name
         this.cardType = card.type
         this.image_info = card.image_info
@@ -58,17 +58,6 @@ export default {
         this.descriptionJeu = card.description_jeu
         this.descriptionVie = card.description_vie
       }
-      /*
-      if (readerID !== '1' && (readerID === '5' && card.type === 'attaque')) {
-        this.cardName = card.name
-        this.cardType = card.type
-        this.image_info = card.image_info
-        this.descriptionJeu = card.description_jeu
-        this.descriptionVie = card.description_vie
-      }
-      * */
-
-
     });
   },
   methods: {
@@ -91,7 +80,8 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  text-align: left;
+  text-align: justify;
+  background-color: rgba(0, 0, 0, .3);
 }
 
 .container-2 {
@@ -144,7 +134,7 @@ img {
 }
 
 p {
-  margin: 10px;
+  margin: 10px 20px 10px 0;
   font-size: 30px;
   color: white;
 }

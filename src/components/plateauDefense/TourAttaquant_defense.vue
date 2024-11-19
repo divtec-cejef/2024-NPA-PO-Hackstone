@@ -13,11 +13,11 @@
     </div>
 
     <div v-if="messageVisibleDefense && !victoire" class="message">
-      <img v-if="tourAdverseDefense" class="imageFinDeTour" src="../../img/UserMessage.png" alt="Fin de tour"/>
-      <img v-else class="imageFinDeTour" src="../../img/UserMessage.png" alt="Fin de tour"/>
+      <img v-if="tourAdverseDefense" class="imageFinDeTour" src="../../img/composant_plateau/UserMessage.png" alt="Fin de tour"/>
+      <img v-else class="imageFinDeTour" src="../../img/composant_plateau/UserMessage.png" alt="Fin de tour"/>
     </div>
     <div v-if="errorVisible" class="test-Image">
-      <img src="../../img/UserMessage.png" alt="" class="image"/>
+      <img src="../../img/composant_plateau/UserMessage.png" alt="" class="image"/>
       <div class="overlay-image"><b>{{ userMessage }}</b></div>
     </div>
 
@@ -52,25 +52,25 @@ export default {
   data() {
     return {
       images_compteur: [
-        require('@/img/compteur/compteur_1.png'),
-        require('@/img/compteur/compteur_2.png'),
-        require('@/img/compteur/compteur_3.png'),
-        require('@/img/compteur/compteur_4.png'),
-        require('@/img/compteur/compteur_5.png')
+        require('@/img/composant_plateau/compteur/compteur_1.png'),
+        require('@/img/composant_plateau/compteur/compteur_2.png'),
+        require('@/img/composant_plateau/compteur/compteur_3.png'),
+        require('@/img/composant_plateau/compteur/compteur_4.png'),
+        require('@/img/composant_plateau/compteur/compteur_5.png')
       ],
       brokenImagesLeft: [
-        require('@/img/compteur/compteur_1_gauche.png'),
-        require('@/img/compteur/compteur_2_gauche.png'),
-        require('@/img/compteur/compteur_3_gauche.png'),
-        require('@/img/compteur/compteur_4_gauche.png'),
-        require('@/img/compteur/compteur_5_gauche.png')
+        require('@/img/composant_plateau/compteur/compteur_1_gauche.png'),
+        require('@/img/composant_plateau/compteur/compteur_2_gauche.png'),
+        require('@/img/composant_plateau/compteur/compteur_3_gauche.png'),
+        require('@/img/composant_plateau/compteur/compteur_4_gauche.png'),
+        require('@/img/composant_plateau/compteur/compteur_5_gauche.png')
       ],
       brokenImagesRight: [
-        require('@/img/compteur/compteur_1_droite.png'),
-        require('@/img/compteur/compteur_2_droite.png'),
-        require('@/img/compteur/compteur_3_droite.png'),
-        require('@/img/compteur/compteur_4_droite.png'),
-        require('@/img/compteur/compteur_5_droite.png')
+        require('@/img/composant_plateau/compteur/compteur_1_droite.png'),
+        require('@/img/composant_plateau/compteur/compteur_2_droite.png'),
+        require('@/img/composant_plateau/compteur/compteur_3_droite.png'),
+        require('@/img/composant_plateau/compteur/compteur_4_droite.png'),
+        require('@/img/composant_plateau/compteur/compteur_5_droite.png')
       ],
       visibility: [true, true, true, true, true],
       victoire: false,
