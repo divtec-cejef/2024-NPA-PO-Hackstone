@@ -10,7 +10,7 @@
         <div class="description_jeu">
           <p><b> Description jeu : </b></p>
           <P>{{ descriptionJeu }}</P>
-          <P><b>Type en jeu : </b>{{ cardType }}</P>
+          <P><b>Type en jeu : {{ cardType }}</b></P>
         </div>
 
         <div class="description_vie">
