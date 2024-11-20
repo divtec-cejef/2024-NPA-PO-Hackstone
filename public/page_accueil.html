@@ -10,6 +10,29 @@
 </head>
 <body>
 
+<!-- Section pour le bouton tutoriel -->
+<div class="tutoriel-container">
+    <button class="tutoriel" onclick="openOverlay()"><b>TUTORIEL</b></button>
+    <button class="information" id="openWindow"><b>INFOS CARTES</b></button>
+</div>
+
+<!-- Overlay contenant la vidéo -->
+<div id="videoOverlay" class="overlay">
+    <div class="overlay-content">
+        <button class="close-btn" onclick="closeOverlay()">&times;</button> <!-- Bouton pour fermer l'overlay -->
+        <video controls width="100%">
+            <source src="../src/img/tutoriel_jeu.mp4" type="video/mp4"> <!-- Lien vers la vidéo -->
+            Votre navigateur ne supporte pas la lecture de vidéo.
+        </video>
+    </div>
+</div>
+
+<!-- Section pour les boutons attaque et défense -->
+<div class="buttons-container">
+    <button class="attaque" onclick="openURL('http://localhost:3000')"><b>ATTAQUE</b></button>
+    <button class="defense" onclick="openURL('http://localhost:3001')"><b>DEFENSE</b></button>
+</div>
+
 <script>
     function openURL(url) {
         window.open(url, '_blank'); // Ouvre l'URL dans un nouvel onglet
@@ -40,29 +63,30 @@
 
     // Ajouter l'événement de clic pour fermer l'overlay
     document.addEventListener('click', clickOutsideOverlay);
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('openWindow').addEventListener('click', () => {
+            // Obtenez les dimensions du premier écran
+            const screenX = window.screen.width; // Largeur totale du premier écran
+            const screenY = 0; // Aligner avec le haut de l'écran secondaire
+            const width = window.screen.width; // Largeur du deuxième écran
+            const height = window.screen.height; // Hauteur du deuxième écran
+
+            // Options de la fenêtre
+            const features = `left=${screenX},top=${screenY},width=${width},height=${height},fullscreen=yes`;
+
+            // Ouvrir une nouvelle fenêtre sur le deuxième écran
+            const newWindow = window.open('http://localhost:3003', 'NouvelleFenetre', features);
+
+            if (newWindow) {
+                newWindow.focus(); // Met la fenêtre en avant-plan
+            } else {
+                alert("Impossible d'ouvrir la fenêtre. Vérifiez que votre navigateur autorise les pop-ups.");
+            }
+        });
+    });
 </script>
-
-<!-- Section pour le bouton tutoriel -->
-<div class="tutoriel-container">
-    <button class="tutoriel" onclick="openOverlay()"><b>TUTORIEL</b></button>
-</div>
-
-<!-- Overlay contenant la vidéo -->
-<div id="videoOverlay" class="overlay">
-    <div class="overlay-content">
-        <button class="close-btn" onclick="closeOverlay()">&times;</button> <!-- Bouton pour fermer l'overlay -->
-        <video controls width="100%">
-            <source src="../src/img/tutoriel_jeu.mp4" type="video/mp4"> <!-- Lien vers la vidéo -->
-            Votre navigateur ne supporte pas la lecture de vidéo.
-        </video>
-    </div>
-</div>
-
-<!-- Section pour les boutons attaque et défense -->
-<div class="buttons-container">
-    <button class="attaque" onclick="openURL('http://localhost:3000')"><b>ATTAQUE</b></button>
-    <button class="defense" onclick="openURL('http://localhost:3001')"><b>DEFENSE</b></button>
-</div>
 
 </body>
 </html>
