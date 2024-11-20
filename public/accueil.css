@@ -23,10 +23,11 @@ body {
 
 .tutoriel-container {
     display: flex;
-    flex-flow: column;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 60vh;
+    position: fixed;
 }
 
 .buttons-container {
@@ -36,6 +37,8 @@ body {
     align-items: flex-end;
     gap: 800px; /* Séparation des boutons attaque et défense */
     padding-bottom: 200px;
+    bottom: 0;
+    position: fixed;
 }
 
 button {
