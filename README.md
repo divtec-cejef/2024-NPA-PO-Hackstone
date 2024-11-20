@@ -19,7 +19,9 @@ Le hacker a jusqu'à la fin de son 5ème tour pour réduire les points de vie de
 
 
 La zone d'informations sur une carte permet de poser une carte de jeu dessus et d'afficher une page à l'écran faisant une courte description de la carte posée.
+
 La quatrième zone de carte est utilisable uniquement par le défenseur lorsqu'il a scanné la carte "Stockage"
+
 La zone d'attaque est utilisable uniquement par l'attaquant afin d'attaquer les points de vie du défenseur ou une de ses cartes.
 
 # Règles 
