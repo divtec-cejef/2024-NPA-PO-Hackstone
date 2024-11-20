@@ -4,6 +4,7 @@
           alt="Attaque Card"
           :class ="{'attack-card': !hasEntered}"
           :id ="canAttack3 ? 'flame_case3' : ''"
+          :style="shakeStyle3"
           class="attaque-card3">
   </div>
 </template>
@@ -44,7 +45,8 @@ export default {
       stockage: 230,
       pv: -455,
       hasEntered: false,
-      canAttack3: false
+      canAttack3: false,
+      shakeStyle3: {},
     }
   },
 
@@ -57,6 +59,9 @@ export default {
       watch(peutAttaquerCase3, (newVal) => {
         this.canAttack3 = newVal
       });
+
+      if (readerID === '5)' && !this.canAttack3 && UID3 === uid)
+        this.triggerShakeAnimation3()
 
       //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
       if (readerID === '5)' && this.readers[5].name === card.name && UID3 === uid && !hasLostAttack) {
@@ -150,7 +155,18 @@ export default {
             x: 0,
             ease: "power2.inOut",
           });
-    }
+    },
+    triggerShakeAnimation3() {
+      this.shakeStyle3 = {}; // Réinitialise le style
+      this.$nextTick(() => {
+        this.shakeStyle3 = {
+          animation: "shakeX3 1s",
+        };
+        setTimeout(() => {
+          this.shakeStyle3 = {}; // Supprime l'animation après
+        }, 1000); // Durée de l'animation
+      });
+    },
   }
 };
 </script>
@@ -224,6 +240,19 @@ img#flame_case3 {
     0 0 30px rgba(255, 0, 0, 0.6),
     0 0 40px rgba(255, 69, 0, 0.5),
     0 0 50px rgba(255, 0, 0, 0.4);
+  }
+}
+
+@keyframes shakeX3 {
+  from,
+  to {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
   }
 }
 </style>
