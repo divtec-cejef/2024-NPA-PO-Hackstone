@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'accueil</title>
-    <link rel="stylesheet" href="accueil.css">
+    <link rel="stylesheet" href="../public/accueil.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap">
 
 </head>
@@ -29,15 +29,11 @@
 
 <!-- Section pour les boutons attaque et défense -->
 <div class="buttons-container">
-    <button class="attaque" onclick="openURL('http://localhost:3000')"><b>ATTAQUE</b></button>
-    <button class="defense" onclick="openURL('http://localhost:3001')"><b>DEFENSE</b></button>
+    <button class="attaque" onclick="window.open('http://localhost:3000')"><b>ATTAQUE</b></button>
+    <button class="defense" onclick="window.open('http://localhost:3001')"><b>DEFENSE</b></button>
 </div>
 
 <script>
-    function openURL(url) {
-        window.open(url, '_blank'); // Ouvre l'URL dans un nouvel onglet
-    }
-
     // Fonction pour ouvrir l'overlay et lancer la vidéo
     function openOverlay() {
         const video = document.querySelector('#videoOverlay video');
@@ -68,13 +64,12 @@
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('openWindow').addEventListener('click', () => {
             // Obtenez les dimensions du premier écran
-            const screenX = window.screen.width; // Largeur totale du premier écran
-            const screenY = 0; // Aligner avec le haut de l'écran secondaire
-            const width = window.screen.width; // Largeur du deuxième écran
-            const height = window.screen.height; // Hauteur du deuxième écran
+            const screenY = 0;
+            const width = window.screen.width;
+            const height = window.screen.height;
 
             // Options de la fenêtre
-            const features = `left=${screenX},top=${screenY},width=${width},height=${height},fullscreen=yes`;
+            const features = `left=${width},top=${screenY},width=${width},height=${height}`;
 
             // Ouvrir une nouvelle fenêtre sur le deuxième écran
             const newWindow = window.open('http://localhost:3003', 'NouvelleFenetre', features);
