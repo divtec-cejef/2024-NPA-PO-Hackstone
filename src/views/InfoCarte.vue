@@ -22,7 +22,7 @@ body {
 }
 
 #app3 {
-  background: url("../img/composant_plateau/fond_ecran/info_carte.jpg") center center / cover no-repeat fixed;
+  background: url("../img/composant_plateau/fond_ecran/info_carte.jpeg") center center / cover no-repeat fixed;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
