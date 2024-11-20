@@ -1,38 +1,44 @@
 <template>
   <div class="bottomReader1_attaque">
     <!-- L'image de la carte (affichée tout le temps) -->
-    <img  v-if="image" :src="getImagePath(image)" alt="Attaque Card"
-          :class ="{'attack-card1': !hasEntered}"
-          :id ="canAttack ? 'flame_case1' : ''"
-          class="attaque-card1" >
+    <img
+        v-if="image"
+        :src="getImagePath(image)"
+        alt="Attaque Card"
+        :class="{'attack-card1': !hasEntered}"
+        :id="canAttack ? 'flame_case1' : ''"
+        :style="shakeStyle"
+        class="attaque-card1"
+    />
   </div>
 </template>
 
 <script>
-import 'animate.css'
+import "animate.css";
 import io from "socket.io-client";
-import {gsap} from "gsap";
-import {ref, watch} from "vue";
+import { gsap } from "gsap";
+import { ref, watch } from "vue";
 import fonctionnaliteesAttaque from "@/components/plateauAttaque/fonctionnaliteesAttaque.vue";
-import {UID1}  from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
-import {hasLostAttack} from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
+import { UID1 } from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
+import { hasLostAttack } from "@/components/plateauAttaque/TourAttaquant_attaque.vue";
 import caseAttaquant_attaque from "@/components/plateauAttaque/Case_attaquant/CaseAttaquant_attaque.vue";
+
 export let peutAttaquer = ref(false);
-let deplacementY = -420
+let deplacementY = -420;
 
 export default {
   props: {
     id: {
       type: Number,
-      required: true
+      required: true,
     },
     image: {
       type: String,
-      required: false
+      required: false,
     },
     readers: {
       type: Array,
-      required: true
+      required: true,
     },
   },
   data() {
@@ -44,70 +50,75 @@ export default {
       stockage: 1140,
       pv: 455,
       hasEntered: false,
-      canAttack: false
-    }
+      canAttack: false,
+      shakeStyle: {},
+    };
   },
-
   mounted() {
-    this.socket = io('http://localhost:3000');
-    this.socket.on('rfidData', (data) => {
-      let {readerID, card, uid} = data;
+    this.socket = io("http://localhost:3000");
+    this.socket.on("rfidData", (data) => {
+      let { readerID, card, uid } = data;
 
-      //Affiche une lueur rouge autour de la carte lorsqu'elle peut attaquer
       watch(peutAttaquer, (newVal) => {
-        if (newVal)
-          this.canAttack = newVal
-        else
-          this.canAttack = newVal
+        this.canAttack = newVal;
       });
 
-      //Vérifie si la carte scannée est la bonne et si la partie n'est pas terminée
-      if (readerID === '5)' && this.readers[2].name === card.name && UID1 === uid && !hasLostAttack) {
+      if (readerID === "5)" && !this.canAttack && UID1 === uid) {
+        this.triggerShakeAnimation();
+      }
+
+      if (
+          readerID === "5)" &&
+          this.readers[2].name === card.name &&
+          UID1 === uid &&
+          !hasLostAttack
+      ) {
         this.hasEntered = true;
         let emplacement;
+        let carteEnDefense =
+            fonctionnaliteesAttaque.methods.trouverCarteDefense(
+                this.readers,
+                card
+            );
 
-        //Retrouve le reader qui contient la carte qui va défendre
-        let carteEnDefense = fonctionnaliteesAttaque.methods.trouverCarteDefense(this.readers, card);
-
-        //Retrouves les coordonnées auxquelles la carte doit se déplacer
         if (carteEnDefense === undefined) {
           emplacement = this.pv;
         } else {
           switch (carteEnDefense.id) {
-            case 1 :
+            case 1:
               emplacement = this.gauche;
               break;
-            case 2 :
+            case 2:
               emplacement = this.milieu;
               break;
-            case 5 :
+            case 5:
               emplacement = this.droite;
               break;
-            case 7 :
+            case 7:
               emplacement = this.stockage;
               break;
             default:
               emplacement = this.pv;
           }
         }
-        //Vérifie si la carte remplie les conditions pour attaquer
+
         if (fonctionnaliteesAttaque.methods.peutAttaquer(card)) {
           this.hasEntered = true;
-          //Animation d'attaque
           this.attaquerCarteCase1(1, emplacement);
-          caseAttaquant_attaque.methods.showRedBorder(deplacementY)
+          caseAttaquant_attaque.methods.showRedBorder(deplacementY);
           setTimeout(() => {
-            fonctionnaliteesAttaque.methods.attaquerNouveau(card, this.readers[2], this.readers);
+            fonctionnaliteesAttaque.methods.attaquerNouveau(
+                card,
+                this.readers[2],
+                this.readers
+            );
           }, 2000);
           setTimeout(() => {
-            //Réactive l'animation d'entrée si la carte a été détruite
-            if (this.readers[2].image === null)
-              this.hasEntered = false
-          },2001)
+            if (this.readers[2].image === null) this.hasEntered = false;
+          }, 2001);
         }
       }
     });
-
   },
   methods: {
     getImagePath(image) {
@@ -121,10 +132,11 @@ export default {
     },
     attaquerCarteCase1(card_number, deplacementX) {
       deplacementY = -420;
-      if (deplacementX === this.pv)
-        deplacementY = -800;
+      if (deplacementX === this.pv) deplacementY = -800;
 
-      const attackingCard = this.$el.querySelector('.attaque-card'+card_number); // Sélectionne l'élément par classe
+      const attackingCard = this.$el.querySelector(
+          ".attaque-card" + card_number
+      );
 
       if (!attackingCard) {
         console.error("La carte attaquante n'est pas disponible.");
@@ -135,7 +147,7 @@ export default {
       tl.to(attackingCard, {
         duration: 0.3,
         scale: 1.1,
-        ease: "power2.inOut"
+        ease: "power2.inOut",
       })
           .to(attackingCard, {
             duration: 0.3,
@@ -143,7 +155,7 @@ export default {
             x: deplacementX,
             scale: 1,
             ease: "power2.inOut",
-            delay: 0.6
+            delay: 0.6,
           })
           .to(attackingCard, {
             duration: 0.3,
@@ -151,10 +163,22 @@ export default {
             x: 0,
             ease: "power2.inOut",
           });
-    }
+    },
+    triggerShakeAnimation() {
+      this.shakeStyle = {}; // Réinitialise le style
+      this.$nextTick(() => {
+        this.shakeStyle = {
+          animation: "shakeX 1s",
+        };
+        setTimeout(() => {
+          this.shakeStyle = {}; // Supprime l'animation après
+        }, 1000); // Durée de l'animation
+      });
+    },
   },
 };
 </script>
+
 
 <style scoped>
 .bottomReader1_attaque {
@@ -226,6 +250,19 @@ img#flame_case1 {
     0 0 30px rgba(255, 0, 0, 0.6),
     0 0 40px rgba(255, 69, 0, 0.5),
     0 0 50px rgba(255, 0, 0, 0.4);
+  }
+}
+
+@keyframes shakeX {
+  from,
+  to {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
   }
 }
 </style>
