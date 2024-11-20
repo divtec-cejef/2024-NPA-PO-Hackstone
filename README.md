@@ -19,31 +19,32 @@ Le hacker a jusqu'à la fin de son 5ème tour pour réduire les points de vie de
 
 
 La zone d'informations sur une carte permet de poser une carte de jeu dessus et d'afficher une page à l'écran faisant une courte description de la carte posée.
+La quatrième zone de carte est utilisable uniquement par le défenseur lorsqu'il a scanné la carte "Stockage"
+La zone d'attaque est utilisable uniquement par l'attaquant afin d'attaquer les points de vie du défenseur ou une de ses cartes.
 
 # Règles 
 * Les cartes d'attaque doivent attendre un tour après avoir été posées avant de pouvoir attaquer.
 * Lors d'une attaque, la carte attaquante doit obligatoirement attaquer la carte qui la défend si elle est présente sur le terrain de l'adversaire, sinon elle peut attaquer les PV du défenseur.
 * Lorsqu'on attaque les points de vie du défenseur, on lui en retire un seul quelque soit la carte.
 * L'anonymus doit obligatoirement attaquer les cartes en défense quelle qu'elles soient, il peut résister à deux attaques et attaquer deux fois par tour.
-* Lorsqu'un super-antivirus ou un white hat est posé en défense, les cartes doivent les détruirse avant de pouvoir attaquer les points de vie de l'adversaire, cependant si la carte qui défend spécifiquement la carte attaquante est posée (si l'on essaie d'attaquer avec un DDOS et qu'un Firewall est posé en défense), la carte doit l'attaquer avant le super-antivirus ou le white hat.
+* Lorsqu'un super-antivirus ou un white hat est posé en défense, les cartes doivent les détruirse avant de pouvoir attaquer les points de vie de l'adversaire.
 * Si à la fin de son tour un joueur à 7 cartes dans sa main, il doit en mettre une au cimetière.
 * La quatrième zone de cartes est utilisable uniquement par le défenseur lorsqu'il a utilisé la carte stockage pour la débloquer.
-* Le nombre de tour de l'attaquant augmente au début de son tour.
+* Le nombre de tour de l'attaquant diminue à la fin de son tour.
 
 # Déroulement d'une partie 
 * Premier tour : 
   - Lors du lancement du jeu, nous choisissons notre rôle (attaquant ou défenseur), chaque rôle possède son propre deck de cartes.
-  - Au début de la partie, chaque joueur pioche 5 cartes.
+  - Au début de la partie, chaque joueur pioche 6 cartes.
   - L'attaquant commence.
   - Les cartes posées par l'attaquant ne peuvent pas attaquer au tour où elles ont été posées, elles doivent attendre au minimum un tour de repos.
   - Une fois que l'attaquant a terminé son tour, c'est au défenseur de jouer.
-  - Il pioche une 6ème carte.
   - Le défenseur doit ensuite poser ses cartes selon celles de l'adversaire afin de pouvoir se protéger des ses attaques.
     
 * Reste de la partie :
   - Lors du début de son tour, le joueur, quel que soit son rôle, pioche jusqu'à avoir 5 cartes dans sa main. 
-  - L'attaquant peut désormais attaquer avec les cartes qu'il a posées au premier tour.
-  - Lorsqu'une carte attaque, elle doit **obligatoirement** attaquer la carte qui la défend si il y en a une présente sur le terrain du défenseur. Sinon, elle peut attaquer directement les points de vie du défenseur.
+  - L'attaquant peut désormais attaquer avec les cartes qu'il a posées au tour précédent.
+  - Lorsqu'une carte attaque, elle doit **obligatoirement** attaquer la carte qui la défend si il y en a une présente sur le terrain du défenseur, sinon, elle peut attaquer directement les points de vie du défenseur.
   - Lorsqu'une carte a attaqué une carte qui la défend, les deux cartes s'étant confrontées se détruisent.
   - L'attaquant remporte la partie lorsque le défenseur n'a plus de points de vie, et le défenseur gagne lorsque l'attaquant est arrivé au terme de son cinquième tour.
 
@@ -70,7 +71,6 @@ La zone d'informations sur une carte permet de poser une carte de jeu dessus et 
   - 3 Pannes réseau
   - 3 Elévations de privilège
   - 3 Bruteforcing
-  - 2 Phishing (jouable uniquement par l'ordinateur)
   - 1 Anonymus
 
 * Rapport entre les cartes :
@@ -84,7 +84,8 @@ La zone d'informations sur une carte permet de poser une carte de jeu dessus et 
    - Les White hat peuvent défendre une attaque de n'importe quelle carte.
  
 * Capacités spéciales
+   - Le super-antivirus à deux points de vie, ils lui permettent donc de résister à deux attaques.
    - Le stockage permet de débloquer une zone de carte de plus pour ajouter une défense supplémentaire.
-   - L'anonymous détruit toute les cartes poser sur les deux terrains lors de son invocation.
-   - Le super-antivirus n'est pas détruit lors de l'invocation de l'anonymous et permet aussi de résister à deux attaques de n'importe quelle carte excepté l'anonymous.
-   - Les redondances de données permettent de copier n'importe quelle carte déjà posée sur le terrain.
+   - L'anonymous détruit toute les cartes poser sur le terrain du défenseur lors de son invocation (sauf le super-antivirus s'il a encore deux points de vie).
+   - Le super-antivirus perd un point de vie lors de l'invocation de l'anonymous et permet aussi de résister à deux attaques de n'importe quelle carte excepté l'anonymous.
+   - Les redondances de données permettent de copier la carte la plus à gauche sur le terrain.
