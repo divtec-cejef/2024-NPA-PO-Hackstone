@@ -23,9 +23,11 @@ body {
 
 .tutoriel-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 60vh;
+    position: fixed;
 }
 
 .buttons-container {
@@ -35,6 +37,8 @@ body {
     align-items: flex-end;
     gap: 800px; /* Séparation des boutons attaque et défense */
     padding-bottom: 200px;
+    bottom: 0;
+    position: fixed;
 }
 
 button {
@@ -59,6 +63,8 @@ button:hover {
 
 }
 
+
+
 button.attaque {
     border: 3px solid red;
     background-color: red;
@@ -72,10 +78,21 @@ button.defense {
 }
 
 button.tutoriel {
+    position: fixed;
     background: transparent;
     border-color: transparent;
     color: red;
 }
+
+button.information {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: 0 10px 50px 0 rgb(255, 0, 0);
+    width: 380px;
+    height: 60px;
+    margin-top: 600px;
+}
+
 /* Style pour l'overlay (initialement caché) */
 .overlay {
     position: fixed; /* L'overlay couvre toute la page */
