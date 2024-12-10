@@ -1,4 +1,4 @@
-n# rfid-project
+# rfid-project
 
 ## Project setup
 ```
