@@ -4,6 +4,12 @@ n# rfid-project
 ```
 npm install
 ```
+```
+npm install gsap
+```
+```
+npm install animate.css
+```
 
 ### Compiles and hot-reloads for development
 ```
