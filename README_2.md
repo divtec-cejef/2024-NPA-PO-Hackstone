@@ -12,7 +12,9 @@ npm run serve
 
 ### Compiles and minifies for production
 ```
-npm run build
+npm run build:plateauAttaque
+npm run build:plateauDefense
+npm run build:informationCarte
 ```
 
 ### Lints and fixes files
