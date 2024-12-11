@@ -64,7 +64,7 @@ La zone d'attaque est utilisable uniquement par l'attaquant afin d'attaquer les 
   - 1 Stockage
   - 1 Super-antivirus
  
-* Le deck de l'attaquant en possède 25 :
+* Le deck de l'attaquant en possède 23 :
   - 2 Virus
   - 2 Cheval de Troie
   - 3 DDOS
